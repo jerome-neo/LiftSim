@@ -1,3 +1,4 @@
+from copy import deepcopy
 import Floor
 
 
@@ -10,4 +11,6 @@ class GroundFloor(Floor):
         self.going_up_persons.append(person)
 
     def remove_all_persons_going_up(self):
-        self.going_up_persons = []
+        copy = deepcopy(self.going_up_persons)
+        self.going_up_persons.clear()
+        return copy
