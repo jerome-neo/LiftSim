@@ -7,16 +7,17 @@ DIRECTION = Enum('Direction', ['UP', 'DOWN'])
 
 
 class Elevator(object):
-    def __init__(self, index, collection_floors, curr_floor):
+    def __init__(self, env, index, collection_floors, curr_floor, direction):
+        self.env = env
         self.index = index
         self.floors = collection_floors
+        self.direction = DIRECTION.UP if direction == "UP" else DIRECTION.DOWN
         self.max_persons = MAX_CAPACITY
         self.max_weight = MAX_WEIGHT
         self.curr_floor = curr_floor
         self.speed = SPEED  # metres per second
-        self.direction = DIRECTION.UP
         self.is_door_open = False
-        self.is_servicing = False
+        self.is_busy = False
         self.passengers = []
 
     def __str__(self):
@@ -30,4 +31,13 @@ class Elevator(object):
 
     def leave_elevator(self):
         yield self.env.timeout(random.randint(2, 4))
+
+    def is_busy(self):
+        return self.is_busy
+
+    def travel(self, start, end):
+        yield self.env.timeout(abs(end - start) * 3)
+
+
+
 
