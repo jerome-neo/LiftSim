@@ -1,6 +1,6 @@
 import simpy
 import random
-import Floor
+from Floor import TopFloor, GroundFloor, SandwichFloor
 import Person
 import ElevatorSystem
 
@@ -14,30 +14,35 @@ class Building(object):
         self.num_floors = num_floors
         self.floors = []
         self.elevator_group = None
+        self.all_persons_spawned = []
+
+    def get_num_floors(self):
+        return self.num_floors
 
     def initialise(self):
-        self.floors.append(Floor.GroundFloor.GroundFloor(1))
-        self.floors.extend([Floor.SandwichFloor.SandwichFloor(i) for i in range(2, self.num_floors)])
-        self.floors.append(Floor.TopFloor.TopFloor(self.num_floors))
-        self.elevator_group = ElevatorSystem.ElevatorSystem(self.floors, self.num_up, self.num_down)
+        self.floors.append(GroundFloor(1))
+        self.floors.extend([SandwichFloor(i) for i in range(2, self.num_floors)])
+        self.floors.append(TopFloor(self.num_floors))
+        self.elevator_group = ElevatorSystem.ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
 
-    def simulate(self, simulation_duration, arrival_rate=0.5):
-        waiting_time = []
-        all_persons_spawned = []
+    def simulate(self, arrival_rate=0.5):
         system = ElevatorSystem.ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
-
-        while self.env.now() <= simulation_duration:
+        index = 0
+        while True:
             # Generate arrive time of a Wave
             inter_arrival_time = random.expovariate(arrival_rate)
             yield self.env.timeout(inter_arrival_time)
             # Generate a number of people for that Wave
             num_people = random.randint(1, 30 + 1)
-            wave = [Person() for i in range(num_people + 1)]
-            all_persons_spawned.extend(wave)  # for calculating their waiting time
+            wave = [Person.Person(self.env, index + i, self) for i in range(num_people + 1)]
+            index += num_people  # update numbering
+            self.all_persons_spawned.extend(wave)  # for calculating their waiting time
 
             # Place person into their respective floor
             for person in wave:
                 system.handle_person(person)
+            yield self.env.process(system.handle_rising_call())
+            yield self.env.process(system.handle_landing_call())
+            yield self.env.process(system.move())
+            system.update_status()
 
-
-            pass
