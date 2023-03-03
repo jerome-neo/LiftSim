@@ -21,7 +21,7 @@ class Main(object):
 Test = Main(2, 2, 9)
 Test.run(20000)
 waiting_time = []
-for i in x.building.all_persons_spawned:
+for i in Test.building.all_persons_spawned:
     if i.has_completed_trip():
         waiting_time.append(i.get_wait_time())
 print(statistics.mean(waiting_time))
