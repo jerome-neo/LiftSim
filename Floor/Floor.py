@@ -13,10 +13,10 @@ class Floor(object):
     def has_call_up(self):
         return self.call_up
 
-    def call_up(self):
+    def set_call_up(self):
         self.call_up = True
 
-    def call_down(self):
+    def set_call_down(self):
         self.call_down = True
 
     def uncall_up(self):
