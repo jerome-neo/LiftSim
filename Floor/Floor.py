@@ -24,3 +24,6 @@ class Floor(object):
 
     def uncall_down(self):
         self.call_down = False
+
+    def get_floor_level(self):
+        return self.floor_index
