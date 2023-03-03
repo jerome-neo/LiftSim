@@ -1,10 +1,4 @@
-import Building
-import Elevator
-import Person
 import simpy
-import random
-import statistics
-
 
 
 class Main(object):
@@ -12,3 +6,4 @@ class Main(object):
         self.env = simpy.Environment
 
     def run(self):
+        pass

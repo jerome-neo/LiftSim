@@ -11,7 +11,7 @@ class SandwichFloor(Floor):
         self.going_up_persons.append(person)
 
     def add_person_going_down(self, person):
-        self.going_down_persons
+        self.going_down_persons.append(person)
 
     def remove_all_persons_going_up(self):
         self.going_up_persons = []
