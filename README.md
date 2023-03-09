@@ -1,7 +1,8 @@
 # LiftSim: Simulating Elevator Efficiency
 
-![logo](docs/images/logo.gif)
-
+<p align="center">
+    <img src="docs/images/logo.gif" alt="logo" width="200" height="200">
+</p>
 
 ## 1. Introduction
 LiftSim is a data science project aimed at improving elevator efficiency and reducing wait times in multi-floor 
