@@ -1,2 +1,4 @@
 .idea
-__pycache__
+__pycache__/*
+Floor/__pycache__/*
+
