@@ -1,5 +1,8 @@
 # LiftSim: Simulating Elevator Efficiency
 
+![logo](docs/images/logo.gif)
+
+
 ## 1. Introduction
 LiftSim is a data science project aimed at improving elevator efficiency and reducing wait times in multi-floor 
 buildings, particularly, S16 building at the National University of Singapore (NUS). By utilizing statistical modeling 
@@ -13,21 +16,21 @@ improve the overall experience for elevator users.
 
 Project authors: AY22/23 DSA3101 Group 07-S16
 
-## 2. Installation:
+## 2. Installation
 Download and run.
-## 3. Usage:
-For more information, please see our [User Guide]("docs/UserGuide.md").
-## 4. Data:
+## 3. Usage
+For more information, please see our [User Guide](docs/UserGuide.md).
+## 4. Data
 In-progress.
 
-## 5. Results:
+## 5. Results
 
-## 6. Contributing:
+## 6. Contributing
 
-## 7. License:
+## 7. License
 
-## 8. Acknowledgments:
+## 8. Acknowledgments
 
-## 9. References:
+## 9. References
 
 
