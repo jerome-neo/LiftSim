@@ -25,7 +25,7 @@ class Person(object):
         """
         self.id = index
         self.env = env
-        self.curr_floor = random.randint(1, building.get_num_floors()//3)
+        self.curr_floor = random.randint(1, building.get_num_floors())
         self.destination_floor = \
             random.choice(list(set([i for i in range(1, building.get_num_floors() + 1)]) - set([self.curr_floor])))
         self.arrival_time = env.now
