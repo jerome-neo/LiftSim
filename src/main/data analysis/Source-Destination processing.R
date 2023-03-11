@@ -13,7 +13,11 @@ proportions <- list()
 for (i in 1:4) {
   dat[[i]] <- read_excel("Source-Destination.xlsx", sheet=i)
   n <- sum(dat[[i]]$Count)
+  
   proportions[[i]] <- dat[[i]] %>%
     group_by(Source, Dest) %>%
     summarize(p=sum(Count)/n)
+  
+  write.csv(proportions[[i]], paste("prop", i, ".csv", sep=""))
 }
+
