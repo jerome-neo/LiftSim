@@ -26,6 +26,10 @@ class ElevatorSystem(object):
         self.floors = collection_floors
         self.elevators_up = [Elevator.Elevator(env, i, self.floors, 1, "UP") for i in range(1, num_up + 1)]
         self.elevators_down = [Elevator.Elevator(env, i, self.floors, 1, "DOWN") for i in range(1, num_down + 1)]
+        for elevator in self.elevators_up:
+            elevator.activate()
+        for elevator in self.elevators_down:
+            elevator.activate()
 
     def __str__(self):
         """
@@ -88,7 +92,7 @@ class ElevatorSystem(object):
                     next_floor = elevator.get_path()[::-1].pop()  # remove from the front
                     yield self.env.process(elevator.travel(next_floor))
                     floor = self.floors[next_floor - 1]
-                    if elevator.get_current_floor() != len(self.floors):
+                    if elevator.get_current_floor() != len(self.floors): #if elevator is currently on top-most level
                         yield self.env.process(elevator.enter_elevator(floor.remove_all_persons_going_up()))
                         floor.uncall_up()
                     else:
