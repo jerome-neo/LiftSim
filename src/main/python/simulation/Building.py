@@ -82,8 +82,13 @@ class Building(object):
             # Place person into their respective floor
             for person in wave:
                 system.handle_person(person)
+
+            #remove later
             yield self.env.process(system.handle_rising_call())
             yield self.env.process(system.handle_landing_call())
             yield self.env.process(system.move())
+
+            yield self.env.process(system.assign_call())
+            
             system.update_status()
 
