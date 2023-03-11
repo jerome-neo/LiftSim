@@ -1,4 +1,4 @@
 .idea
-__pycache__/*
-Floor/__pycache__/*
+src/main/python/simulation/__pycache__/*
+src/main/python/simulation/Floor/__pycache__/*
 
