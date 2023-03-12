@@ -26,10 +26,7 @@ class ElevatorSystem(object):
         self.floors = collection_floors
         self.elevators_up = [Elevator.Elevator(env, i, self.floors, 1, "UP") for i in range(1, num_up + 1)]
         self.elevators_down = [Elevator.Elevator(env, i, self.floors, 1, "DOWN") for i in range(1, num_down + 1)]
-        for elevator in self.elevators_up:
-            elevator.activate()
-        for elevator in self.elevators_down:
-            elevator.activate()
+
 
     def __str__(self):
         """
@@ -40,6 +37,9 @@ class ElevatorSystem(object):
 
         """
         return f"Elevator with {len(self.elevators_up)} up and {len(self.elevators_down)} down configuration."
+    
+
+
 
     def handle_person(self, person) -> None:
         """
@@ -57,6 +57,8 @@ class ElevatorSystem(object):
         else:
             curr_floor.add_person_going_up(person)
             curr_floor.set_call_up()
+    
+
 
     def handle_landing_call(self) -> None:
         """Handles a landing call from a person who wants to go down."""
@@ -87,7 +89,9 @@ class ElevatorSystem(object):
     def move(self) -> None:
         """Moves the elevators and handles passengers getting on and off."""
         for elevator in self.elevators_down + self.elevators_up:
+            print(len(self.elevators_up+self.elevators_down))
             while elevator.has_path():
+                print(f"Current path for elevator {elevator.index} going {elevator.direction}: {elevator.get_path()}")
                 if elevator.get_direction() == "UP":
                     next_floor = elevator.get_path()[::-1].pop()  # remove from the front
                     yield self.env.process(elevator.travel(next_floor))
