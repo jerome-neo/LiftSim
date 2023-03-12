@@ -98,7 +98,8 @@ class Elevator(object):
             self.add_passengers(person)
             floor_level = person.get_dest_floor()
             # Add items to the heap (priority, value)
-            self.path.append(floor_level)
+            if floor_level not in self.path:
+                self.path.append(floor_level)
             print(f"{person} has entered {self}")
         self.path.sort()
         yield self.env.timeout(random.randint(2, 4))
