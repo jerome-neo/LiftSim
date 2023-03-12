@@ -1,4 +1,8 @@
 import random
+import simpy
+import numpy as np
+
+
 MAX_CAPACITY = 8
 MAX_WEIGHT = 1600 # kilograms
 SPEED = (0.5, 0.6)
@@ -60,12 +64,13 @@ class Elevator(object):
         self.is_working_status = False
         self.passengers = []
         self.path = []  # empty heap
-        self.resource = simpy.Resource(env,self.max_persons)
+        self.resource = simpy.Resource(env,1)
 
     def __str__(self):
         """Returns a string representation of the Elevator object."""
-        return f"elevator dedicated to {self.direction} calls is at " \
+        return f"elevator {self.index} dedicated to {self.direction} calls is at " \
                f"{self.curr_floor} with {len(self.passengers)} person(s)"
+
 
     def get_direction(self) -> str:
         """Returns the direction of travel for the Elevator object."""
@@ -147,7 +152,11 @@ class Elevator(object):
 
         """
         self.curr_floor = end
-        yield self.env.timeout(abs(end - self.curr_floor) * 3)
+
+        with self.resource.request() as req:
+            yield req
+            yield self.env.timeout(abs(end - self.curr_floor) * 3)
+
 
     def add_path(self, floor_level) -> None:
         """
@@ -158,10 +167,9 @@ class Elevator(object):
 
         """
         self.path.append(floor_level)
+        self.path = np.unique(self.path).tolist()
         self.path.sort()
-        with self.resource.request() as req:
-            yield req
-            yield req_served
+        print(f"Path of elevator {self.index} going {self.direction}: {self.path}")
 
     def get_path(self) -> list:
         """
@@ -182,32 +190,31 @@ class Elevator(object):
 
         """
         return len(self.path) != 0
-
+    
+    
     def activate(self) -> None:
+        """Activates elevator such that it immediately moves when a call is placed"""
         while self.has_path():
-                if self.get_direction() == "UP":
-                    next_floor = self.get_path()[::-1].pop()  # remove from the front
-                    yield self.env.process(self.travel(next_floor))
-                    floor = self.floors[next_floor - 1]
-                    if self.get_current_floor() != len(self.floors): #if elevator is currently on top-most level
-                        yield self.env.process(elevator.enter_elevator(floor.remove_all_persons_going_up()))
-                        floor.uncall_up()
-                    else:
-                        yield self.env.process(elevator.travel(1))
+            print(f"Current path for elevator {self.index} going {self.direction}: {self.get_path()}")
+            if self.get_direction() == "UP":
+                next_floor = self.get_path()[::-1].pop()  # remove from the front
+                yield self.env.process(self.travel(next_floor))
+                floor = self.floors[next_floor - 1]
+                if self.get_current_floor() != len(self.floors): #if elevator is currently on top-most level
+                    yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_up()))
+                    floor.uncall_up()
                 else:
-                    next_floor = self.get_path().pop()
-                    yield self.env.process(self.travel(next_floor))
-                    floor = self.floors[next_floor - 1]
-                    if elevator.get_current_floor() != 1:
-                        yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_down()))
-                        floor.uncall_down()
-                    else:
-                        yield self.env.process(self.travel(1))
-                # take out passengers if any
-                yield self.env.process(self.leave_elevator())
-
-
-
-
+                    yield self.env.process(self.travel(1))
+            else:
+                next_floor = self.get_path().pop()
+                yield self.env.process(self.travel(next_floor))
+                floor = self.floors[next_floor - 1]
+                if self.get_current_floor() != 1:
+                    yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_down()))
+                    floor.uncall_down()
+                else:
+                    yield self.env.process(self.travel(1))
+            # take out passengers if any
+            yield self.env.process(self.leave_elevator())
 
 

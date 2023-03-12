@@ -39,7 +39,7 @@ class Building(object):
         self.env = env
         self.num_up = num_up
         self.num_down = num_down
-        self.elevators = simpy.Resource(env, num_up + num_down)
+        self.elevators = simpy.Resource(env, num_up + num_down) #not used now
         self.num_floors = num_floors
         self.floors = []
         self.elevator_group = None
@@ -56,6 +56,7 @@ class Building(object):
         self.floors.append(TopFloor(self.num_floors))
         self.elevator_group = ElevatorSystem.ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
 
+
     def simulate(self, arrival_rate=0.5) -> None:
         """
         Simulates the building operation by creating Person instances, placing them in their respective floors, and managing the elevators in the building.
@@ -67,7 +68,7 @@ class Building(object):
                 The arrival time of each wave of Person instances.
 
         """
-        system = ElevatorSystem.ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
+        #system = ElevatorSystem.ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
         index = 0
         while True:
             # Generate arrive time of a Wave
@@ -81,14 +82,16 @@ class Building(object):
 
             # Place person into their respective floor
             for person in wave:
-                system.handle_person(person)
+                self.elevator_group.handle_person(person)
 
-            #remove later
-            yield self.env.process(system.handle_rising_call())
-            yield self.env.process(system.handle_landing_call())
-            yield self.env.process(system.move())
-
-            yield self.env.process(system.assign_call())
+    
+            self.env.process(self.elevator_group.handle_rising_call())
+            self.env.process(self.elevator_group.handle_landing_call())
+            #self.env.process(self.elevator_group.move()) remove later
+            self.env.process(self.elevator_group.elevators_up[0].activate())
+            self.env.process(self.elevator_group.elevators_up[1].activate())
+            self.env.process(self.elevator_group.elevators_down[0].activate())
+            self.env.process(self.elevator_group.elevators_down[1].activate())
             
-            system.update_status()
+            self.elevator_group.update_status()
 
