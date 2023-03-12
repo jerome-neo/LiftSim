@@ -66,10 +66,15 @@ class ElevatorSystem(object):
             if all(map(lambda x: x.is_busy(), self.elevators_down)):
                 yield self.env.timeout(1)
             else:
-                elevator = max(self.elevators_down, key=lambda x: x.get_current_floor())
+                list_of_elevators = sorted(self.elevators_down, key=lambda x: x.get_current_floor(), reverse=True)
+                chosen_index = 0
+                elevator = list_of_elevators[chosen_index]
+                while elevator.is_busy():
+                    chosen_index += 1
+                    elevator = list_of_elevators[chosen_index]
                 elevator.set_busy()
                 for floor in self.floors:
-                    if floor.has_call_down():
+                    if floor.has_call_down() and (floor.get_floor_level() not in elevator.path):
                         elevator.add_path(floor.get_floor_level())
                 break
 
@@ -79,10 +84,15 @@ class ElevatorSystem(object):
             if all(map(lambda x: x.is_busy(), self.elevators_up)):
                 yield self.env.timeout(1)
             else:
-                elevator = min(self.elevators_up, key=lambda x: x.get_current_floor())
+                list_of_elevators = sorted(self.elevators_up, key=lambda x: x.get_current_floor(), reverse=False)
+                chosen_index = 0
+                elevator = list_of_elevators[chosen_index]
+                while elevator.is_busy():
+                    chosen_index += 1
+                    elevator = list_of_elevators[chosen_index]
                 elevator.set_busy()
                 for floor in self.floors:
-                    if floor.has_call_up():
+                    if floor.has_call_up() and (floor.get_floor_level() not in elevator.path):
                         elevator.add_path(floor.get_floor_level())
                 break
 
