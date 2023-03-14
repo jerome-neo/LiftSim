@@ -19,12 +19,11 @@ class LiftRandoms:
     No attributes.
     """
 
-    def next_arrival_time(self, cur_time, thin_fn, maxlambda=167/900) -> float:
+    def next_arrival_time(self, cur_time, maxlambda=167/900) -> float:
         """Generates the next arrival time of a rider according to a non-homogeneous Poisson process, using the thinning method.
 
         Args: 
-            cur_time (float): Current timestamp of the environment in seconds.
-            thin_fn (function): Thinning function from LiftRandoms class, defined below.
+            cur_time (float): Current timestamp of the environment in seconds
         
         Returns:
             float: The next arrival time.
@@ -32,7 +31,7 @@ class LiftRandoms:
         u = rd.uniform(0, 1)
         arr_time = cur_time + rd.expovariate(maxlambda)
 
-        while u > (thin_fn(arr_time)/maxlambda):
+        while u > (self.thinning_fn(arr_time)/maxlambda):
             arr_time += rd.expovariate(maxlambda)
             u = rd.uniform(0, 1)
         
