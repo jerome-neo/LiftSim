@@ -87,11 +87,12 @@ class Building(object):
     
             self.env.process(self.elevator_group.handle_rising_call())
             self.env.process(self.elevator_group.handle_landing_call())
-            #self.env.process(self.elevator_group.move()) remove later
-            self.env.process(self.elevator_group.elevators_up[0].activate())
-            self.env.process(self.elevator_group.elevators_up[1].activate())
-            self.env.process(self.elevator_group.elevators_down[0].activate())
-            self.env.process(self.elevator_group.elevators_down[1].activate())
+
+            for elevator in self.elevator_group.elevators_up:
+                self.env.process(elevator.activate())
+            
+            for elevator in self.elevator_group.elevators_down:
+                self.env.process(elevator.activate())
             
             self.elevator_group.update_status()
 
