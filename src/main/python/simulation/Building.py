@@ -39,7 +39,6 @@ class Building(object):
         self.env = env
         self.num_up = num_up
         self.num_down = num_down
-        self.elevators = simpy.Resource(env, num_up + num_down)
         self.num_floors = num_floors
         self.floors = []
         self.elevator_group = None
@@ -56,6 +55,7 @@ class Building(object):
         self.floors.append(TopFloor(self.num_floors))
         self.elevator_group = ElevatorSystem.ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
 
+
     def simulate(self, arrival_rate=0.5) -> None:
         """
         Simulates the building operation by creating Person instances, placing them in their respective floors, and managing the elevators in the building.
@@ -67,7 +67,7 @@ class Building(object):
                 The arrival time of each wave of Person instances.
 
         """
-        system = ElevatorSystem.ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
+        #system = ElevatorSystem.ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
         index = 0
         while True:
             # Generate arrive time of a Wave
@@ -81,9 +81,16 @@ class Building(object):
 
             # Place person into their respective floor
             for person in wave:
-                system.handle_person(person)
-            yield self.env.process(system.handle_rising_call())
-            yield self.env.process(system.handle_landing_call())
-            yield self.env.process(system.move())
-            system.update_status()
+                self.elevator_group.handle_person(person)
+    
+            self.env.process(self.elevator_group.handle_rising_call())
+            self.env.process(self.elevator_group.handle_landing_call())
+
+            for elevator in self.elevator_group.elevators_up:
+                self.env.process(elevator.activate())
+            
+            for elevator in self.elevator_group.elevators_down:
+                self.env.process(elevator.activate())
+            
+            self.elevator_group.update_status()
 
