@@ -96,32 +96,6 @@ class ElevatorSystem(object):
                         elevator.add_path(floor.get_floor_level())
                 break
 
-    def move(self) -> None:
-        """Moves the elevators and handles passengers getting on and off."""
-        for elevator in self.elevators_down + self.elevators_up:
-            print(len(self.elevators_up+self.elevators_down))
-            while elevator.has_path():
-                print(f"Current path for elevator {elevator.index} going {elevator.direction}: {elevator.get_path()}")
-                if elevator.get_direction() == "UP":
-                    next_floor = elevator.get_path()[::-1].pop()  # remove from the front
-                    yield self.env.process(elevator.travel(next_floor))
-                    floor = self.floors[next_floor - 1]
-                    if elevator.get_current_floor() != len(self.floors): #if elevator is currently on top-most level
-                        yield self.env.process(elevator.enter_elevator(floor.remove_all_persons_going_up()))
-                        floor.uncall_up()
-                    else:
-                        yield self.env.process(elevator.travel(1))
-                else:
-                    next_floor = elevator.get_path().pop()
-                    yield self.env.process(elevator.travel(next_floor))
-                    floor = self.floors[next_floor - 1]
-                    if elevator.get_current_floor() != 1:
-                        yield self.env.process(elevator.enter_elevator(floor.remove_all_persons_going_down()))
-                        floor.uncall_down()
-                    else:
-                        yield self.env.process(elevator.travel(1))
-                # take out passengers if any
-                yield self.env.process(elevator.leave_elevator())
 
     def update_status(self) -> None:
         """Updates the elevators to be idle when they have no path."""
