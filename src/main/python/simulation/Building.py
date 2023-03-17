@@ -39,7 +39,6 @@ class Building(object):
         self.env = env
         self.num_up = num_up
         self.num_down = num_down
-        self.elevators = simpy.Resource(env, num_up + num_down) #not used now
         self.num_floors = num_floors
         self.floors = []
         self.elevator_group = None
@@ -83,7 +82,6 @@ class Building(object):
             # Place person into their respective floor
             for person in wave:
                 self.elevator_group.handle_person(person)
-
     
             self.env.process(self.elevator_group.handle_rising_call())
             self.env.process(self.elevator_group.handle_landing_call())
