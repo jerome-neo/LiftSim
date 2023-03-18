@@ -3,6 +3,7 @@ import random
 from Floor import TopFloor, GroundFloor, SandwichFloor
 import Person
 import ElevatorSystem
+import LiftRandoms
 
 
 class Building(object):
@@ -23,7 +24,7 @@ class Building(object):
     Methods:
         get_num_floors(): Returns the number of floors in the building.
         initialise(): Initialises the building by adding the floors and the elevator system.
-        simulate(arrival_rate=0.5): Simulates the building operation by creating Person instances, placing them in their
+        simulate(): Simulates the building operation by creating Person instances, placing them in their
             respective floors, and managing the elevators in the building.
 
     """
@@ -56,32 +57,32 @@ class Building(object):
         self.elevator_group = ElevatorSystem.ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
 
 
-    def simulate(self, arrival_rate=0.5) -> None:
+    def simulate(self) -> None:
         """
         Simulates the building operation by creating Person instances, placing them in their respective floors, and managing the elevators in the building.
 
         Args:
-            arrival_rate (float): The arrival rate of Person instances to the building.
+            -
 
         Yields:
                 The arrival time of each wave of Person instances.
 
         """
-        #system = ElevatorSystem.ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
+        random_variable_generator = LiftRandoms.LiftRandoms()
         index = 0
         while True:
             # Generate arrive time of a Wave
-            inter_arrival_time = random.expovariate(arrival_rate)
+            inter_arrival_time = random_variable_generator.next_arrival_time(self.env.now)
             yield self.env.timeout(inter_arrival_time)
-            # Generate a number of people for that Wave
-            num_people = random.randint(1, 30 + 1)
-            wave = [Person.Person(self.env, index + i, self) for i in range(num_people + 1)]
-            index += num_people  # update numbering
-            self.all_persons_spawned.extend(wave)  # for calculating their waiting time
+    
+            index += 1  # update numbering
+            # Generate person
+            person = Person.Person(self.env, index, self)
+            
+            self.all_persons_spawned.append(person)  # for calculating waiting time
 
             # Place person into their respective floor
-            for person in wave:
-                self.elevator_group.handle_person(person)
+            self.elevator_group.handle_person(person)
     
             self.env.process(self.elevator_group.handle_rising_call())
             self.env.process(self.elevator_group.handle_landing_call())
@@ -93,4 +94,3 @@ class Building(object):
                 self.env.process(elevator.activate())
             
             self.elevator_group.update_status()
-
