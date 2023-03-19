@@ -116,9 +116,9 @@ class LiftRandoms:
         """
 
         day_phase, hr_phase = self.phase(x)
-        u = rd.uniform(0, 1)
-        p = 0
-        i = -1
+        uniform_rv = rd.uniform(0, 1)
+        probability = 0
+        index = -1
 
         # initialize the correct proportions dataframe (off-peak, morning, evening, etc.)
         if hr_phase == HourPhase.OFF_PEAK:
@@ -131,11 +131,11 @@ class LiftRandoms:
             prop_data = prop4
 
         # ordered sequential inversion method for discrete random variable simulation
-        while u > p:
-            i += 1
-            p += prop_data.iloc[i, 2]
+        while uniform_rv > probability:
+            index += 1
+            probability += prop_data.iloc[index, 2]
 
-        return tuple(prop_data.iloc[i, 0:2].astype('int'))
+        return tuple(prop_data.iloc[index, 0:2].astype('int'))
 
     @staticmethod
     def phase(arrival_time) -> tuple:
@@ -196,4 +196,3 @@ class LiftRandoms:
             hr_phase = HourPhase.OFF_PEAK
 
         return day_phase, hr_phase
-
