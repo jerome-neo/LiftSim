@@ -100,7 +100,7 @@ class Elevator(object):
             # Add items to the heap (priority, value)
             if floor_level not in self.path:
                 self.path.append(floor_level)
-            print(f"{person} has entered {self}")
+            print(f"{person} has entered {self} at {self.env.now}")
         self.path.sort()
         yield self.env.timeout(random.randint(2, 4))
 
@@ -117,7 +117,7 @@ class Elevator(object):
             if person.has_reached_destination(self):
                 person.complete_trip()
                 to_remove.append(person)
-                print(f"{person} has left {self}")
+                print(f"{person} has left {self} at {self.env.now}")
         for person in to_remove:
             self.passengers.remove(person)
         yield self.env.timeout(random.randint(2, 4))
@@ -196,7 +196,6 @@ class Elevator(object):
     def activate(self) -> None:
         """Activates elevator such that it immediately moves when a call is placed"""
         while self.has_path():
-            print(f"Current path for elevator {self.index} going {self.direction}: {self.get_path()}")
             if self.get_direction() == "UP":
                 next_floor = self.get_path()[::-1].pop()  # remove from the front
                 yield self.env.process(self.travel(next_floor))

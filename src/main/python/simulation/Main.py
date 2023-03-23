@@ -40,11 +40,14 @@ class Main(object):
         self.building = Building.Building(self.env, self.num_up, self.num_down, self.num_floors)
         self.building.initialise()
         self.env.process(self.building.simulate())
-        self.env.run(until=duration)
+        #self.env.run(until=duration)
+        
+        while self.env.peek() < duration:
+            self.env.step()
 
 
 Test = Main(2, 2, 9)
-Test.run(10)
+Test.run(36000)
 waiting_time = []
 for i in Test.building.all_persons_spawned:
     if i.has_completed_trip():
