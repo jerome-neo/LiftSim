@@ -1,5 +1,5 @@
 import random
-
+import LiftRandoms
 
 class Person(object):
     """A person in the building.
@@ -25,12 +25,15 @@ class Person(object):
         """
         self.id = index
         self.env = env
-        self.curr_floor = random.randint(1, building.get_num_floors())
-        self.destination_floor = \
-            random.choice(list(set([i for i in range(1, building.get_num_floors() + 1)]) - set([self.curr_floor])))
         self.arrival_time = env.now
+
+        random_variable_generator=LiftRandoms.LiftRandoms()
+        self.curr_floor,self.destination_floor=random_variable_generator.generate_source_dest(self.arrival_time)
+        
         self.end_time = None
         self.has_reached_floor = False
+        print(f"Source: {self.curr_floor}, Dest: {self.destination_floor}")
+        print(f"Arrival time: {self.arrival_time}")
 
     def __str__(self):
         """Returns a string representation of the Person object."""
