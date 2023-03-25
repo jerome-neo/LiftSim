@@ -66,18 +66,17 @@ class LiftRandoms:
         Returns:
             float: The corresponding rate parameter at the proposed arrival time.
         """
-
         day_phase, hr_phase = self.phase(x)
 
         print(day_phase)
         print(hr_phase)
 
         # off-peak
-        if hr_phase == 4:
+        if hr_phase == HourPhase.OFF_PEAK:
             return 14/225
 
         # morning: pre-peak, peak, post-peak1, post-peak2
-        if day_phase == DayPhase.MORNING and hr_phase == HourPhase.OFF_PEAK:
+        if day_phase == DayPhase.MORNING and hr_phase == HourPhase.PRE_PEAK:
             return 9/100
         if day_phase == DayPhase.MORNING and hr_phase == HourPhase.PEAK:
             return 127/900
@@ -87,7 +86,7 @@ class LiftRandoms:
             return 11/225
         
         # afternoon: pre-peak, peak, post-peak1, post-peak2
-        if day_phase == DayPhase.AFTERNOON and hr_phase == HourPhase.OFF_PEAK:
+        if day_phase == DayPhase.AFTERNOON and hr_phase == HourPhase.PRE_PEAK:
             return 19/150
         if day_phase == DayPhase.AFTERNOON and hr_phase == HourPhase.PEAK:
             return 167/900
@@ -97,7 +96,7 @@ class LiftRandoms:
             return 29/600
 
         # evening: pre-peak, peak, post-peak1, post-peak2
-        if day_phase == DayPhase.EVENING and hr_phase == HourPhase.OFF_PEAK:
+        if day_phase == DayPhase.EVENING and hr_phase == HourPhase.PRE_PEAK:
             return 31/600
         if day_phase == DayPhase.EVENING and hr_phase == HourPhase.PEAK:
             return 7/75
