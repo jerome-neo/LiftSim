@@ -49,6 +49,10 @@ class Building(object):
         """Returns the number of floors in the building."""
         return self.num_floors
 
+    def get_all_persons(self) -> list:
+        """Returns a list of Person objects that have been instantiated."""
+        return self.all_persons_spawned
+
     def initialise(self) -> None:
         """Initialises the building by adding the floors and the elevator system."""
         self.floors.append(GroundFloor(1))
@@ -56,13 +60,10 @@ class Building(object):
         self.floors.append(TopFloor(self.num_floors))
         self.elevator_group = ElevatorSystem.ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
 
-
     def simulate(self) -> None:
         """
-        Simulates the building operation by creating Person instances, placing them in their respective floors, and managing the elevators in the building.
-
-        Args:
-            -
+        Simulates the building operation by creating Person instances, placing them in their respective floors,
+        and managing the elevators in the building.
 
         Yields:
                 The arrival time of each wave of Person instances.
