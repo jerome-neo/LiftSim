@@ -68,9 +68,6 @@ class LiftRandoms:
         """
         day_phase, hr_phase = self.phase(x)
 
-        print(day_phase)
-        print(hr_phase)
-
         # off-peak
         if hr_phase == HourPhase.OFF_PEAK:
             return 14/225

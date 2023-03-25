@@ -1,7 +1,7 @@
 import simpy
 import statistics
 import Building
-from src.main.python.simulation.LiftRandoms import LiftRandoms
+from LiftRandoms import LiftRandoms
 
 
 class Main(object):
