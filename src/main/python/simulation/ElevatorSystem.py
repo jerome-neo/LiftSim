@@ -4,6 +4,7 @@ import Elevator
 class ElevatorSystem(object):
     """
     A system for controlling a group of elevators in a building.
+    Uses traditional Otis elevators logic.
 
     Attributes:
         env (simpy.Environment): The simulation environment.
