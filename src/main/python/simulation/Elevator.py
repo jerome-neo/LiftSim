@@ -71,7 +71,6 @@ class Elevator(object):
         return f"elevator {self.index} dedicated to {self.direction} calls is at " \
                f"{self.curr_floor} with {len(self.passengers)} person(s)"
 
-
     def get_direction(self) -> str:
         """Returns the direction of travel for the Elevator object."""
         return self.direction
@@ -158,7 +157,6 @@ class Elevator(object):
             yield req
             yield self.env.timeout(abs(end - self.curr_floor) * 3)
 
-
     def add_path(self, floor_level) -> None:
         """
         Add a floor to the elevator's path.
@@ -191,8 +189,7 @@ class Elevator(object):
 
         """
         return len(self.path) != 0
-    
-    
+
     def activate(self) -> None:
         """Activates elevator such that it immediately moves when a call is placed"""
         while self.has_path():
@@ -200,7 +197,7 @@ class Elevator(object):
                 next_floor = self.get_path()[::-1].pop()  # remove from the front
                 yield self.env.process(self.travel(next_floor))
                 floor = self.floors[next_floor - 1]
-                if self.get_current_floor() != len(self.floors): #if elevator is currently on top-most level
+                if self.get_current_floor() != len(self.floors): # if elevator is currently on top-most level
                     yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_up()))
                     floor.uncall_up()
                 else:
