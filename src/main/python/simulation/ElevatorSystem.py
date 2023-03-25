@@ -27,7 +27,6 @@ class ElevatorSystem(object):
         self.elevators_up = [Elevator.Elevator(env, i, self.floors, 1, "UP") for i in range(1, num_up + 1)]
         self.elevators_down = [Elevator.Elevator(env, i, self.floors, 1, "DOWN") for i in range(1, num_down + 1)]
 
-
     def __str__(self):
         """
         Returns a string representation of the ElevatorSystem.
@@ -37,9 +36,6 @@ class ElevatorSystem(object):
 
         """
         return f"Elevator with {len(self.elevators_up)} up and {len(self.elevators_down)} down configuration."
-    
-
-
 
     def handle_person(self, person) -> None:
         """
@@ -57,8 +53,6 @@ class ElevatorSystem(object):
         else:
             curr_floor.add_person_going_up(person)
             curr_floor.set_call_up()
-    
-
 
     def handle_landing_call(self) -> None:
         """Handles a landing call from a person who wants to go down."""
@@ -95,7 +89,6 @@ class ElevatorSystem(object):
                     if floor.has_call_up() and (floor.get_floor_level() not in elevator.path):
                         elevator.add_path(floor.get_floor_level())
                 break
-
 
     def update_status(self) -> None:
         """Updates the elevators to be idle when they have no path."""
