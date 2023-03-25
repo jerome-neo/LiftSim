@@ -47,7 +47,7 @@ class Main(object):
 
 
 Test = Main(2, 2, 9)
-Test.run(36000)
+Test.run(100000)
 waiting_time = []
 for i in Test.building.all_persons_spawned:
     if i.has_completed_trip():
