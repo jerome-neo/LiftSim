@@ -49,7 +49,7 @@ class LiftRandoms:
         """
         uniform_rv = rd.uniform(0, 1)
         arrival_time = curr_time + rd.expovariate(max_lambda)
-
+        
         while uniform_rv > (self.thinning_fn(arrival_time)/max_lambda):
             arrival_time += rd.expovariate(max_lambda)
             uniform_rv = rd.uniform(0, 1)
@@ -68,6 +68,9 @@ class LiftRandoms:
         """
 
         day_phase, hr_phase = self.phase(x)
+
+        print(day_phase)
+        print(hr_phase)
 
         # off-peak
         if hr_phase == 4:
