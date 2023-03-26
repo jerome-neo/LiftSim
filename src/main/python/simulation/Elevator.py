@@ -41,7 +41,7 @@ class Elevator(object):
         has_path(): Returns whether the elevator has a path to follow.
 
     """
-    def __init__(self, env, index, collection_floors, curr_floor, direction):
+    def __init__(self, env, index, collection_floors, curr_floor, direction="NIL"):
         """
         Initializes an Elevator object with the specified parameters.
 
@@ -56,7 +56,7 @@ class Elevator(object):
         self.env = env
         self.index = index
         self.floors = collection_floors
-        self.direction = direction
+        self.direction = direction #if direction is inputted, we are running Otis algo, else we are running modern EGCS algo
         self.max_persons = MAX_CAPACITY  # not implemented
         self.max_weight = MAX_WEIGHT  # not implemented
         self.curr_floor = curr_floor
@@ -99,8 +99,7 @@ class Elevator(object):
             floor_level = person.get_dest_floor()
             # Add items to the heap (priority, value)
             if floor_level not in self.path:
-                self.path.append(floor_level)
-            print(f"{person} has entered {self} at {self.env.now}")
+                self.add_path(floor_level)
         self.path.sort()
         yield self.env.timeout(random.randint(2, 4))
 
@@ -117,7 +116,6 @@ class Elevator(object):
             if person.has_reached_destination(self):
                 person.complete_trip()
                 to_remove.append(person)
-                print(f"{person} has left {self} at {self.env.now}")
         for person in to_remove:
             self.passengers.remove(person)
         yield self.env.timeout(random.randint(2, 4))
@@ -156,9 +154,10 @@ class Elevator(object):
 
         with self.resource.request() as req:
             yield req
-            yield self.env.timeout(abs(end - self.curr_floor) * 3)
+            yield self.env.timeout(abs(end - self.curr_floor))
+        self.path = self.path[1:]
 
-
+    #might need to modify for modern EGCS
     def add_path(self, floor_level) -> None:
         """
         Add a floor to the elevator's path.
@@ -170,7 +169,6 @@ class Elevator(object):
         self.path.append(floor_level)
         self.path = np.unique(self.path).tolist()
         self.path.sort()
-        print(f"Path of elevator {self.index} going {self.direction}: {self.path}")
 
     def get_path(self) -> list:
         """
@@ -192,7 +190,7 @@ class Elevator(object):
         """
         return len(self.path) != 0
     
-    
+    #might need to modify for modern EGCS
     def activate(self) -> None:
         """Activates elevator such that it immediately moves when a call is placed"""
         while self.has_path():
@@ -200,21 +198,26 @@ class Elevator(object):
                 next_floor = self.get_path()[::-1].pop()  # remove from the front
                 yield self.env.process(self.travel(next_floor))
                 floor = self.floors[next_floor - 1]
+                
                 if self.get_current_floor() != len(self.floors): #if elevator is currently on top-most level
                     yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_up()))
-                    floor.uncall_up()
-                else:
-                    yield self.env.process(self.travel(1))
+                yield self.env.process(self.leave_elevator()) # take out passengers if any
+                print(f"{self} currently has {len(self.passengers)} passengers")
+                print(f"{self} path: {self.path}")
+                floor.uncall_up()
+
             else:
                 next_floor = self.get_path().pop()
                 yield self.env.process(self.travel(next_floor))
                 floor = self.floors[next_floor - 1]
+                
                 if self.get_current_floor() != 1:
                     yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_down()))
-                    floor.uncall_down()
-                else:
-                    yield self.env.process(self.travel(1))
-            # take out passengers if any
-            yield self.env.process(self.leave_elevator())
+                yield self.env.process(self.leave_elevator()) # take out passengers if any
+                print(f"{self} currently has {len(self.passengers)} passengers")
+                print(f"{self} path: {self.path}")
+                floor.uncall_down()
+
+            
 
 

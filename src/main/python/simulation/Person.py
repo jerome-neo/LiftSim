@@ -28,7 +28,12 @@ class Person(object):
         self.arrival_time = env.now
 
         random_variable_generator=LiftRandoms.LiftRandoms()
-        self.curr_floor,self.destination_floor=random_variable_generator.generate_source_dest(self.arrival_time)
+
+        self.curr_floor=0
+        self.destination_floor=0
+
+        while self.curr_floor==self.destination_floor:
+            self.curr_floor,self.destination_floor=random_variable_generator.generate_source_dest(self.arrival_time)
         
         self.end_time = None
         self.has_reached_floor = False

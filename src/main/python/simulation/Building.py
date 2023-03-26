@@ -80,10 +80,10 @@ class Building(object):
             person = Person.Person(self.env, index, self)
             
             self.all_persons_spawned.append(person)  # for calculating waiting time
+            self.elevator_group.update_status()
 
-            # Place person into their respective floor
-            self.elevator_group.handle_person(person)
-    
+            # Otis handling of persons
+            self.elevator_group.handle_person(person) #handle each incoming person
             self.env.process(self.elevator_group.handle_rising_call())
             self.env.process(self.elevator_group.handle_landing_call())
 
@@ -93,4 +93,4 @@ class Building(object):
             for elevator in self.elevator_group.elevators_down:
                 self.env.process(elevator.activate())
             
-            self.elevator_group.update_status()
+            
