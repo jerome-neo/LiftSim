@@ -73,7 +73,7 @@ class Building(object):
         index = 0
         while True:
             # Generate arrive time of a Wave
-            inter_arrival_time = random_variable_generator.next_arrival_time(self.env.now)
+            inter_arrival_time = random_variable_generator.next_arrival_time(self.env.now) - self.env.now
             yield self.env.timeout(inter_arrival_time)
     
             index += 1  # update numbering
@@ -95,3 +95,11 @@ class Building(object):
                 self.env.process(elevator.activate())
             
             self.elevator_group.update_status()
+
+            # for debugging
+            for elevator in self.elevator_group.elevators_up:
+                print(elevator)
+
+            for elevator in self.elevator_group.elevators_down:
+                print(elevator)
+

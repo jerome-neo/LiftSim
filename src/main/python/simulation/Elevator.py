@@ -3,7 +3,7 @@ import simpy
 import numpy as np
 
 
-MAX_CAPACITY = 8
+MAX_CAPACITY = 13
 MAX_WEIGHT = 1600 # kilograms
 SPEED = (0.5, 0.6)
 
@@ -68,8 +68,9 @@ class Elevator(object):
 
     def __str__(self):
         """Returns a string representation of the Elevator object."""
-        return f"elevator {self.index} dedicated to {self.direction} calls is at " \
-               f"{self.curr_floor} with {len(self.passengers)} person(s)"
+        # return f"elevator {self.index} dedicated to {self.direction} calls is at " \
+        #        f"{self.curr_floor} with {len(self.passengers)} person(s)"
+        return f"{self.direction} Elevator {self.index} with {list(map(lambda x: str(x), self.passengers))}"
 
     def get_direction(self) -> str:
         """Returns the direction of travel for the Elevator object."""
@@ -195,6 +196,7 @@ class Elevator(object):
         while self.has_path():
             if self.get_direction() == "UP":
                 next_floor = self.get_path()[::-1].pop()  # remove from the front
+                self.path = self.path[1:]
                 yield self.env.process(self.travel(next_floor))
                 floor = self.floors[next_floor - 1]
                 if self.get_current_floor() != len(self.floors): # if elevator is currently on top-most level
