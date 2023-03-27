@@ -68,8 +68,9 @@ class Elevator(object):
 
     def __str__(self):
         """Returns a string representation of the Elevator object."""
-        return f"elevator {self.index} dedicated to {self.direction} calls is at " \
-               f"{self.curr_floor} with {len(self.passengers)} person(s)"
+        # return f"elevator {self.index} dedicated to {self.direction} calls is at " \
+        #        f"{self.curr_floor} with {len(self.passengers)} person(s)"
+        return f"{self.direction} Elevator {self.index} with {list(map(lambda x: str(x), self.passengers))}"
 
     def get_direction(self) -> str:
         """Returns the direction of travel for the Elevator object."""

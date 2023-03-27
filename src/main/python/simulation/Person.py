@@ -36,7 +36,8 @@ class Person(object):
 
     def __str__(self):
         """Returns a string representation of the Person object."""
-        return f"Person {self.id} starting at {self.curr_floor} and going to {self.destination_floor}:"
+        # return f"Person {self.id} starting at {self.curr_floor} and going to {self.destination_floor}:"
+        return f"Person {self.id}"
 
     def calls_elevator(self) -> None:
         """

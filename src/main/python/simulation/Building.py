@@ -95,3 +95,11 @@ class Building(object):
                 self.env.process(elevator.activate())
             
             self.elevator_group.update_status()
+
+            # for debugging
+            for elevator in self.elevator_group.elevators_up:
+                print(elevator)
+
+            for elevator in self.elevator_group.elevators_down:
+                print(elevator)
+
