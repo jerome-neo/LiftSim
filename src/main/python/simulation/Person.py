@@ -26,18 +26,18 @@ class Person(object):
         self.id = index
         self.env = env
         self.arrival_time = env.now
-
-        random_variable_generator=LiftRandoms.LiftRandoms()
-        self.curr_floor,self.destination_floor=random_variable_generator.generate_source_dest(self.arrival_time)
-        
+        self.curr_floor, self.destination_floor = LiftRandoms.LiftRandoms().generate_source_dest(self.arrival_time)
         self.end_time = None
         self.has_reached_floor = False
+        while self.curr_floor == self.destination_floor:
+            self.curr_floor, self.destination_floor = LiftRandoms.LiftRandoms().generate_source_dest(self.arrival_time)
         print(f"Source: {self.curr_floor}, Dest: {self.destination_floor}")
         print(f"Arrival time: {self.arrival_time}")
 
     def __str__(self):
         """Returns a string representation of the Person object."""
-        return f"Person {self.id} starting at {self.curr_floor} and going to {self.destination_floor}:"
+        # return f"Person {self.id} starting at {self.curr_floor} and going to {self.destination_floor}:"
+        return f"Person {self.id}"
 
     def calls_elevator(self) -> None:
         """

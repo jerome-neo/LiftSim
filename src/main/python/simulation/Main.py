@@ -58,7 +58,6 @@ class Main(object):
         else:
             return statistics.mean(waiting_time)
 
-
-Test = Main(num_up=2, num_down=2, num_floors=9)
-Test.run(17000)
+Test = Main(num_up=2, num_down=1, num_floors=9)
+Test.run(86400)
 print(len(Test.building.get_all_persons()))
