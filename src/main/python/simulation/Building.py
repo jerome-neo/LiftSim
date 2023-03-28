@@ -40,6 +40,7 @@ class Building(object):
         self.env = env
         self.num_up = num_up
         self.num_down = num_down
+        self.num_lifts = self.num_up + self.num_down
         self.num_floors = num_floors
         self.floors = []
         self.elevator_group = None
@@ -49,12 +50,16 @@ class Building(object):
         """Returns the number of floors in the building."""
         return self.num_floors
 
-    def initialise(self) -> None:
+    def initialise(self,lift_algo) -> None:
         """Initialises the building by adding the floors and the elevator system."""
         self.floors.append(GroundFloor(1))
         self.floors.extend([SandwichFloor(i) for i in range(2, self.num_floors)])
         self.floors.append(TopFloor(self.num_floors))
-        self.elevator_group = ElevatorSystem.ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
+
+        if lift_algo=="Otis":
+            self.elevator_group = ElevatorSystem.ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
+        elif lift_algo=="ModernEGCS":
+            self.elevator_group = ModernEGCS.ModernEGCS(self.env, self.floors, self.num_lifts)
 
 
     def simulate(self) -> None:
@@ -83,14 +88,22 @@ class Building(object):
             self.elevator_group.update_status()
 
             # Otis handling of persons
-            self.elevator_group.handle_person(person) #handle each incoming person
-            self.env.process(self.elevator_group.handle_rising_call())
-            self.env.process(self.elevator_group.handle_landing_call())
+            if isinstance(self.elevator_group, ElevatorSystem):
+                self.elevator_group.handle_person(person) #handle each incoming person
+                self.env.process(self.elevator_group.handle_rising_call())
+                self.env.process(self.elevator_group.handle_landing_call())
 
-            for elevator in self.elevator_group.elevators_up:
-                self.env.process(elevator.activate())
-            
-            for elevator in self.elevator_group.elevators_down:
-                self.env.process(elevator.activate())
+                for elevator in self.elevator_group.elevators_up:
+                    self.env.process(elevator.activate())
+                
+                for elevator in self.elevator_group.elevators_down:
+                    self.env.process(elevator.activate())
+
+            #ModernEGCS handling of persons
+            elif isinstance(self.elevator_group, ModernEGCS):
+                pass
+
+            else:
+                print("Lift algorithm has not been configured yet")
             
             
