@@ -51,3 +51,12 @@ class TopFloor(Floor):
         for i in range(n):
             pointer.append(self.going_down_persons.pop())
         return pointer
+    
+
+    def get_all_persons_going_down(self) -> list:
+        """
+        Returns the list of all persons who want to go down from the top floor
+        Returns:
+            List[Person]: A list of all persons who want to go down from the top floor.
+        """
+        return self.going_down_persons
