@@ -75,3 +75,21 @@ class SandwichFloor(Floor):
         for i in range(n):
             pointer.append(self.going_down_persons.pop())
         return pointer
+    
+    def get_all_persons_going_up(self) -> list:
+        """
+        Returns the list of all persons who want to go up from the sandwich floor
+        Returns:
+            List[Person]: A list of all persons who want to go up from the sandwich floor.
+        """
+        return self.going_up_persons
+    
+    
+    def get_all_persons_going_down(self) -> list:
+        """
+        Returns the list of all persons who want to go down from the sandwich floor
+        Returns:
+            List[Person]: A list of all persons who want to go down from the sandwich floor.
+        """
+        return self.going_down_persons
+

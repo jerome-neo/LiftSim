@@ -29,19 +29,20 @@ class Building(object):
             respective floors, and managing the elevators in the building.
 
     """
-    def __init__(self, env, num_up, num_down, num_floors):
+    def __init__(self, env, num_up=0, num_down=0, num_elevators=0, num_floors=0):
         """
         Args:
             env (simpy.Environment): The simulation environment.
             num_up (int): The number of elevators going up.
             num_down (int): The number of elevators going down.
+            num_elevators (int): The total number of elevators in the system
             num_floors (int): The number of floors in the building.
 
         """
         self.env = env
         self.num_up = num_up
         self.num_down = num_down
-        self.num_lifts = self.num_up + self.num_down
+        self.num_elevators = num_elevators
         self.num_floors = num_floors
         self.floors = []
         self.elevator_group = None
@@ -58,9 +59,9 @@ class Building(object):
         self.floors.append(TopFloor(self.num_floors))
 
         if lift_algo=="Otis":
-            self.elevator_group = ElevatorSystem.ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
+            self.elevator_group = ElevatorSystem.ElevatorSystem(env=self.env, floors=self.floors, num_up=self.num_up, num_down=self.num_down)
         elif lift_algo=="ModernEGCS":
-            self.elevator_group = ModernEGCS.ModernEGCS(self.env, self.floors, self.num_lifts)
+            self.elevator_group = ModernEGCS.ModernEGCS(env=self.env, floors=self.floors, num_elevators=self.num_elevators,w1=1,w2=1,w3=1)
 
 
     def simulate(self) -> None:
@@ -103,7 +104,7 @@ class Building(object):
             #ModernEGCS handling of persons
             elif isinstance(self.elevator_group, ModernEGCS.ModernEGCS):
                 self.elevator_group.handle_person(person)
-                self.env.process(self.elevator_group.assign_call())
+                self.env.process(self.elevator_group.assign_call(person))
 
                 for elevator in self.elevator_group.elevators:
                     self.env.process(elevator.activate)

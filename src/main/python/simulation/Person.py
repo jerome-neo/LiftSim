@@ -28,9 +28,10 @@ class Person(object):
         self.arrival_time = env.now #arrival time of person's request
         self.elevator_arrival_time = None #time taken for the elevator to reach the person, i.e. for the person's hall call to be answered
         self.end_time = None
+
+        self.entered_elevator = False
         self.has_reached_floor = False
         random_variable_generator=LiftRandoms.LiftRandoms()
-
         self.curr_floor=0
         self.destination_floor=0
 
@@ -130,16 +131,40 @@ class Person(object):
 
     def get_riding_time(self)-> float:
         """
-        Returns the length of time when the person is in the elevator. Used in ModernEGCS cost calculation.
+        Returns the length of time when the person is in the elevator up to the present moment. Used in ModernEGCS cost calculation.
 
         Returns:
             float: The length of time spent by the person in the elevator
         """
-        time_taken_to_ride = self.end_time-self.elevator_arrival_time
+        time_taken_to_ride = self.env.now-self.elevator_arrival_time
         return time_taken_to_ride
     
-    def failed_to_enter(self)-> None:
+    def get_elevator_waiting_time(self)->float:
         """
-        Updates elevator_arrival_time when person fails to enter the elevator due to full capacity
+        Returns the length of time spent waiting for the elevator to come and service the person's call.
+
+        Returns:
+            float: THe length of time spent waiting for the elevator by the person
         """
-        self.elevator_arrival_time = None
+        time_taken_for_elevator_arrival = self.elevator_arrival_time - self.arrival_time
+        return time_taken_for_elevator_arrival
+    
+    def succeeds_entering_elevator(self)->None:
+        """Updates the person's status of success regarding entering the elevator"""
+        self.entered_elevator = True
+    
+    def is_in_elevator(self)->bool:
+        """
+        Returns whether or not person is inside an elevator
+
+        Returns:
+            bool: The person's status of being inside an elevator or not
+        """
+        return self.entered_elevator
+
+    
+    def elevator_arrived(self)->None:
+        """
+        Updates elevator arrival times
+        """
+        self.elevator_arrival_time = self.env.now

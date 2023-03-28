@@ -1,9 +1,10 @@
 import random
 import simpy
 import numpy as np
+import Floor
 
 
-MAX_CAPACITY = 8
+MAX_CAPACITY = 13
 MAX_WEIGHT = 1600 # kilograms
 SPEED = (0.5, 0.6)
 
@@ -63,8 +64,11 @@ class Elevator(object):
         self.speed = SPEED  # metres per second
         self.is_working_status = False
         self.passengers = []
-        self.path = []  # empty heap
+        self.path = []  #all assigned floors in the elevator's current path
+        self.car_calls = [] #all unserved car calls registered for the elevator
         self.resource = simpy.Resource(env,1)
+        self.capacity = MAX_CAPACITY
+        self.is_moving = False
 
     def __str__(self):
         """Returns a string representation of the Elevator object."""
@@ -86,6 +90,12 @@ class Elevator(object):
     def add_passengers(self, person) -> None:
         """Adds a passenger to the Elevator object."""
         self.passengers.append(person)
+    
+    def add_car_call(self,floor) -> None:
+        """Adds a car call to the list of unserved car calls"""
+        if floor not in self.car_calls:
+            self.car_calls.append(floor)
+            self.car_calls.sort()
 
     def enter_elevator(self, list_of_person) -> None:
         """Simulates passengers entering the Elevator object.
@@ -97,12 +107,16 @@ class Elevator(object):
             simpy.events.Timeout: a timeout event representing the time it takes for the passengers to enter
 
         """
-        for person in list_of_person:
-            self.add_passengers(person)
-            floor_level = person.get_dest_floor()
-            # Add items to the heap (priority, value)
-            if floor_level not in self.path:
-                self.add_path(floor_level)
+        index=0
+        while self.get_passenger_count()<self.capacity and index<len(list_of_person)-1:
+                person = list_of_person[index]
+                self.add_passengers(person)
+                person.succeeds_entering_elevator()
+                floor_level = person.get_dest_floor()
+        
+                if floor_level not in self.path:
+                    self.add_path(floor_level)
+                    self.add_car_call(floor_level)
         self.path.sort()
         yield self.env.timeout(random.randint(2, 4))
 
@@ -132,6 +146,15 @@ class Elevator(object):
 
         """
         return self.is_working_status
+    
+    def is_moving(self) -> bool:
+        """
+        Checks if the elevator is moving, i.e. in-between floors.
+
+        Returns:
+            bool: True if elevator is moving, False otherwise
+        """
+        return self.is_moving
 
     def set_busy(self) -> None:
         """Set the elevator to be busy."""
@@ -140,6 +163,14 @@ class Elevator(object):
     def set_idle(self) -> None:
         """Set the elevator to be idle."""
         self.is_working_status = False
+    
+    def set_moving(self)-> None:
+        """Set the elevator as moving"""
+        self.is_moving = True
+    
+    def set_stop_moving(self)-> None:
+        """Set the elevator as not moving"""
+        self.is_moving = False
 
     def travel(self, end) -> None:
         """
@@ -153,12 +184,13 @@ class Elevator(object):
                 destination floor
 
         """
+        self.set_moving()
         self.curr_floor = end
-
         with self.resource.request() as req:
             yield req
             yield self.env.timeout(abs(end - self.curr_floor))
         self.path = self.path[1:]
+        self.set_stop_moving()
 
     #might need to modify for modern EGCS
     def add_path(self, floor_level) -> None:
@@ -218,7 +250,50 @@ class Elevator(object):
                 self.env.process(self.leave_elevator()) # take out passengers if any
                 floor.uncall_down()
                 print(f"{self} at {self.env.now}")
+    
+    def get_current_floor_object(self)->Floor:
+        """
+        Returns the object of the current floor where the elevator is at.
 
-            
+        Returns:
+            Floor: floor object of current floor where the elevator is at
+        """
+        floor_index = self.get_current_floor()-1
+        return self.floors[floor_index]
 
+    def get_passenger_count(self)->int:
+        """
+        Returns the number of passengers that are currently in the elevator.
+
+        Returns:
+            int: length of self.passengers
+        """
+        return len(self.passengers)
+
+    def get_passenger_list(self)->list:
+        """
+        Returns a list of passengers that are currently in the elevator.
+
+        Returns:
+            list: list of Person objects of people currently inside the elevator
+        """
+        return self.passengers
+    
+    def car_calls_left(self)-> int:
+        """
+        Returns the number of car calls left
+
+        Returns:
+            int: length of self.car_calls
+        """
+        return len(self.car_calls)
+    
+    def get_car_calls(self)-> list:
+        """
+        Returns a list of floor levels for remaining car calls
+        
+        Returns:
+            list: self.car_calls
+        """
+        return self.car_calls
 

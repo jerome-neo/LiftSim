@@ -49,3 +49,11 @@ class GroundFloor(Floor):
         for i in range(n):
             pointer.append(self.going_up_persons.pop())
         return pointer
+    
+    def get_all_persons_going_up(self) -> list:
+        """
+        Returns the list of all persons who want to go up from the ground floor
+        Returns:
+            List[Person]: A list of all persons who want to go up from the ground floor.
+        """
+        return self.going_up_persons
