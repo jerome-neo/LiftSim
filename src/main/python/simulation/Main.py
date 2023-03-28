@@ -46,7 +46,7 @@ class Main(object):
             self.env.step()
 
 
-Test = Main(1, 1, 9)
+Test = Main(2, 1, 9)
 Test.run(36000,"Otis")
 waiting_time = []
 for i in Test.building.all_persons_spawned:
