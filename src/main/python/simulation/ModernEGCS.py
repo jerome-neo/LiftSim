@@ -93,13 +93,15 @@ class ModernEGCS(object):
                 break
             
     def assign_call(self,person) -> None:
+        """cost = """
         person_current_floor = person.get_curr_floor()
         all_elevator_cost=[]
         all_priority_cost=[]
         for elevator in self.elevators:
             elevator_id = elevator.get_index()
             elevator_current_floor = elevator.get_current_floor()
-            cost = abs(elevator_current_floor-person_current_floor) #cost = absolute floor difference as travel route from person's current floor to destination floor is the same regardless of elevator chosen and travel time is assumed equal for all directions
+            cost = abs(elevator_current_floor-person_current_floor) 
+            
             elevator_cost = (elevator_id,cost)
             all_elevator_cost.append(elevator_cost)
         all_elevator_cost.sort(key=lambda x: x[1])
