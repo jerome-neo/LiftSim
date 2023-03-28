@@ -29,25 +29,25 @@ class Main(object):
         self.num_floors = num_floors
         self.building = None
 
-    def run(self, duration):
+    def run(self, duration, lift_algo):
         """
         Runs the simulation for a specified duration.
 
         Args:
             duration (float): The duration of the simulation in seconds.
+            lift_algo (string): The type of lift algo ran by the simulation
 
         """
         self.building = Building.Building(self.env, self.num_up, self.num_down, self.num_floors)
-        self.building.initialise()
+        self.building.initialise(lift_algo)
         self.env.process(self.building.simulate())
-        #self.env.run(until=duration)
         
         while self.env.peek() < duration:
             self.env.step()
 
 
 Test = Main(1, 1, 9)
-Test.run(36000)
+Test.run(36000,"Otis")
 waiting_time = []
 for i in Test.building.all_persons_spawned:
     if i.has_completed_trip():
@@ -55,3 +55,14 @@ for i in Test.building.all_persons_spawned:
 if len(waiting_time)>0:
     print(statistics.mean(waiting_time))
 print(len(Test.building.all_persons_spawned))
+
+
+#Test = Main(1, 1, 9)
+#Test.run(36000,"ModernEGCS")
+#waiting_time = []
+#for i in Test.building.all_persons_spawned:
+    #if i.has_completed_trip():
+        #waiting_time.append(i.get_wait_time())
+#if len(waiting_time)>0:
+    #print(statistics.mean(waiting_time))
+#print(len(Test.building.all_persons_spawned))
