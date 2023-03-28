@@ -25,8 +25,10 @@ class Person(object):
         """
         self.id = index
         self.env = env
-        self.arrival_time = env.now
-
+        self.arrival_time = env.now #arrival time of person's request
+        self.elevator_arrival_time = None #time taken for the elevator to reach the person, i.e. for the person's hall call to be answered
+        self.end_time = None
+        self.has_reached_floor = False
         random_variable_generator=LiftRandoms.LiftRandoms()
 
         self.curr_floor=0
@@ -35,8 +37,7 @@ class Person(object):
         while self.curr_floor==self.destination_floor:
             self.curr_floor,self.destination_floor=random_variable_generator.generate_source_dest(self.arrival_time)
         
-        self.end_time = None
-        self.has_reached_floor = False
+        
         print(f"Source: {self.curr_floor}, Dest: {self.destination_floor}")
         print(f"Arrival time: {self.arrival_time}")
 
@@ -127,3 +128,18 @@ class Person(object):
         """
         return -1 if self.curr_floor > self.destination_floor else 1
 
+    def get_riding_time(self)-> float:
+        """
+        Returns the length of time when the person is in the elevator. Used in ModernEGCS cost calculation.
+
+        Returns:
+            float: The length of time spent by the person in the elevator
+        """
+        time_taken_to_ride = self.end_time-self.elevator_arrival_time
+        return time_taken_to_ride
+    
+    def failed_to_enter(self)-> None:
+        """
+        Updates elevator_arrival_time when person fails to enter the elevator due to full capacity
+        """
+        self.elevator_arrival_time = None
