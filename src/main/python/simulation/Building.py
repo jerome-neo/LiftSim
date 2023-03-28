@@ -4,6 +4,7 @@ from Floor import TopFloor, GroundFloor, SandwichFloor
 import Person
 import ElevatorSystem
 import LiftRandoms
+import ModernEGCS
 
 
 class Building(object):
@@ -88,7 +89,7 @@ class Building(object):
             self.elevator_group.update_status()
 
             # Otis handling of persons
-            if isinstance(self.elevator_group, ElevatorSystem):
+            if isinstance(self.elevator_group, ElevatorSystem.ElevatorSystem):
                 self.elevator_group.handle_person(person) #handle each incoming person
                 self.env.process(self.elevator_group.handle_rising_call())
                 self.env.process(self.elevator_group.handle_landing_call())
@@ -100,8 +101,12 @@ class Building(object):
                     self.env.process(elevator.activate())
 
             #ModernEGCS handling of persons
-            elif isinstance(self.elevator_group, ModernEGCS):
-                pass
+            elif isinstance(self.elevator_group, ModernEGCS.ModernEGCS):
+                self.elevator_group.handle_person(person)
+                self.env.process(self.elevator_group.assign_call())
+
+                for elevator in self.elevator_group.elevators:
+                    self.env.process(elevator.activate)
 
             else:
                 print("Lift algorithm has not been configured yet")

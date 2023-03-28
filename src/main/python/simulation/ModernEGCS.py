@@ -3,17 +3,16 @@ import Elevator
 
 class ModernEGCS(object):
     """
-    A system for controlling a group of elevators in a building.
+    A system for controlling a group of elevators in a building using ModernEGCS algorithm.
 
     Attributes:
         env (simpy.Environment): The simulation environment.
         floors (list of Floor): The collection of floors in the building.
-        elevators_up (list of Elevator): The collection of elevators that move up.
-        elevators_down (list of Elevator): The collection of elevators that move down.
+        elevators (list of Elevator): The collection of elevators within the building system.
     """
     def __init__(self, env, collection_floors, num_elevators):
         """
-        Initializes an ElevatorSystem.
+        Initializes a ModernEGCS.
 
         Args:
             env (simpy.Environment): The simulation environment.
@@ -23,9 +22,8 @@ class ModernEGCS(object):
         """
         self.env = env
         self.floors = collection_floors
-        self.elevators = [Elevator.Elevator(env, i, self.floors, 1, "UP") for i in range(1, num_elevators + 1)]
+        self.elevators = [Elevator.Elevator(env, i, self.floors, 1) for i in range(1, num_elevators + 1)]
         
-
 
     def __str__(self):
         """
@@ -35,8 +33,7 @@ class ModernEGCS(object):
             str: A string representation of the ElevatorSystem.
 
         """
-        return f"Elevator with {len(self.elevators_up)} up and {len(self.elevators_down)} down configuration."
-    
+        return f"ModernEGCS with {len(self.elevators)} elevators."
 
 
 
@@ -94,8 +91,29 @@ class ModernEGCS(object):
                     if floor.has_call_up() and (floor.get_floor_level() not in elevator.path):
                         elevator.add_path(floor.get_floor_level())
                 break
+            
+    def assign_call(self,person) -> None:
+        person_current_floor = person.get_curr_floor()
+        all_elevator_cost=[]
+        all_priority_cost=[]
+        for elevator in self.elevators:
+            elevator_id = elevator.get_index()
+            elevator_current_floor = elevator.get_current_floor()
+            cost = abs(elevator_current_floor-person_current_floor) #cost = absolute floor difference as travel route from person's current floor to destination floor is the same regardless of elevator chosen and travel time is assumed equal for all directions
+            elevator_cost = (elevator_id,cost)
+            all_elevator_cost.append(elevator_cost)
+        all_elevator_cost.sort(key=lambda x: x[1])
+            
+        for i in range(len(self.elevators)-1):
+            priority_cost=all_elevator_cost[i+1][1]-all_elevator_cost[i][1]
+            elevator_id=
+            all_priority_cost.append(priority_cost)
 
-
+        #append all_priority_cost to global list for all unserved calls
+        #if there are other lists in global list, sort such that the frontmost element gets its best elevator
+        #else take the first elevator in the list
+        
+            
     def update_status(self) -> None:
         """Updates the elevators to be idle when they have no path."""
         for elevator in self.elevators_down + self.elevators_up:

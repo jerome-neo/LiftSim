@@ -71,7 +71,10 @@ class Elevator(object):
         return f"elevator {self.index} dedicated to {self.direction} calls is at " \
                f"{self.curr_floor} with {len(self.passengers)} person(s)"
 
-
+    def get_index(self) -> int:
+        """Returns the index of the elevator"""
+        return self.index
+    
     def get_direction(self) -> str:
         """Returns the direction of travel for the Elevator object."""
         return self.direction
@@ -200,11 +203,10 @@ class Elevator(object):
                 floor = self.floors[next_floor - 1]
                 
                 if self.get_current_floor() != len(self.floors): #if elevator is currently on top-most level
-                    yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_up()))
-                yield self.env.process(self.leave_elevator()) # take out passengers if any
-                print(f"{self} currently has {len(self.passengers)} passengers")
-                print(f"{self} path: {self.path}")
+                    self.env.process(self.enter_elevator(floor.remove_all_persons_going_up()))
+                self.env.process(self.leave_elevator()) # take out passengers if any
                 floor.uncall_up()
+                print(f"{self} at {self.env.now}")
 
             else:
                 next_floor = self.get_path().pop()
@@ -212,11 +214,10 @@ class Elevator(object):
                 floor = self.floors[next_floor - 1]
                 
                 if self.get_current_floor() != 1:
-                    yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_down()))
-                yield self.env.process(self.leave_elevator()) # take out passengers if any
-                print(f"{self} currently has {len(self.passengers)} passengers")
-                print(f"{self} path: {self.path}")
+                    self.env.process(self.enter_elevator(floor.remove_all_persons_going_down()))
+                self.env.process(self.leave_elevator()) # take out passengers if any
                 floor.uncall_down()
+                print(f"{self} at {self.env.now}")
 
             
 
