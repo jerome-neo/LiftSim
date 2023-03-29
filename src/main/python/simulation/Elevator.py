@@ -42,7 +42,7 @@ class Elevator(object):
         has_path(): Returns whether the elevator has a path to follow.
 
     """
-    def __init__(self, env, index, collection_floors, curr_floor, direction="NIL"):
+    def __init__(self, env, index, collection_floors, curr_floor, total_num_elevators, direction="NIL"):
         """
         Initializes an Elevator object with the specified parameters.
 
@@ -69,6 +69,7 @@ class Elevator(object):
         self.resource = simpy.Resource(env,1)
         self.capacity = MAX_CAPACITY
         self.is_moving = False
+        self.total_num_elevators = total_num_elevators
 
     def __str__(self):
         """Returns a string representation of the Elevator object."""
@@ -139,6 +140,10 @@ class Elevator(object):
         for person in to_remove:
             self.passengers.remove(person)
         yield self.env.timeout(random.randint(2, 4))
+    
+    def has_more_than_optimum_calls(self) -> bool:
+        """Checks if elevator's number of calls is more than total number of floors // total number of elevators. Used in ModernEGCS."""
+        return len(self.path)>len(self.floors)//self.total_num_elevators
 
     def is_busy(self) -> bool:
         """
@@ -196,18 +201,19 @@ class Elevator(object):
         self.path = self.path[1:]
         self.set_stop_moving()
 
-    #might need to modify for modern EGCS
-    def add_path(self, floor_level) -> None:
+    def add_path(self, floor_level,direction) -> None:
         """
-        Add a floor to the elevator's path.
+        Add a floor from assigned hall call to the elevator's path.
 
         Args:
             floor_level (int): the floor to add to the elevator's path
+            direction (str): the call direction
 
         """
         self.path.append(floor_level)
-        self.path = np.unique(self.path).tolist()
-        self.path.sort()
+        if self.direction == direction:
+            self.path = np.unique(self.path).tolist()
+            self.path.sort()
 
     def get_path(self) -> list:
         """
