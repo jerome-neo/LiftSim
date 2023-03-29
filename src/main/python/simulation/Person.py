@@ -156,12 +156,26 @@ class Person(object):
         else:
             elevator_arrival_to_now = self.env.now-self.get_elevator_arrival_time()
         assigned_elevator = self.get_assigned_elevator()
-        elevator_remaining_car_calls_count = len(elevator_assigned.get_car_calls())
+        elevator_remaining_car_calls = elevator_assigned.get_car_calls()
         elevator_current_floor = assigned_elevator.get_current_floor()
         person_destination_floor = self.get_dest_floor()
-        estimated_remaining_travel_time = abs(person_destination_floor-elevator_current_floor)+3*(elevator_remaining_car_calls_count-1)
+        person_source_floor = self.get_curr_floor()
+        to_wait_for_reaching_dest=0
+        for floor in elevator_remaining_car_calls:
+            if floor>person_source_floor and floor<person_dest_floor:
+                to_wait_for_reaching_dest+=1
+            if floor>=person_dest_floor:
+                break
+        if assigned_elevator.get_direction() == "DOWN":
+            to_wait_for_reaching_dest = len(elevator_remaining_car_calls) - to_wait_for_reaching_dest - 1
+        
+        estimated_remaining_travel_time = abs(person_destination_floor-elevator_current_floor)+3*to_wait_for_reaching_dest
         time_taken_to_ride = elevator_arrival_to_now + estimated_remaining_travel_time
         return time_taken_to_ride
+
+    def get_person_arrival_time(self)->float:
+        """Returns person's arrival time"""
+        return self.arrival_time
     
     def get_elevator_waiting_time(self)->float:
         """
@@ -170,7 +184,7 @@ class Person(object):
         Returns:
             float: THe length of time spent waiting for the elevator by the person
         """
-        time_taken_for_elevator_arrival = self.elevator_arrival_time - self.arrival_time
+        time_taken_for_elevator_arrival = self.get_elevator_arrival_time() - self.person_arrival_time()
         return time_taken_for_elevator_arrival
     
     def succeeds_entering_elevator(self)->None:
