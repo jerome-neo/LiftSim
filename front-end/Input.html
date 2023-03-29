@@ -31,18 +31,41 @@
 
     <p id="result"></p>
     <script>
+
       function displayInputs() {
+      const inputs = [];
 
-        for (let i = 0; i < document.getElementsByName("No. of people taking the lift").length; i++) {
-          let input1 = document.getElementsByName("No. of people taking the lift")[i].value;
-          let input2 = document.getElementsByName("Source")[i].value;
-          let input3 = document.getElementsByName("Destination")[i].value;
-
-          let result = document.getElementById("result");
-          result.innerHTML = "No. of people taking the lift: " + input1 + "<br>" + "Source: " + input2 + "<br>" + "Destination: " + input3;
-          }
+      // Loop through each input field and add its value to the inputs array
+      for (let i = 0; i < document.getElementsByName("No. of people taking the lift").length; i++) {
+        const input1 = parseInt(document.getElementsByName("No. of people taking the lift")[i].value);
+        const input2 = document.getElementsByName("Source")[i].value;
+        const input3 = document.getElementsByName("Destination")[i].value;
         
-        }
+        inputs.push({
+          "input1": input1,
+          "input2": input2,
+          "input3": input3
+        });
+      }
+      
+      // Send a POST request to the backend API endpoint with the inputs data
+      fetch('/api/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(inputs)
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the response from the backend here
+        console.log(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
+  
     </script>
 
     <script src="Dynamic Input.js"></script>
