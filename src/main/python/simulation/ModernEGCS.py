@@ -129,7 +129,7 @@ class ModernEGCS(object):
             Elevator: An Elevator object, for which cost1 is being calculated
 
         Returns:
-            tuple: (total_cost1, waiting_passengers_cost, riding_passengers_cost, list_car_calls)
+            tuple: (total_cost1, waiting_passengers_cost, riding_passengers_cost, elevator_moving_distance_cost, list_car_calls)
         """
         total_cost1 = 0
         waiting_passengers_cost = 0
@@ -170,9 +170,95 @@ class ModernEGCS(object):
 
         total_cost1 = self.w1*waiting_passengers_cost + self.w2*riding_passengers_cost + self.w3*elevator_moving_distance_cost
             
-        return total_cost1,waiting_passengers_cost,riding_passengers_cost,list_car_calls
+        return total_cost1,waiting_passengers_cost,riding_passengers_cost,elevator_moving_distance_cost,list_car_calls
 
-    def calculate_cost2(self,person,elevator,waiting_passengers_cost1,riding_passengers_cost1,cost1_car_calls):
+    def calculate_cost2(self,person,elevator,waiting_passengers_cost1,riding_passengers_cost1,elevator_moving_distance_cost1,cost1_car_calls)-> float:
+        """
+        Cost2 = w1*sigma i: waiting passengers(WTi^2+RWTi^2) + w2* sigma i: riding passengers(RTi^2) + w3*PC where person's hall call is considered added to the elevator's path
+        Calculates cost2 in HCPM algorithm and returns its value
+        
+        Waiting Passengers = Passengers currently at the floor where elevator is, who will enter at this floor
+        Riding Passengers = Passengers that are already inside the elevator, including those who alight at this floor
+
+        Args:
+            person: A Person object, representing the hall call which cost we are calculating
+            elevator: An Elevator object, for which cost1 is being calculated
+            waiting_passengers_cost1: Float which is output from calculate_cost1, represents the cost incurred by waiting passengers serviced by the elevator
+            riding_passengers_cost1: Float which is output from calculate_cost1, represents the cost incurred by riding passengers serviced by the elevator
+            elevator_moving_distance1: Float which is output from calculate_cost1, represents the cost incurred by elevator's total moving distance based on current car calls
+
+        Returns:
+            float: total_cost2
+        """
+        elevant_curr_floor = elevator.get_current_floor()
+        person_dest_floor = person.get_dest_floor()
+        person_source_floor = person.get_curr_floor()
+        to_wait_for_elevator_arrival = 0
+        for floor in cost1_car_calls:
+            if floor<person_source_floor:
+                to_wait_for_elevator_arrival+=1
+            else:
+                break
+            
+        person_arrival_to_now = self.env.now - self.person.get_person_arrival_time()
+        estimated_remaining_waiting_time = abs(person_source_floor-elevator_curr_floor)+to_wait_for_elevator_arrival*3
+        person_waiting_time = person_arrival_to_now + estimated_remaining_waiting_time #person's estimated waiting time if their hall call is assigned to this elevator
+        additional_waiting_passengers_cost = self.w1*person_waiting_time^2
+        
+        person_riding_time = person.get_riding_time() #person's estimated riding time if their hall call is assigned to this elevator
+        additional_riding_passengers_cost = self.w2*person_riding_time^2
+
+        first_car_call_in_list = cost1_car_calls[0]
+        last_car_call_in_list = cost1_car_calls[-1]
+        
+        if person_source_floor not in range(first_car_call_in_list, last_car_call_in_list+1):
+            cost1_car_calls.append(person_source_floor):
+        if person_dest_floor not in range(first_car_call_in_list, last_car_call_in_list+1):
+            cost1_car_calls.append(person_dest_floor)
+        cost1_car_calls.sort()
+
+        current_elevator_moving_distance=abs(cost1_car_calls[0]-cost1_car_calls[-1])
+        additional_elevator_moving_distance_cost=self.w3*current_elevator_moving_distance - elevator_moving_distance_cost1
+
+        total_cost2 = waiting_passengers_cost1 + additional_waiting_passengers_cost + riding_passengers_cost1 + additional_riding_passengers_cost + elevator_moving_distance1 + additional_elevator_moving_distance
+        return total_cost2
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         
 
     def update_status(self) -> None:
