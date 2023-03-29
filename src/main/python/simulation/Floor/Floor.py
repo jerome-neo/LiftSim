@@ -30,19 +30,19 @@ class Floor(object):
         return self.call_down
 
     def has_call_up(self) -> bool:
-        """Set the call_up flag to True."""
+        """Checks whether there is a registered UP hall call from this floor"""
         return self.call_up
 
     def set_call_up(self) -> bool:
-        """Set the call_down flag to True."""
+        """Set the call_up flag to True."""
         self.call_up = True
 
     def set_call_down(self) -> None:
-        """Set the call_up flag to False."""
+        """Set the call_down flag to True."""
         self.call_down = True
 
     def uncall_up(self) -> None:
-        """Set the call_down flag to False."""
+        """Set the call_up flag to False."""
         self.call_up = False
 
     def uncall_down(self) -> None:
