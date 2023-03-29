@@ -2,15 +2,52 @@
 function createInputSet() {
   const inputSet = document.createElement("div");
   inputSet.className = "input-container";
-
+  
   // Create three input fields
-  for (let i = 1; i <= 3; i++) {
-    const input = document.createElement("input");
-    input.type = "text";
-    input.name = "request-" + i;
-    input.placeholder = "Request " + i;
-    inputSet.appendChild(input);
-  }
+  const input1 = document.createElement("input");
+  input1.type = "text";
+  input1.name = "No. of people taking the lift";
+  input1.placeholder = "No. of people taking the lift";
+  inputSet.appendChild(input1);
+
+  const input2 = document.createElement("input");
+  input2.type = "text";
+  input2.name = "Source";
+  input2.placeholder = "Source";
+  inputSet.appendChild(input2);
+
+  const input3 = document.createElement("input");
+  input3.type = "text";
+  input3.name = "Destination";
+  input3.placeholder = "Destination";
+  inputSet.appendChild(input3);
+
+
+  // Create the submit button
+  const submitBtn = document.createElement("button");
+  submitBtn.type = "submit";
+  submitBtn.innerHTML = "Submit";
+
+  // Add event listener to submit button
+  submitBtn.addEventListener("click", (event) => {
+    // Prevent the default form submission behavior
+    event.preventDefault();
+  
+    // Get the input values
+    const input1Value = input1.value;
+    const input2Value = input2.value;
+    const input3Value = input3.value;
+  
+    // Store the input values in an object
+    const inputValues = {
+      "No. of people taking the lift": input1Value,
+      "Source": input2Value,
+      "Destination": input3Value
+    };
+  
+    // Do something with the input values
+    console.log(inputValues);
+  });
 
   // Create the remove button
   const removeBtn = document.createElement("button");
@@ -30,6 +67,7 @@ function createInputSet() {
   container.appendChild(inputSet);
 }
 
+
 // Add event listener to "Add Request" button
 const addBtn = document.getElementById("add-btn");
 addBtn.addEventListener("click", () => {
@@ -37,30 +75,3 @@ addBtn.addEventListener("click", () => {
 });
 
 
-
-
-
-var clock = new Vue({
-  el: '#clock',
-  data: {
-      time: '',
-      date: ''
-  }
-});
-
-var week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-var timerID = setInterval(updateTime, 1000);
-updateTime();
-function updateTime() {
-  var cd = new Date();
-  clock.time = zeroPadding(cd.getHours(), 2) + ':' + zeroPadding(cd.getMinutes(), 2) + ':' + zeroPadding(cd.getSeconds(), 2);
-  clock.date = zeroPadding(cd.getFullYear(), 4) + '-' + zeroPadding(cd.getMonth()+1, 2) + '-' + zeroPadding(cd.getDate(), 2) + ' ' + week[cd.getDay()];
-};
-
-function zeroPadding(num, digit) {
-  var zero = '';
-  for(var i = 0; i < digit; i++) {
-      zero += '0';
-  }
-  return (zero + num).slice(-digit);
-}
