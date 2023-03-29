@@ -157,9 +157,9 @@ class ModernEGCS(object):
                 while riding_passengers_count<elevator.get_capacity():
                     person_to_add = waiting_passengers_list[index]
                     if person_to_add not in riding passengers_list:
-                        riding_passengers_cost+=person.get_riding_time()^2
+                        riding_passengers_cost+=person_to_add.get_riding_time()^2
                         riding_passengers_count+=1
-                        person_dest = person.get_dest_floor()
+                        person_dest = person_to_add.get_dest_floor()
                         if person_dest not in list_car_calls:
                             list_car_calls.append(person_dest)
                             list_car_calls.sort()
@@ -223,41 +223,71 @@ class ModernEGCS(object):
         total_cost2 = waiting_passengers_cost1 + additional_waiting_passengers_cost + riding_passengers_cost1 + additional_riding_passengers_cost + elevator_moving_distance1 + additional_elevator_moving_distance
         return total_cost2
         
+    
+    def calculate_cost2_minus_cost1_efficient(self,elevator):
+        """
+        Cost1 = w1*sigma i: waiting passengers(WTi^2+RWTi^2) + w2* sigma i: riding passengers(RTi^2) + w3*PC
+        Cost2 = w1*sigma i: waiting passengers(WTi^2+RWTi^2) + w2* sigma i: riding passengers(RTi^2) + w3*PC where person's hall call is considered added to the elevator's path
+        Calculates Cost2-Cost1 which is input to pstr_array used to determine priority
+        
+        Waiting Passengers = Passengers currently at the floor where elevator is, who will enter at this floor
+        Riding Passengers = Passengers that are already inside the elevator, including those who alight at this floor
 
+        Args:
+            Elevator: An Elevator object, for which cost1 is being calculated
 
+        Returns:
+            tuple: cost2_minus_cost1
+        """
+        elevant_curr_floor = elevator.get_current_floor()
+        person_dest_floor = person.get_dest_floor()
+        person_source_floor = person.get_curr_floor()
+        to_wait_for_elevator_arrival = 0
 
+        list_car_calls = elevator.get_car_calls()
+        riding_passengers_count = elevator.get_passenger_count()
+            
+        if not elevator.is_moving():
+            index = 0
+            while riding_passengers_count<elevator.get_capacity():
+                person_to_add = waiting_passengers_list[index]
+                if person_to_add not in riding passengers_list:
+                    person_dest = person_to_add.get_dest_floor()
+                    riding_passengers_count+=1
+                    if person_dest not in list_car_calls:
+                        list_car_calls.append(person_dest)
+                        list_car_calls.sort()
+                index+=1
+        
+        for floor in list_car_calls:
+            if floor<person_source_floor:
+                to_wait_for_elevator_arrival+=1
+            else:
+                break
+            
+        person_arrival_to_now = self.env.now - self.person.get_person_arrival_time()
+        estimated_remaining_waiting_time = abs(person_source_floor-elevator_curr_floor)+to_wait_for_elevator_arrival*3
+        person_waiting_time = person_arrival_to_now + estimated_remaining_waiting_time #person's estimated waiting time if their hall call is assigned to this elevator
+        additional_waiting_passengers_cost = self.w1*person_waiting_time^2
+        
+        person_riding_time = person.get_riding_time() #person's estimated riding time if their hall call is assigned to this elevator
+        additional_riding_passengers_cost = self.w2*person_riding_time^2
 
+        first_car_call_in_list = list_car_calls[0]
+        last_car_call_in_list = list_car_calls[-1]
+        initial_elevator_moving_distance = abs(last_car_call_in_list - first_car_call_in_list)
+        
+        if person_source_floor not in range(first_car_call_in_list, last_car_call_in_list+1):
+            list_car_calls.append(person_source_floor):
+        if person_dest_floor not in range(first_car_call_in_list, last_car_call_in_list+1):
+            list_car_calls.append(person_dest_floor)
+        list_car_calls.sort()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        current_elevator_moving_distance=abs(cost1_car_calls[0]-cost1_car_calls[-1])
+        additional_elevator_moving_distance_cost=self.w3*(current_elevator_moving_distance - initial_elevator_moving_distance)
+        
+        cost2_minus_cost1 = additional_waiting_passengers_cost + additional_riding_passengers_cost + additional_elevator_moving_distance_cost
+        return cost2_minus_cost1
         
         
 
