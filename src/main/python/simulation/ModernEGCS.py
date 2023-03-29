@@ -117,57 +117,63 @@ class ModernEGCS(object):
         #if there are other lists in global list, sort such that the frontmost element gets its best elevator
         #else take the first elevator in the list
         
-    def calculate_cost1(self,elevator) -> list:
+    def calculate_cost1(self,elevator) -> tuple:
         """
-        Creates HCPM array used for deciding prioritization of hall calls.
-        Cost = w1*sigma i: waiting passengers(WTi^2+RWTi^2) + w2* sigma i: riding passengers(RTi^2) + w3*PC
+        Cost1 = w1*sigma i: waiting passengers(WTi^2+RWTi^2) + w2* sigma i: riding passengers(RTi^2) + w3*PC
+        Calculates Cost1 in HCPM algorithm and returns its value and components used in calculate_cost2 function
+        
         Waiting Passengers = Passengers currently at the floor where elevator is, who will enter at this floor
         Riding Passengers = Passengers that are already inside the elevator, including those who alight at this floor
-        """
-        cost = 0
-        if not elevator.is_moving():
-            waiting_passengers_cost = 0
-            floor = elevator.get_current_floor_object()
-            if elevator.get_direction() == "UP":
-                list_of_person = floor.get_all_persons_going_up()
-            else:
-                list_of_person = floor.get_all_persons_going_down()
-            for person in list_of_person:
-                waiting_passengers_cost+=person.get_elevator_waiting_time()^2
-            cost+=self.w1*waiting_passengers_cost
 
-        if elevator.get_passenger_count>0:
-            riding_passengers_cost = 0
-            list_of_person = elevator.get_passenger_list()
-            for person in list_of_person:
+        Args:
+            Elevator: An Elevator object, for which cost1 is being calculated
+
+        Returns:
+            tuple: (total_cost1, waiting_passengers_cost, riding_passengers_cost, list_car_calls)
+        """
+        total_cost1 = 0
+        waiting_passengers_cost = 0
+        riding_passengers_cost = 0
+        elevator_moving_distance_cost = 0
+        floor = elevator.get_current_floor_object()
+        if elevator.get_direction() == "UP":
+            waiting_passengers_list = floor.get_all_persons_going_up()
+        else:
+            waiting_passengers_list = floor.get_all_persons_going_down()
+        riding_passengers_list = elevator.get_passenger_list()
+        list_car_calls = elevator.get_car_calls()
+
+        if not elevator.is_moving():
+            for person in waiting_passengers_list:
+                waiting_passengers_cost+=person.get_elevator_waiting_time()^2
+
+        if elevator.get_passenger_count()>0:
+            for person in riding_passengers_list:    
                 riding_passengers_cost+=person.get_riding_time()^2
-            cost+=self.w2*riding_passengers_cost
+                waiting_passengers_cost+=person.get_elevator_waiting_time()^2
+            riding_passengers_count = len(riding_passengers_list)
+            if not elevator.is_moving():
+                index = 0
+                while riding_passengers_count<elevator.get_capacity():
+                    person_to_add = waiting_passengers_list[index]
+                    if person_to_add not in riding passengers_list:
+                        riding_passengers_cost+=person.get_riding_time()^2
+                        riding_passengers_count+=1
+                        person_dest = person.get_dest_floor()
+                        if person_dest not in list_car_calls:
+                            list_car_calls.append(person_dest)
+                            list_car_calls.sort()
+                    index+=1
         
         if elevator.car_calls_left()>0:
-            list_car_calls = elevator.get_car_calls()
-            elevator_moving_distance_cost = 0
-            if elevator.get_direction() == "UP":
-                for i in range(len(list_car_calls)):
-                    if i==0:
-                        prev_floor = elevator.get_current_floor()
-                    else:
-                        prev_floor = list_car_calls[i-1]
-                    next_floor = list_car_calls[i]
-                    elevator_moving_distance_cost+=next_floor-prev_floor
-            else:
-                for i in range(start=-1,stop=-len(list_car_calls)-1,step=-1):
-                    if i==-1:
-                        prev_floor = elevator.get_current_floor()
-                    else:
-                        prev_floor = list_car_calls[i-1]
-                    next_floor = list_car_calls[i]
-                    elevator_moving_distance_cost+=next_floor-prev_floor
-            cost+=self.w3*elevator_moving_distance_cost
-        return cost
+            elevator_moving_distance_cost+=abs(list_car_calls[0]-list_car_calls[-1])
+
+        total_cost1 = self.w1*waiting_passengers_cost + self.w2*riding_passengers_cost + self.w3*elevator_moving_distance_cost
             
+        return total_cost1,waiting_passengers_cost,riding_passengers_cost,list_car_calls
 
-
-
+    def calculate_cost2(self,person,elevator,waiting_passengers_cost1,riding_passengers_cost1,cost1_car_calls):
+        
 
     def update_status(self) -> None:
         """Updates the elevators to be idle when they have no path."""

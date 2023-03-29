@@ -83,6 +83,10 @@ class Elevator(object):
         """Returns the direction of travel for the Elevator object."""
         return self.direction
 
+    def get_capacity(self) -> int:
+        """Returns the capacity of the Elevator object, i.e. maximum number of people inside the elevator"""
+        return self.capacity
+
     def get_current_floor(self) -> int:
         """Returns the current floor the Elevator object is on."""
         return self.curr_floor
@@ -108,15 +112,14 @@ class Elevator(object):
 
         """
         index=0
-        while self.get_passenger_count()<self.capacity and index<len(list_of_person)-1:
-                person = list_of_person[index]
-                self.add_passengers(person)
-                person.succeeds_entering_elevator()
-                floor_level = person.get_dest_floor()
-        
-                if floor_level not in self.path:
-                    self.add_path(floor_level)
-                    self.add_car_call(floor_level)
+        while self.get_passenger_count()<self.get_capacity() and index<len(list_of_person)-1:
+            person = list_of_person[index]
+            self.add_passengers(person)
+            person.succeeds_entering_elevator()
+            floor_level = person.get_dest_floor()
+            if floor_level not in self.path:
+                self.add_path(floor_level)
+                self.add_car_call(floor_level)
         self.path.sort()
         yield self.env.timeout(random.randint(2, 4))
 
@@ -171,6 +174,7 @@ class Elevator(object):
     def set_stop_moving(self)-> None:
         """Set the elevator as not moving"""
         self.is_moving = False
+
 
     def travel(self, end) -> None:
         """
