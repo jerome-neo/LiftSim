@@ -1,5 +1,6 @@
 import random
 import LiftRandoms
+import Elevator
 
 class Person(object):
     """A person in the building.
@@ -129,14 +130,37 @@ class Person(object):
         """
         return -1 if self.curr_floor > self.destination_floor else 1
 
+    def get_assigned_elevator(self)-> Elevator:
+        """
+        Returns the object of the assigned Elevator
+        """
+        return self.assigned_elevator
+
+    def get_elevator_arrival_time(self)-> float:
+        """
+        Returns the person's assigned elevator's arrival time
+        """
+        return self.elevator_arrival_time
+        
     def get_riding_time(self)-> float:
         """
-        Returns the length of time when the person is in the elevator up to the present moment. Used in ModernEGCS cost calculation.
+        Returns the estimated riding time of the person, which is time from the moment the person enters the assigned
+        to the moment the person leaves the elevator, i.e. when the elevator has reached the person's destination.
+        Used in ModernEGCS cost calculation.
 
         Returns:
             float: The length of time spent by the person in the elevator
         """
-        time_taken_to_ride = self.env.now-self.elevator_arrival_time
+        if self.get_elevator_arrival_time() is None:
+            elevator_arrival_to_now = 0
+        else:
+            elevator_arrival_to_now = self.env.now-self.get_elevator_arrival_time()
+        assigned_elevator = self.get_assigned_elevator()
+        elevator_remaining_car_calls_count = len(elevator_assigned.get_car_calls())
+        elevator_current_floor = assigned_elevator.get_current_floor()
+        person_destination_floor = self.get_dest_floor()
+        estimated_remaining_travel_time = abs(person_destination_floor-elevator_current_floor)+3*(elevator_remaining_car_calls_count-1)
+        time_taken_to_ride = elevator_arrival_to_now + estimated_remaining_travel_time
         return time_taken_to_ride
     
     def get_elevator_waiting_time(self)->float:
@@ -150,8 +174,9 @@ class Person(object):
         return time_taken_for_elevator_arrival
     
     def succeeds_entering_elevator(self)->None:
-        """Updates the person's status of success regarding entering the elevator"""
+        """Updates the person's status of success regarding entering the elevator and updates elevator arrival time"""
         self.entered_elevator = True
+        self.elevator_arrival_time = self.env.now
     
     def is_in_elevator(self)->bool:
         """
