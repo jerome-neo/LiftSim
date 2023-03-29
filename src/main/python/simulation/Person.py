@@ -156,15 +156,15 @@ class Person(object):
         else:
             elevator_arrival_to_now = self.env.now-self.get_elevator_arrival_time()
         assigned_elevator = self.get_assigned_elevator()
-        elevator_remaining_car_calls = elevator_assigned.get_car_calls()
+        elevator_remaining_car_calls = assigned_elevator.get_car_calls()
         elevator_current_floor = assigned_elevator.get_current_floor()
         person_destination_floor = self.get_dest_floor()
         person_source_floor = self.get_curr_floor()
         to_wait_for_reaching_dest=0
         for floor in elevator_remaining_car_calls:
-            if floor>person_source_floor and floor<person_dest_floor:
+            if floor>person_source_floor and floor<person_destination_floor:
                 to_wait_for_reaching_dest+=1
-            if floor>=person_dest_floor:
+            if floor>=person_destination_floor:
                 break
         if assigned_elevator.get_direction() == "DOWN":
             to_wait_for_reaching_dest = len(elevator_remaining_car_calls) - to_wait_for_reaching_dest - 1

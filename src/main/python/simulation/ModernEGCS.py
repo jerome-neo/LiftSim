@@ -1,5 +1,5 @@
 import Elevator
-
+import HallCall
 
 class ModernEGCS(object):
     """
@@ -9,6 +9,7 @@ class ModernEGCS(object):
         env (simpy.Environment): The simulation environment.
         floors (list of Floor): The collection of floors in the building.
         elevators (list of Elevator): The collection of elevators within the building system.
+        unassigned_hall_calls (list of two-element tuples): The queue of unassigned hall calls
     """
     def __init__(self, env, collection_floors, num_elevators,w1,w2,w3):
         """
@@ -18,11 +19,15 @@ class ModernEGCS(object):
             env (simpy.Environment): The simulation environment.
             collection_floors (list of Floor): The collection of floors in the building.
             num_elevators (int): The number of elevators in the system.
+            w1: w1 for cost calculation in HCPM
+            w2: w2 for cost calculation in HCPM
+            w3: w3 for cost calculation in HCPM
 
         """
         self.env = env
         self.floors = collection_floors
         self.elevators = [Elevator.Elevator(env, i, self.floors, 1) for i in range(1, num_elevators + 1)]
+        self.unassigned_hall_calls = [] 
         self.w1 = w1
         self.w2 = w2
         self.w3 = w3
@@ -38,7 +43,10 @@ class ModernEGCS(object):
         """
         return f"ModernEGCS with {len(self.elevators)} elevators."
 
-
+    def add_hall_call(self,hall_call) -> None:
+        """Appends a new hall call to the list of unassigned hall calls.
+        Hall calls are represented by a tuple: (source floor of the call, direction of the call)"""
+        self.unassigned_hall_calls.append(hall_call)
 
     def handle_person(self, person) -> None:
         """
@@ -52,70 +60,18 @@ class ModernEGCS(object):
         curr_floor = self.floors[person.get_curr_floor() - 1]
         if call_direction < 0:
             curr_floor.add_person_going_down(person)
-            curr_floor.set_call_down()
+            if not curr_floor.has_call_down():
+                curr_floor.set_call_down()
+                hall_call = HallCall.HallCall(self.env,curr_floor.get_floor_level(),-1)
+                self.add_hall_call(hall_call)
+
         else:
             curr_floor.add_person_going_up(person)
-            curr_floor.set_call_up()
-    
-
-
-    def handle_landing_call(self) -> None:
-        """Handles a landing call from a person who wants to go down."""
-        while True:
-            if all(map(lambda x: x.is_busy(), self.elevators_down)):
-                yield self.env.timeout(1)
-            else:
-                list_of_elevators = sorted(self.elevators_down, key=lambda x: x.get_current_floor(), reverse=True)
-                chosen_index = 0
-                elevator = list_of_elevators[chosen_index]
-                while elevator.is_busy():
-                    chosen_index += 1
-                    elevator = list_of_elevators[chosen_index]
-                elevator.set_busy()
-                for floor in self.floors:
-                    if floor.has_call_down() and (floor.get_floor_level() not in elevator.path):
-                        elevator.add_path(floor.get_floor_level())
-                break
-
-    def handle_rising_call(self) -> None:
-        """Handles a rising call from a person who wants to go up."""
-        while True:
-            if all(map(lambda x: x.is_busy(), self.elevators_up)):
-                yield self.env.timeout(1)
-            else:
-                list_of_elevators = sorted(self.elevators_up, key=lambda x: x.get_current_floor(), reverse=False)
-                chosen_index = 0
-                elevator = list_of_elevators[chosen_index]
-                while elevator.is_busy():
-                    chosen_index += 1
-                    elevator = list_of_elevators[chosen_index]
-                elevator.set_busy()
-                for floor in self.floors:
-                    if floor.has_call_up() and (floor.get_floor_level() not in elevator.path):
-                        elevator.add_path(floor.get_floor_level())
-                break
+            if not curr_floor.has_call_up():
+                curr_floor.set_call_up()
+                hall_call = HallCall.HallCall(self.env,curr_floor.get_floor_level(),1)
+                self.add_hall_call(hall_call)
             
-    def assign_call(self,person) -> Elevator:
-        """Assigns hall call to the most suitable elevator based on HCPM method."""
-        person_current_floor = person.get_curr_floor()
-        all_elevator_cost=[]
-        all_priority_cost=[]
-        for elevator in self.elevators:
-            elevator_id = elevator.get_index()
-            elevator_current_floor = elevator.get_current_floor()
-            cost = abs(elevator_current_floor-person_current_floor)
-            elevator_cost = (elevator_id,cost)
-            all_elevator_cost.append(elevator_cost)
-        all_elevator_cost.sort(key=lambda x: x[1])
-            
-        for i in range(len(self.elevators)-1):
-            priority_cost=all_elevator_cost[i+1][1]-all_elevator_cost[i][1]
-            elevator_id=
-            all_priority_cost.append(priority_cost)
-
-        #append all_priority_cost to global list for all unserved calls
-        #if there are other lists in global list, sort such that the frontmost element gets its best elevator
-        #else take the first elevator in the list
         
     def calculate_cost1(self,elevator) -> tuple:
         """
@@ -156,7 +112,7 @@ class ModernEGCS(object):
                 index = 0
                 while riding_passengers_count<elevator.get_capacity():
                     person_to_add = waiting_passengers_list[index]
-                    if person_to_add not in riding passengers_list:
+                    if person_to_add not in riding_passengers_list:
                         riding_passengers_cost+=person_to_add.get_riding_time()^2
                         riding_passengers_count+=1
                         person_dest = person_to_add.get_dest_floor()
@@ -190,7 +146,7 @@ class ModernEGCS(object):
         Returns:
             float: total_cost2
         """
-        elevant_curr_floor = elevator.get_current_floor()
+        elevator_curr_floor = elevator.get_current_floor()
         person_dest_floor = person.get_dest_floor()
         person_source_floor = person.get_curr_floor()
         to_wait_for_elevator_arrival = 0
@@ -212,7 +168,7 @@ class ModernEGCS(object):
         last_car_call_in_list = cost1_car_calls[-1]
         
         if person_source_floor not in range(first_car_call_in_list, last_car_call_in_list+1):
-            cost1_car_calls.append(person_source_floor):
+            cost1_car_calls.append(person_source_floor)
         if person_dest_floor not in range(first_car_call_in_list, last_car_call_in_list+1):
             cost1_car_calls.append(person_dest_floor)
         cost1_car_calls.sort()
@@ -224,72 +180,116 @@ class ModernEGCS(object):
         return total_cost2
         
     
-    def calculate_cost2_minus_cost1_efficient(self,elevator):
+    def calculate_cost2_minus_cost1_efficient(self,hall_call,elevator):
         """
         Cost1 = w1*sigma i: waiting passengers(WTi^2+RWTi^2) + w2* sigma i: riding passengers(RTi^2) + w3*PC
-        Cost2 = w1*sigma i: waiting passengers(WTi^2+RWTi^2) + w2* sigma i: riding passengers(RTi^2) + w3*PC where person's hall call is considered added to the elevator's path
+        Cost2 = w1*sigma i: waiting passengers(WTi^2+RWTi^2) + w2* sigma i: riding passengers(RTi^2) + w3*PC where hall call is considered added to the elevator's path
         Calculates Cost2-Cost1 which is input to pstr_array used to determine priority
         
         Waiting Passengers = Passengers currently at the floor where elevator is, who will enter at this floor
         Riding Passengers = Passengers that are already inside the elevator, including those who alight at this floor
 
         Args:
-            Elevator: An Elevator object, for which cost1 is being calculated
+            hall_call: A HallCall object 
+            Elevator: An Elevator object, for which cost2-cost1 is being calculated
 
         Returns:
-            tuple: cost2_minus_cost1
+            value: cost2_minus_cost1
         """
-        elevant_curr_floor = elevator.get_current_floor()
-        person_dest_floor = person.get_dest_floor()
-        person_source_floor = person.get_curr_floor()
-        to_wait_for_elevator_arrival = 0
+        elevator_curr_floor = elevator.get_current_floor()
+        elevator_direction = elevator.get_direction()
+        elevator_capacity = elevator.get_capacity()
+        elevator_passengers_count = elevator.get_passenger_count()
+        elevator_passengers_list = elevator.get_passenger_list()
+        elevator_carcalls_list = elevator.get_car_calls()
 
-        list_car_calls = elevator.get_car_calls()
-        riding_passengers_count = elevator.get_passenger_count()
-            
-        if not elevator.is_moving():
-            index = 0
-            while riding_passengers_count<elevator.get_capacity():
-                person_to_add = waiting_passengers_list[index]
-                if person_to_add not in riding passengers_list:
-                    person_dest = person_to_add.get_dest_floor()
-                    riding_passengers_count+=1
-                    if person_dest not in list_car_calls:
-                        list_car_calls.append(person_dest)
-                        list_car_calls.sort()
-                index+=1
-        
-        for floor in list_car_calls:
-            if floor<person_source_floor:
-                to_wait_for_elevator_arrival+=1
+        hall_call_floor = hall_call.get_source_floor()
+        hall_call_direction = hall_call.get_direction()
+        now = self.env.now
+
+        waiting_passengers_cost = 0
+        riding_passengers_cost = 0
+        elevator_moving_distance_cost = 0
+
+        if elevator_direction == hall_call_direction:
+            if hall_call_direction == "UP":
+                waiting_passengers_hallcall = self.floors[hall_call_floor-1].get_all_persons_going_up()
+                waiting_passengers_elevator_curr_floor = self.floors[elevator_curr_floor-1].get_all_persons_going_up()
             else:
-                break
+                waiting_passengers_hallcall = self.floors[hall_call_floor-1].get_all_persons_going_down()
+                waiting_passengers_elevator_curr_floor = self.floors[elevator_curr_floor-1].get_all_persons_going_down()
             
-        person_arrival_to_now = self.env.now - self.person.get_person_arrival_time()
-        estimated_remaining_waiting_time = abs(person_source_floor-elevator_curr_floor)+to_wait_for_elevator_arrival*3
-        person_waiting_time = person_arrival_to_now + estimated_remaining_waiting_time #person's estimated waiting time if their hall call is assigned to this elevator
-        additional_waiting_passengers_cost = self.w1*person_waiting_time^2
-        
-        person_riding_time = person.get_riding_time() #person's estimated riding time if their hall call is assigned to this elevator
-        additional_riding_passengers_cost = self.w2*person_riding_time^2
+            if not elevator.is_moving():
+                index = 0
+                while elevator_passengers_count<elevator_capacity() and index<len(waiting_passengers_elevator_curr_floor):
+                    person_to_add = waiting_passengers_elevator_curr_floor[index]
+                    if person_to_add not in elevator_passengers_list:
+                        person_dest = person_to_add.get_dest_floor()
+                        elevator_passengers_count+=1
+                        if person_dest not in elevator_carcalls_list:
+                            elevator_carcalls_list.append(person_dest)
+                            elevator_carcalls_list.sort()
+                    index+=1
+            
+            floors_til_arrival = 0
+            for floor in elevator_carcalls_list:
+                if floor<hall_call_floor:
+                    floors_til_arrival+=1
+                else:
+                    break
+            if hall_call_direction == "DOWN":
+                floors_til_arrival = len(elevator_carcalls_list)-floors_til_arrival-1
 
-        first_car_call_in_list = list_car_calls[0]
-        last_car_call_in_list = list_car_calls[-1]
-        initial_elevator_moving_distance = abs(last_car_call_in_list - first_car_call_in_list)
-        
-        if person_source_floor not in range(first_car_call_in_list, last_car_call_in_list+1):
-            list_car_calls.append(person_source_floor):
-        if person_dest_floor not in range(first_car_call_in_list, last_car_call_in_list+1):
-            list_car_calls.append(person_dest_floor)
-        list_car_calls.sort()
+            for person in waiting_passengers_hallcall:
+                waiting_passengers_cost += ((now-person.get_arrival_time()) + floors_til_arrival*3)^2
+                riding_passengers_cost += person.get_riding_time()^2 #assume we can load everyone registered under this hallcall
+            
+            first_car_call_in_list = elevator_carcalls_list[0]
+            last_car_call_in_list = elevator_carcalls_list[-1]
+            initial_elevator_moving_distance = abs(last_car_call_in_list - first_car_call_in_list)
+            
+            if hall_call_floor not in range(first_car_call_in_list, last_car_call_in_list+1):
+                elevator_carcalls_list.append(hall_call_floor)
+            if hall_call_floor not in range(first_car_call_in_list, last_car_call_in_list+1):
+                elevator_carcalls_list.append(hall_call_floor)
+            elevator_carcalls_list.sort()
 
-        current_elevator_moving_distance=abs(cost1_car_calls[0]-cost1_car_calls[-1])
-        additional_elevator_moving_distance_cost=self.w3*(current_elevator_moving_distance - initial_elevator_moving_distance)
-        
-        cost2_minus_cost1 = additional_waiting_passengers_cost + additional_riding_passengers_cost + additional_elevator_moving_distance_cost
-        return cost2_minus_cost1
-        
-        
+            current_elevator_moving_distance=abs(elevator_carcalls_list[0]-elevator_carcalls_list[-1])
+            elevator_moving_distance_cost=(current_elevator_moving_distance - initial_elevator_moving_distance)
+            
+            cost2_minus_cost1 = self.w1*waiting_passengers_cost + self.w2*riding_passengers_cost + elevator_moving_distance_cost
+            return cost2_minus_cost1
+    
+    def create_call_priority_array(self,person) -> list:
+        """
+        Creates priority array for each hall call, which will be evaluated for elevator allocation by the HCPM method.
+
+        Args:
+            person: an object of Person class representing the person whose ha
+        """
+
+
+    def assign_call(self,person) -> Elevator:
+        """Assigns hall call to the most suitable elevator based on HCPM method."""
+        person_current_floor = person.get_curr_floor()
+        all_elevator_cost=[]
+        all_priority_cost=[]
+        for elevator in self.elevators:
+            elevator_id = elevator.get_index()
+            elevator_current_floor = elevator.get_current_floor()
+            cost = abs(elevator_current_floor-person_current_floor)
+            elevator_cost = (elevator_id,cost)
+            all_elevator_cost.append(elevator_cost)
+        all_elevator_cost.sort(key=lambda x: x[1])
+            
+        for i in range(len(self.elevators)-1):
+            priority_cost=all_elevator_cost[i+1][1]-all_elevator_cost[i][1]
+            elevator_id=
+            all_priority_cost.append(priority_cost)
+
+        #append all_priority_cost to global list for all unserved calls
+        #if there are other lists in global list, sort such that the frontmost element gets its best elevator
+        #else take the first elevator in the list
 
     def update_status(self) -> None:
         """Updates the elevators to be idle when they have no path."""
