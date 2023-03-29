@@ -1,3 +1,5 @@
+const {Input} = require('./Dynamic Input');
+
 var now_value=1;//电梯当前楼层
 var plan_value=now_value;//电梯初始计划停靠楼层
 var Floor_status=0;//电梯当前状态，停
@@ -154,4 +156,35 @@ var Floor_plan=new Array();
   for (i=1;i<=Floor_num;i++)  SetUnLight(i);
  }
 
+
+
  
+
+
+ function addPassenger() {
+  const numOfPeople = parseInt(document.getElementById("numOfPeople").value);
+  const sourceFloor = parseInt(document.getElementById("sourceFloor").value);
+  const destinationFloor = parseInt(document.getElementById("destinationFloor").value);
+  
+  // Validate input
+  if (numOfPeople <= 0 || sourceFloor < 1 || sourceFloor > 10 || destinationFloor < 1 || destinationFloor > 10) {
+    alert("Please enter valid input.");
+    return;
+  }
+  
+  // Add passenger to list
+  passengers.push({
+    numOfPeople: numOfPeople,
+    sourceFloor: sourceFloor,
+    destinationFloor: destinationFloor
+  });
+  
+  // Add passenger to lift queue
+  addPassengerToQueue(numOfPeople, sourceFloor, destinationFloor);
+  
+  // Clear input fields
+  document.getElementById("numOfPeople").value = "";
+  document.getElementById("sourceFloor").value = "";
+  document.getElementById("destinationFloor").value = "";
+}
+
