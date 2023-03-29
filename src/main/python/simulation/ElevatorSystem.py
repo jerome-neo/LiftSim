@@ -24,8 +24,8 @@ class ElevatorSystem(object):
         """
         self.env = env
         self.floors = collection_floors
-        self.elevators_up = [Elevator.Elevator(env, i, self.floors, 1, "UP") for i in range(1, num_up + 1)]
-        self.elevators_down = [Elevator.Elevator(env, i, self.floors, 1, "DOWN") for i in range(1, num_down + 1)]
+        self.elevators_up = [Elevator.Elevator(env, i, self.floors, 1, num_up+num_down,"UP") for i in range(1, num_up + 1)]
+        self.elevators_down = [Elevator.Elevator(env, i, self.floors, 1, num_up+num_down,"DOWN") for i in range(1, num_down + 1)]
 
 
     def __str__(self):

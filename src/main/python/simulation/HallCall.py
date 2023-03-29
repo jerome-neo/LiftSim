@@ -15,7 +15,7 @@ class HallCall(object):
 
         Args:
             source_floor(int): floor level where elevator button is pressed
-            direction(int): direction of elevator call -> -1 if down, 1 if up
+            direction(int): direction of elevator call -> -1 is down, 1 is up
 
         """
         self.env = env

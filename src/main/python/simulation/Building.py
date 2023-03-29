@@ -104,8 +104,6 @@ class Building(object):
             #ModernEGCS handling of persons
             elif isinstance(self.elevator_group, ModernEGCS.ModernEGCS):
                 self.elevator_group.handle_person(person)
-                self.env.process(self.elevator_group.assign_call(person))
-
                 for elevator in self.elevator_group.elevators:
                     self.env.process(elevator.activate)
 
