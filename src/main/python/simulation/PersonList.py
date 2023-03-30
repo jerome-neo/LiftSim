@@ -75,5 +75,3 @@ class PersonList:
     def get(self, index) -> Person:
         """Returns the Person at the specified index"""
         return self.list[index]
-
-PersonList(300).initialise("manual")
