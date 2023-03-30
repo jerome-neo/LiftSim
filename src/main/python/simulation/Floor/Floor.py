@@ -5,6 +5,7 @@ class Floor(object):
         Initialize the floor with the given index.
 
         Args:
+            env (simpy.Environment): The simulation environment.
             index (int): The index of the floor.
         """
         self.env = env
@@ -31,7 +32,7 @@ class Floor(object):
         """Returns the call_up flag."""
         return self.call_up
 
-    def set_call_up(self) -> bool:
+    def set_call_up(self) -> None:
         """Set the call_down flag to True."""
         self.call_up = True
 
@@ -74,4 +75,3 @@ class Floor(object):
 
     def unaccept_up_call(self) -> None:
         self.call_up_accepted = False
-

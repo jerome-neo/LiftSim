@@ -38,12 +38,14 @@ class ElevatorSystem(object):
         """
         return f"Elevator with {len(self.elevators_up)} up and {len(self.elevators_down)} down configuration."
 
-    def print_system_status(self):
+    def print_system_status(self) -> str:
+        """Returns a string representation number of active elevators."""
         num_active_up = len(list(filter(lambda x: x.is_busy(), self.elevators_up)))
         num_active_down = len(list(filter(lambda x: x.is_busy(), self.elevators_down)))
         return f"Elevator system has {num_active_up} UP and {num_active_down} DOWN elevator(s) ACTIVE"
 
-    def is_all_idle(self):
+    def is_all_idle(self) -> bool:
+        """Returns True if all the elevators are idle"""
         return all(map(lambda x: x.is_busy(), self.elevators_up)) \
             and all(map(lambda x: x.is_busy(), self.elevators_down))
 

@@ -1,11 +1,7 @@
 import random
 import simpy
-import numpy as np
-
-from src.main.python.simulation.Floor import TopFloor, GroundFloor
-
 MAX_CAPACITY = 13
-MAX_WEIGHT = 1600 # kilograms
+MAX_WEIGHT = 1600  # kilograms
 SPEED = (0.5, 0.6)
 
 
@@ -67,7 +63,7 @@ class Elevator(object):
         self.is_working_status = False
         self.passengers = []
         self.path = []
-        self.resource = simpy.Resource(env,1)
+        self.resource = simpy.Resource(env, 1)
 
     def __str__(self):
         """Returns a string representation of the Elevator object."""
@@ -89,12 +85,14 @@ class Elevator(object):
         self.passengers.append(person)
 
     def elevator_door_open(self, t=3):
+        """Simulates door opening."""
         yield self.env.timeout(t)
 
     def elevator_door_close(self, t=3):
+        """Simulates door closing."""
         yield self.env.timeout(t)
 
-    def enter_elevator(self, list_of_person) -> None:
+    def enter_elevator(self, list_of_person):
         """Simulates passengers entering the Elevator object.
 
         Args:
@@ -129,7 +127,7 @@ class Elevator(object):
         else:
             yield self.env.timeout(0)
 
-    def leave_elevator(self) -> None:
+    def leave_elevator(self):
         """
         Simulate passengers leaving the elevator.
 
@@ -173,7 +171,7 @@ class Elevator(object):
         self.is_working_status = False
         print(f'{self.direction} Elevator {self.index} has been set idle')
 
-    def travel(self, end) -> None:
+    def travel(self, end):
         """
         Simulate the elevator traveling to a new floor.
 
@@ -229,6 +227,7 @@ class Elevator(object):
         return len(self.path) > 0
 
     def move(self):
+        """This moves the elevator in the direction of the next floor in their path."""
         # todo modify this to change the algorithm when it reaches top level
         if self.is_busy() and self.has_path():
             destination_floor = self.get_path()[0] if self.get_direction() == "UP" else self.get_path()[-1]
@@ -241,13 +240,17 @@ class Elevator(object):
         else:
             yield self.env.timeout(0)
 
-        # if self.get_direction() == "UP" and self.get_current_floor() == self.num_floors:
-        #     yield self.env.process(self.travel(1))
-        # if self.get_direction() == "DOWN" and self.get_current_floor() == 1:
-        #     yield self.env.process(self.travel(self.num_floors))
-
     def activate(self) -> None:
-        """Activates elevator such that it immediately moves when a call is placed"""
+        """
+        This activates the logic of the elevator at the floor, here are the important functions:
+            (1) It makes sure to check if the floor it is at is where they are supposed to be.
+            (2) Allows boarding and leaving of passengers.
+            (3) Updates the floor call statuses. It can only un-call it.
+            (4) Updates the acceptance of a floor call status. It can only un-accept it.
+        Note:
+            Setting of the call status is done by the Floor class update() method.
+            It should be called in the Building class.
+        """
         if not self.is_busy():
             yield self.env.timeout(0)
         elif not self.has_path():
@@ -279,9 +282,3 @@ class Elevator(object):
                         # reset status
                         floor.uncall_down()
                         floor.unaccept_down_call()
-
-
-
-
-
-

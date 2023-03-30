@@ -1,7 +1,6 @@
 import simpy
 from Floor import TopFloor, GroundFloor, SandwichFloor
 import ElevatorSystem
-import LiftRandoms
 
 
 class Building(object):
@@ -20,6 +19,8 @@ class Building(object):
 
     Methods:
         get_num_floors(): Returns the number of floors in the building.
+        get_all_persons(): Returns the PersonList object in the building.
+        place_person_on_floor(): Distribute Person from PersonList into the floors.
         initialise(): Initialises the building by adding the floors and the elevator system.
         simulate(): Simulates the building operation by creating Person instances, placing them in their
             respective floors, and managing the elevators in the building.
@@ -32,7 +33,7 @@ class Building(object):
             num_up (int): The number of elevators going up.
             num_down (int): The number of elevators going down.
             num_floors (int): The number of floors in the building.
-
+            persons_list (PersonList): The generated Persons used for simulation.
         """
         self.env = env
         self.num_up = num_up

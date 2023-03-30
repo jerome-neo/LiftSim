@@ -9,6 +9,7 @@ class SandwichFloor(Floor):
         Initialize the sandwich floor with the given index.
 
         Args:
+            env (simpy.Environment): The simulation environment.
             index (int): The index of the sandwich floor.
 
         """
@@ -93,14 +94,15 @@ class SandwichFloor(Floor):
             return pointer
 
     def sort(self) -> None:
+        """Sorts the list of Persons in ascending arrival time."""
         self.going_up_persons.sort(key=lambda person: person.get_arrival_time())
         self.going_down_persons.sort(key=lambda person: person.get_arrival_time())
 
-    def update(self):
+    def update(self) -> None:
+        """Important to call this method every step of the simulation to update call status of every floor."""
         # Floor will "check" if people have arrived by peeking at the simulation time
         # to compare with the person's arrival time.
         if len(self.going_up_persons) != 0 and self.going_up_persons[0].get_arrival_time() <= self.env.now:
             self.set_call_up()
         if len(self.going_down_persons) != 0 and self.going_down_persons[0].get_arrival_time() <= self.env.now:
             self.set_call_down()
-
