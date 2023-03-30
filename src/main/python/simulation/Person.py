@@ -38,6 +38,7 @@ class Person(object):
         return f"Person {self.id}"
 
     def get_arrival_time(self):
+        """Returns the arrival_time attribute."""
         return self.arrival_time
 
     def has_reached_destination(self, elevator) -> bool:
