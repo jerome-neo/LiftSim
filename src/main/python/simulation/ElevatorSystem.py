@@ -24,6 +24,7 @@ class ElevatorSystem(object):
         """
         self.env = env
         self.floors = collection_floors
+        self.num_floors = len(collection_floors)
         self.elevators_up = [Elevator.Elevator(env, i, self.floors, 1, "UP") for i in range(1, num_up + 1)]
         self.elevators_down = [Elevator.Elevator(env, i, self.floors, 1, "DOWN") for i in range(1, num_down + 1)]
 
@@ -37,58 +38,51 @@ class ElevatorSystem(object):
         """
         return f"Elevator with {len(self.elevators_up)} up and {len(self.elevators_down)} down configuration."
 
-    def handle_person(self, person) -> None:
-        """
-        Handles a person who wants to use the elevator system.
+    def print_system_status(self):
+        num_active_up = len(list(filter(lambda x: x.is_busy(), self.elevators_up)))
+        num_active_down = len(list(filter(lambda x: x.is_busy(), self.elevators_down)))
+        return f"Elevator system has {num_active_up} UP and {num_active_down} DOWN elevator(s) ACTIVE"
 
-        Args:
-            person (Person): The person who wants to use the elevator system.
-        """
-        # Put the person in the floor and call the lift
-        call_direction = person.get_direction()
-        curr_floor = self.floors[person.get_curr_floor() - 1]
-        if call_direction < 0:
-            curr_floor.add_person_going_down(person)
-            curr_floor.set_call_down()
-        else:
-            curr_floor.add_person_going_up(person)
-            curr_floor.set_call_up()
+    def is_all_idle(self):
+        return all(map(lambda x: x.is_busy(), self.elevators_up)) \
+            and all(map(lambda x: x.is_busy(), self.elevators_down))
 
-    def handle_landing_call(self) -> None:
+    def allocate_landing_call(self) -> None:
         """Handles a landing call from a person who wants to go down."""
-        while True:
-            if all(map(lambda x: x.is_busy(), self.elevators_down)):
-                yield self.env.timeout(1)
-            else:
-                list_of_elevators = sorted(self.elevators_down, key=lambda x: x.get_current_floor(), reverse=True)
-                chosen_index = 0
+        if all(map(lambda x: x.is_call_down_accepted(), filter(lambda x: x.has_call_down(), self.floors))):
+            return None
+        if not all(map(lambda x: x.is_busy(), self.elevators_down)):
+            list_of_elevators = sorted(self.elevators_down, key=lambda x: x.get_current_floor(), reverse=True)
+            chosen_index = 0
+            elevator = list_of_elevators[chosen_index]
+            while elevator.is_busy():
+                chosen_index += 1
                 elevator = list_of_elevators[chosen_index]
-                while elevator.is_busy():
-                    chosen_index += 1
-                    elevator = list_of_elevators[chosen_index]
-                elevator.set_busy()
-                for floor in self.floors:
-                    if floor.has_call_down() and (floor.get_floor_level() not in elevator.path):
-                        elevator.add_path(floor.get_floor_level())
-                break
+            for floor in self.floors:
+                if floor.is_call_down_accepted():
+                    continue
+                elif floor.has_call_down():
+                    elevator.add_path(floor.get_floor_level())
+                    floor.accept_down_call()
 
-    def handle_rising_call(self) -> None:
+    def allocate_rising_call(self) -> None:
         """Handles a rising call from a person who wants to go up."""
-        while True:
-            if all(map(lambda x: x.is_busy(), self.elevators_up)):
-                yield self.env.timeout(1)
-            else:
-                list_of_elevators = sorted(self.elevators_up, key=lambda x: x.get_current_floor(), reverse=False)
-                chosen_index = 0
+        if all(map(lambda x: x.is_call_up_accepted(), filter(lambda x: x.has_call_up(), self.floors))):
+            return None
+        if not all(map(lambda x: x.is_busy(), self.elevators_up)):
+            list_of_elevators = sorted(self.elevators_up, key=lambda x: x.get_current_floor(), reverse=False)
+            chosen_index = 0
+            elevator = list_of_elevators[chosen_index]
+            while elevator.is_busy():
+                chosen_index += 1
                 elevator = list_of_elevators[chosen_index]
-                while elevator.is_busy():
-                    chosen_index += 1
-                    elevator = list_of_elevators[chosen_index]
-                elevator.set_busy()
-                for floor in self.floors:
-                    if floor.has_call_up() and (floor.get_floor_level() not in elevator.path):
-                        elevator.add_path(floor.get_floor_level())
-                break
+            elevator.set_busy()
+            for floor in self.floors:
+                if floor.is_call_up_accepted():
+                    continue
+                elif floor.has_call_up():
+                    elevator.add_path(floor.get_floor_level())
+                    floor.accept_up_call()
 
     def update_status(self) -> None:
         """Updates the elevators to be idle when they have no path."""
