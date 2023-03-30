@@ -1,3 +1,5 @@
+import pandas as pd
+
 from src.main.python.simulation.LiftRandoms import LiftRandoms
 from src.main.python.simulation.Person import Person
 
@@ -13,20 +15,8 @@ class PersonList:
             limit (int): maximum cap on the number of Person objects that can be generated.
         """
         self.list = []
-        time = 0
-        person_id = 1
-        next_arrival_time = LiftRandoms().next_arrival_time(time)
-        for i in range(duration_of_simulation):
-            if person_id > limit:
-                # we set a cap on the number of people we want to generate
-                # this takes precedence over the duration_of_simulation
-                break
-            time += (next_arrival_time - time)  # update the 'clock'
-            person = Person(person_id, next_arrival_time)
-            self.list.append(person)
-            # update the variables for next iteration
-            person_id += 1
-            next_arrival_time = LiftRandoms().next_arrival_time(time)
+        self.limit = limit
+        self.duration_of_simulation = duration_of_simulation
 
     def __str__(self):
         """
@@ -40,6 +30,35 @@ class PersonList:
     def __len__(self):
         """Returns the length of the list."""
         return len(self.list)
+
+    def initialise(self, mode='default', path_to_data="../../in/input.csv"):
+        if mode == 'manual':
+            df = pd.read_csv(path_to_data)
+            person_id = 1
+            for index, row in df.iterrows():
+                curr = row['curr']
+                dest = row['dest']
+                time = row['time']
+                person = Person(person_id, time)
+                person.overwrite(curr, dest)
+                self.list.append(person)
+                person_id += 1
+            self.list.sort(key=lambda x: x.get_arrival_time())
+        else:
+            time = 0
+            person_id = 1
+            next_arrival_time = LiftRandoms().next_arrival_time(time)
+            for i in range(self.duration_of_simulation):
+                if person_id > self.limit:
+                    # we set a cap on the number of people we want to generate
+                    # this takes precedence over the duration_of_simulation
+                    break
+                time += (next_arrival_time - time)  # update the 'clock'
+                person = Person(person_id, next_arrival_time)
+                self.list.append(person)
+                # update the variables for next iteration
+                person_id += 1
+                next_arrival_time = LiftRandoms().next_arrival_time(time)
 
     def get_person_list(self) -> list:
         """Returns the list."""
@@ -56,3 +75,5 @@ class PersonList:
     def get(self, index) -> Person:
         """Returns the Person at the specified index"""
         return self.list[index]
+
+PersonList(300).initialise("manual")
