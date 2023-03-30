@@ -171,24 +171,19 @@ class Elevator(object):
         self.is_working_status = False
         print(f'{self.direction} Elevator {self.index} has been set idle')
 
-    def travel(self, end):
+    def travel(self, end) -> None:
         """
         Simulate the elevator traveling to a new floor.
 
         Args:
             end (int): the destination floor of the elevator
-
-        Yields:
-            simpy.events.Timeout: a timeout event representing the time it takes for the elevator to travel to the
-                destination floor
-
         """
         print(f'{self} moved from {self.curr_floor} to {end}')
         self.curr_floor = end
-
-        with self.resource.request() as req:
-            yield req
-            yield self.env.timeout(abs(end - self.curr_floor) * 3)
+        #
+        # with self.resource.request() as req:
+        #     yield req
+        #     yield self.env.timeout(abs(end - self.curr_floor) * 3)
 
     def add_path(self, floor_level) -> None:
         """
@@ -234,9 +229,10 @@ class Elevator(object):
             displacement_direction = destination_floor - self.get_current_floor()  # final - initial = change
             move_direction = "UP" if displacement_direction > 0 else "DOWN"
             if move_direction == "UP" and self.get_current_floor() != self.num_floors:
-                yield self.env.process(self.travel(self.get_current_floor() + 1))
+                self.travel(self.get_current_floor() + 1)
             elif move_direction == "DOWN" and self.get_current_floor() != 1:
-                yield self.env.process(self.travel(self.get_current_floor() - 1))
+                self.travel(self.get_current_floor() - 1)
+            yield self.env.timeout(random.randint(3, 4))
         else:
             yield self.env.timeout(0)
 
