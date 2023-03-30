@@ -4,7 +4,7 @@ from .Floor import Floor
 class TopFloor(Floor):
     """ A class representing the top floor of a building."""
 
-    def __init__(self, index: int):
+    def __init__(self, env, index: int):
         """
         Initialize the top floor with the given index.
 
@@ -12,7 +12,7 @@ class TopFloor(Floor):
             index (int): The index of the Top floor.
 
         """
-        super().__init__(index)
+        super().__init__(env, index)
         self.going_down_persons = []
 
     def __str__(self):
@@ -40,14 +40,32 @@ class TopFloor(Floor):
 
     def remove_all_persons_going_down(self) -> list:
         """
-        Remove all people waiting to go down from this floor and return them.
+        Remove all persons who want to go down from the sandwich floor and return them as a list.
 
         Returns:
-            A list containing all the people waiting to go down from this floor.
+            List[Person]: A list of all persons who want to go down from the sandwich floor.
 
         """
         pointer = []
-        n = len(self.going_down_persons)
-        for i in range(n):
-            pointer.append(self.going_down_persons.pop())
-        return pointer
+        if not self.has_call_down() or self.going_down_persons[0].get_arrival_time() > self.env.now:
+            return pointer
+        else:
+            n = len(self.going_down_persons)
+            count = 0
+            for i in range(n):
+                if self.going_down_persons[i].get_arrival_time() > self.env.now:
+                    break
+                count += 1
+            if count > 0:
+                for i in range(count):
+                    pointer.append(self.going_down_persons.pop(i))
+                return pointer
+
+    def sort(self) -> None:
+        self.going_down_persons.sort(key=lambda person: person.get_arrival_time())
+
+    def update(self):
+        # Floor will "check" if people have arrived by peeking at the simulation time
+        # to compare with the person's arrival time.
+        if len(self.going_down_persons) != 0 and self.going_down_persons[0].get_arrival_time() <= self.env.now:
+            self.set_call_down()

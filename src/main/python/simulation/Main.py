@@ -2,6 +2,7 @@ import simpy
 import statistics
 import Building
 from src.main.python.simulation.LiftRandoms import LiftRandoms
+from src.main.python.simulation.PersonList import PersonList
 
 
 class Main(object):
@@ -38,17 +39,21 @@ class Main(object):
             duration (float): The duration of the simulation in seconds.
 
         """
-        self.building = Building.Building(self.env, self.num_up, self.num_down, self.num_floors)
+        self.building = Building.Building(self.env,
+                                          self.num_up,
+                                          self.num_down,
+                                          self.num_floors,
+                                          PersonList(duration))
         self.building.initialise()
         self.env.process(self.building.simulate())
         # self.env.run(until=duration)
-        
+
         while self.env.peek() < duration:
             self.env.step()
 
     def get_average_waiting_time(self):
         waiting_time = []
-        people = self.building.get_all_persons()
+        people = self.building.get_all_persons().get_person_list()
         for person in people:
             if person.has_completed_trip():
                 waiting_time.append(person.get_wait_time())
@@ -59,5 +64,7 @@ class Main(object):
             return statistics.mean(waiting_time)
 
 Test = Main(num_up=2, num_down=1, num_floors=9)
-Test.run(86400)
+# Test.run(86400)
+Test.run(50)
 print(len(Test.building.get_all_persons()))
+print(Test.get_average_waiting_time())
