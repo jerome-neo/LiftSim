@@ -68,8 +68,8 @@ class Main(object):
         return len(list(filter(lambda x: x.has_completed_trip(), people)))
 
 Test = Main(num_up=2, num_down=1, num_floors=9)
-# Test.run(86400)
-Test.run(200)
+Test.run(86400)
+# Test.run(200)
 print('Number of people spawned in advance:', len(Test.building.get_all_persons()))
 print('Number of people served:', Test.get_number_of_people_served())
 print(Test.get_average_waiting_time())

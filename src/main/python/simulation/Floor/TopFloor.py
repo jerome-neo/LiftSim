@@ -56,9 +56,8 @@ class TopFloor(Floor):
                 if self.going_down_persons[i].get_arrival_time() > self.env.now:
                     break
                 count += 1
-            if count > 0 and n > 0:
-                for i in range(count):
-                    pointer.append(self.going_down_persons.pop(i))
+            pointer = self.going_down_persons[:count]
+            self.going_down_persons = self.going_down_persons[count + 1:]
             return pointer
 
     def sort(self) -> None:
