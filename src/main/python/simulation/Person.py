@@ -37,9 +37,18 @@ class Person(object):
         # return f"Person {self.id} starting at {self.curr_floor} and going to {self.destination_floor}:"
         return f"Person {self.id}"
 
+    def overwrite(self, curr_floor, destination_floor):
+        """Overwrites automatic config of Person class."""
+        self.curr_floor = curr_floor
+        self.destination_floor = destination_floor
+
     def get_arrival_time(self):
         """Returns the arrival_time attribute."""
         return self.arrival_time
+
+    def get_end_time(self):
+        """Returns the end_time attribute."""
+        return self.end_time
 
     def has_reached_destination(self, elevator) -> bool:
         """
