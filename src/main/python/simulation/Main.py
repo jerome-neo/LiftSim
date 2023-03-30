@@ -41,7 +41,7 @@ class Main(object):
             duration (float): The duration of the simulation in seconds.
 
         """
-        self.person_list = PersonList(duration, limit=300)
+        self.person_list = PersonList(duration, limit=300) # person generated cannot exceed 300
         self.person_list.initialise(mode=mode)
         self.building = Building.Building(self.env,
                                           self.num_up,
@@ -89,11 +89,22 @@ class Main(object):
             writer.writerows(data)
 
 
+# Example ways of running the simulation
 
+# Step 1
+# set up the environment with number of UP elevators, number of DOWN elevators and number of floors"
 Test = Main(num_up=2, num_down=1, num_floors=9)
-Test.run(200, mode='manual')
-# Test.run(200, mode='default')
+
+# Step 2
+# run the simulation by telling it how long to run, e.g. 200
+# when mode is 'manual', it will read the input file in ../../in
+Test.run(200, mode='manual') # Test.run(200, mode='default')
+
+# Step 3
+# Save the data of all persons that have completed their trip in the simulation
+Test.output_to_csv()
+
+# Additional information to be printed in terminal
 print('Number of people spawned in advance:', len(Test.building.get_all_persons()))
 print('Number of people served:', Test.get_number_of_people_served())
 print(Test.get_average_waiting_time())
-Test.output_to_csv()
