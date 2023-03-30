@@ -88,6 +88,12 @@ class Elevator(object):
         print(f'{person} has entered elevator {self.direction} {self.index}')
         self.passengers.append(person)
 
+    def elevator_door_open(self, t=3):
+        yield self.env.timeout(t)
+
+    def elevator_door_close(self, t=3):
+        yield self.env.timeout(t)
+
     def enter_elevator(self, list_of_person) -> None:
         """Simulates passengers entering the Elevator object.
 
@@ -102,18 +108,24 @@ class Elevator(object):
             if len(self.passengers) < MAX_CAPACITY:
                 self.add_passengers(person)
                 floor_level = person.get_dest_floor()
-                # Add items to the heap (priority, value)
                 if floor_level not in self.path:
                     self.path.append(floor_level)
                 print(f"{person} has entered elevator at simulation time: {self.env.now}")
             else:
-                if self.get_direction() == "UP":
+                # Put them back into the floor if the elevator is full
+                if self.get_direction() == "DOWN":
                     self.floors[self.get_current_floor() - 1].add_person_going_down(person)
-                    self.floors[self.get_current_floor() - 1].sort()
-
+                elif self.get_direction() == "UP":
+                    self.floors[self.get_current_floor() - 1].add_person_going_up(person)
+        # re-arrange our path back to ordering
         self.path.sort()
-        if len(list_of_person) != 0:
-            yield self.env.timeout(random.randint(2, 4))
+        # if we have people being put back into the floor
+        self.floors[self.get_current_floor() - 1].sort()
+        self.floors[self.get_current_floor() - 1].sort()
+        if len(list_of_person) > 0:
+            yield self.env.process(self.elevator_door_open())
+            yield self.env.timeout(random.randint(2, 5))
+            yield self.env.process(self.elevator_door_open())
         else:
             yield self.env.timeout(0)
 
@@ -134,8 +146,10 @@ class Elevator(object):
                 print(f"{person} has left elevator at simulation time: {self.env.now}")
         for person in to_remove:
             self.passengers.remove(person)
-        if len(to_remove) != 0:
-            yield self.env.timeout(random.randint(2, 4))
+        if len(to_remove) > 0:
+            yield self.env.process(self.elevator_door_open())
+            yield self.env.timeout(random.randint(2, 5))
+            yield self.env.process(self.elevator_door_open())
         else:
             yield self.env.timeout(0)
 
