@@ -52,7 +52,7 @@ class LiftRandoms:
         """
         uniform_rv = rd.uniform(0, 1)
         arrival_time = curr_time + rd.expovariate(max_lambda)
-
+        
         while uniform_rv > (self.thinning_fn(arrival_time)/max_lambda):
             arrival_time += rd.expovariate(max_lambda)
             uniform_rv = rd.uniform(0, 1)
