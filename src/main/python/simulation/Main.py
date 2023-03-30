@@ -65,6 +65,6 @@ class Main(object):
 
 Test = Main(num_up=2, num_down=1, num_floors=9)
 # Test.run(86400)
-Test.run(50)
+Test.run(200)
 print(len(Test.building.get_all_persons()))
 print(Test.get_average_waiting_time())

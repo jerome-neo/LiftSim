@@ -54,10 +54,10 @@ class GroundFloor(Floor):
                 if self.going_up_persons[i].get_arrival_time() > self.env.now:
                     break
                 count += 1
-            if count > 0:
+            if count > 0 and n > 0:
                 for i in range(count):
                     pointer.append(self.going_up_persons.pop(i))
-                return pointer
+            return pointer
 
     def sort(self) -> None:
         self.going_up_persons.sort(key=lambda person: person.get_arrival_time())
