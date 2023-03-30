@@ -125,7 +125,7 @@ class Elevator(object):
         if len(list_of_person) > 0:
             yield self.env.process(self.elevator_door_open())
             yield self.env.timeout(random.randint(2, 5))
-            yield self.env.process(self.elevator_door_open())
+            yield self.env.process(self.elevator_door_close())
         else:
             yield self.env.timeout(0)
 
@@ -149,7 +149,7 @@ class Elevator(object):
         if len(to_remove) > 0:
             yield self.env.process(self.elevator_door_open())
             yield self.env.timeout(random.randint(2, 5))
-            yield self.env.process(self.elevator_door_open())
+            yield self.env.process(self.elevator_door_close())
         else:
             yield self.env.timeout(0)
 
