@@ -4,15 +4,16 @@ from .Floor import Floor
 class SandwichFloor(Floor):
     """A class representing a floor of a building with people going up and down,
     which is a subclass of the Floor class."""
-    def __init__(self, index: int):
+    def __init__(self, env, index: int):
         """
         Initialize the sandwich floor with the given index.
 
         Args:
+            env (simpy.Environment): The simulation environment.
             index (int): The index of the sandwich floor.
 
         """
-        super().__init__(index)
+        super().__init__(env, index)
         self.going_up_persons = []
         self.going_down_persons = []
 
@@ -50,17 +51,25 @@ class SandwichFloor(Floor):
 
     def remove_all_persons_going_up(self) -> list:
         """
-        Remove all persons who want to go up from the sandwich floor and return them as a list.
+        Remove all persons who want to go up from the ground floor and return them as a list.
 
         Returns:
-            List[Person]: A list of all persons who want to go up from the sandwich floor.
+            List[Person]: A list of all persons who want to go up from the ground floor.
 
         """
         pointer = []
-        n = len(self.going_up_persons)
-        for i in range(n):
-            pointer.append(self.going_up_persons.pop())
-        return pointer
+        if not self.has_call_up() or self.going_up_persons[0].get_arrival_time() > self.env.now:
+            return pointer
+        else:
+            n = len(self.going_up_persons)
+            count = 0
+            for i in range(n):
+                if self.going_up_persons[i].get_arrival_time() > self.env.now:
+                    break
+                count += 1
+            pointer = self.going_up_persons[:count]
+            self.going_up_persons = self.going_up_persons[count + 1:]
+            return pointer
 
     def remove_all_persons_going_down(self) -> list:
         """
@@ -71,7 +80,29 @@ class SandwichFloor(Floor):
 
         """
         pointer = []
-        n = len(self.going_down_persons)
-        for i in range(n):
-            pointer.append(self.going_down_persons.pop())
-        return pointer
+        if not self.has_call_up() or self.going_down_persons[0].get_arrival_time() > self.env.now:
+            return pointer
+        else:
+            n = len(self.going_down_persons)
+            count = 0
+            for i in range(n):
+                if self.going_down_persons[i].get_arrival_time() > self.env.now:
+                    break
+                count += 1
+            pointer = self.going_down_persons[:count]
+            self.going_down_persons = self.going_down_persons[count + 1:]
+            return pointer
+
+    def sort(self) -> None:
+        """Sorts the list of Persons in ascending arrival time."""
+        self.going_up_persons.sort(key=lambda person: person.get_arrival_time())
+        self.going_down_persons.sort(key=lambda person: person.get_arrival_time())
+
+    def update(self) -> None:
+        """Important to call this method every step of the simulation to update call status of every floor."""
+        # Floor will "check" if people have arrived by peeking at the simulation time
+        # to compare with the person's arrival time.
+        if len(self.going_up_persons) != 0 and self.going_up_persons[0].get_arrival_time() <= self.env.now:
+            self.set_call_up()
+        if len(self.going_down_persons) != 0 and self.going_down_persons[0].get_arrival_time() <= self.env.now:
+            self.set_call_down()

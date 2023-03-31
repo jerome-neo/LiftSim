@@ -1,10 +1,7 @@
 import random
 import simpy
-import numpy as np
-
-
 MAX_CAPACITY = 13
-MAX_WEIGHT = 1600 # kilograms
+MAX_WEIGHT = 1600  # kilograms
 SPEED = (0.5, 0.6)
 
 
@@ -16,6 +13,7 @@ class Elevator(object):
         env (simpy.Environment): The simulation environment.
         index (int): The index of the elevator.
         floors (list): The collection of floors in the building.
+        num_floors (int): Number of floors it is connected to.
         direction (str): The direction of travel for the elevator.
         max_persons (int): The maximum number of passengers the elevator can hold.
         max_weight (int): The maximum weight the elevator can hold.
@@ -56,6 +54,7 @@ class Elevator(object):
         self.env = env
         self.index = index
         self.floors = collection_floors
+        self.num_floors = len(collection_floors)
         self.direction = direction
         self.max_persons = MAX_CAPACITY  # not implemented
         self.max_weight = MAX_WEIGHT  # not implemented
@@ -63,14 +62,14 @@ class Elevator(object):
         self.speed = SPEED  # metres per second
         self.is_working_status = False
         self.passengers = []
-        self.path = []  # empty heap
-        self.resource = simpy.Resource(env,1)
+        self.path = []
+        self.resource = simpy.Resource(env, 1)
 
     def __str__(self):
         """Returns a string representation of the Elevator object."""
         # return f"elevator {self.index} dedicated to {self.direction} calls is at " \
         #        f"{self.curr_floor} with {len(self.passengers)} person(s)"
-        return f"{self.direction} Elevator {self.index} with {list(map(lambda x: str(x), self.passengers))}"
+        return f"{self.direction} Elevator {self.index} has passengers: {list(map(lambda x: str(x), self.passengers))}"
 
     def get_direction(self) -> str:
         """Returns the direction of travel for the Elevator object."""
@@ -82,9 +81,18 @@ class Elevator(object):
 
     def add_passengers(self, person) -> None:
         """Adds a passenger to the Elevator object."""
+        print(f'{person} has entered elevator {self.direction} {self.index}')
         self.passengers.append(person)
 
-    def enter_elevator(self, list_of_person) -> None:
+    def elevator_door_open(self, t=3):
+        """Simulates door opening."""
+        yield self.env.timeout(t)
+
+    def elevator_door_close(self, t=3):
+        """Simulates door closing."""
+        yield self.env.timeout(t)
+
+    def enter_elevator(self, list_of_person):
         """Simulates passengers entering the Elevator object.
 
         Args:
@@ -95,16 +103,31 @@ class Elevator(object):
 
         """
         for person in list_of_person:
-            self.add_passengers(person)
-            floor_level = person.get_dest_floor()
-            # Add items to the heap (priority, value)
-            if floor_level not in self.path:
-                self.path.append(floor_level)
-            print(f"{person} has entered {self} at {self.env.now}")
+            if len(self.passengers) < MAX_CAPACITY:
+                self.add_passengers(person)
+                floor_level = person.get_dest_floor()
+                if floor_level not in self.path:
+                    self.path.append(floor_level)
+                print(f"{person} has entered elevator at simulation time: {self.env.now}")
+            else:
+                # Put them back into the floor if the elevator is full
+                if self.get_direction() == "DOWN":
+                    self.floors[self.get_current_floor() - 1].add_person_going_down(person)
+                elif self.get_direction() == "UP":
+                    self.floors[self.get_current_floor() - 1].add_person_going_up(person)
+        # re-arrange our path back to ordering
         self.path.sort()
-        yield self.env.timeout(random.randint(2, 4))
+        # if we have people being put back into the floor
+        self.floors[self.get_current_floor() - 1].sort()
+        self.floors[self.get_current_floor() - 1].sort()
+        if len(list_of_person) > 0:
+            yield self.env.process(self.elevator_door_open())
+            yield self.env.timeout(random.randint(2, 5))
+            yield self.env.process(self.elevator_door_close())
+        else:
+            yield self.env.timeout(0)
 
-    def leave_elevator(self) -> None:
+    def leave_elevator(self):
         """
         Simulate passengers leaving the elevator.
 
@@ -115,12 +138,18 @@ class Elevator(object):
         to_remove = []
         for person in self.passengers:
             if person.has_reached_destination(self):
-                person.complete_trip()
+                print(f'{person} has reached destination floor')
+                person.complete_trip(self.env.now)
                 to_remove.append(person)
-                print(f"{person} has left {self} at {self.env.now}")
+                print(f"{person} has left elevator at simulation time: {self.env.now}")
         for person in to_remove:
             self.passengers.remove(person)
-        yield self.env.timeout(random.randint(2, 4))
+        if len(to_remove) > 0:
+            yield self.env.process(self.elevator_door_open())
+            yield self.env.timeout(random.randint(2, 5))
+            yield self.env.process(self.elevator_door_close())
+        else:
+            yield self.env.timeout(0)
 
     def is_busy(self) -> bool:
         """
@@ -135,10 +164,12 @@ class Elevator(object):
     def set_busy(self) -> None:
         """Set the elevator to be busy."""
         self.is_working_status = True
+        print(f'{self.direction} Elevator {self.index} has been set busy')
 
     def set_idle(self) -> None:
         """Set the elevator to be idle."""
         self.is_working_status = False
+        print(f'{self.direction} Elevator {self.index} has been set idle')
 
     def travel(self, end) -> None:
         """
@@ -146,17 +177,13 @@ class Elevator(object):
 
         Args:
             end (int): the destination floor of the elevator
-
-        Yields:
-            simpy.events.Timeout: a timeout event representing the time it takes for the elevator to travel to the
-                destination floor
-
         """
+        print(f'{self} moved from {self.curr_floor} to {end}')
         self.curr_floor = end
-
-        with self.resource.request() as req:
-            yield req
-            yield self.env.timeout(abs(end - self.curr_floor) * 3)
+        #
+        # with self.resource.request() as req:
+        #     yield req
+        #     yield self.env.timeout(abs(end - self.curr_floor) * 3)
 
     def add_path(self, floor_level) -> None:
         """
@@ -167,9 +194,12 @@ class Elevator(object):
 
         """
         self.path.append(floor_level)
-        self.path = np.unique(self.path).tolist()
+        # self.path = np.unique(self.path).tolist()
         self.path.sort()
-        print(f"Path of elevator {self.index} going {self.direction}: {self.path}")
+        if not self.is_busy():
+            self.set_busy()
+        displayed_path = self.path if self.get_direction() == "UP" else self.path[::-1]
+        print(f"{self.direction} elevator {self.index} path logged: {displayed_path}")
 
     def get_path(self) -> list:
         """
@@ -189,31 +219,62 @@ class Elevator(object):
             bool: True if the elevator has a path, False otherwise
 
         """
-        return len(self.path) != 0
+        return len(self.path) > 0
+
+    def move(self):
+        """This moves the elevator in the direction of the next floor in their path."""
+        # todo modify this to change the algorithm when it reaches top level
+        if self.is_busy() and self.has_path():
+            destination_floor = self.get_path()[0] if self.get_direction() == "UP" else self.get_path()[-1]
+            displacement_direction = destination_floor - self.get_current_floor()  # final - initial = change
+            move_direction = "UP" if displacement_direction > 0 else "DOWN"
+            if move_direction == "UP" and self.get_current_floor() != self.num_floors:
+                self.travel(self.get_current_floor() + 1)
+            elif move_direction == "DOWN" and self.get_current_floor() != 1:
+                self.travel(self.get_current_floor() - 1)
+            yield self.env.timeout(random.randint(3, 4))
+        else:
+            yield self.env.timeout(0)
 
     def activate(self) -> None:
-        """Activates elevator such that it immediately moves when a call is placed"""
-        while self.has_path():
-            if self.get_direction() == "UP":
-                next_floor = self.get_path()[::-1].pop()  # remove from the front
-                self.path = self.path[1:]
-                yield self.env.process(self.travel(next_floor))
-                floor = self.floors[next_floor - 1]
-                if self.get_current_floor() != len(self.floors): # if elevator is currently on top-most level
-                    yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_up()))
-                    floor.uncall_up()
-                else:
-                    yield self.env.process(self.travel(1))
+        """
+        This activates the logic of the elevator at the floor, here are the important functions:
+            (1) It makes sure to check if the floor it is at is where they are supposed to be.
+            (2) Allows boarding and leaving of passengers.
+            (3) Updates the floor call statuses. It can only un-call it.
+            (4) Updates the acceptance of a floor call status. It can only un-accept it.
+        Note:
+            Setting of the call status is done by the Floor class update() method.
+            It should be called in the Building class.
+        """
+        if not self.is_busy():
+            yield self.env.timeout(0)
+        elif not self.has_path():
+            # return control
+            self.set_idle()
+            yield self.env.timeout(0)
+        else:
+            if self.get_path()[0] != self.get_current_floor():
+                print(f"{self.direction} Elevator {self.index} knows that current floor {self.curr_floor} NOT IN path")
+                yield self.env.timeout(0)
             else:
-                next_floor = self.get_path().pop()
-                yield self.env.process(self.travel(next_floor))
-                floor = self.floors[next_floor - 1]
-                if self.get_current_floor() != 1:
-                    yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_down()))
-                    floor.uncall_down()
-                else:
-                    yield self.env.process(self.travel(1))
-            # take out passengers if any
-            yield self.env.process(self.leave_elevator())
+                print(f"{self.direction} Elevator {self.index} knows that current floor {self.curr_floor} IN path")
+                self.get_path().pop(0)
 
+                # Assuming we people are gracious
+                # i.e. we let people leave the elevator before boarding
+                yield self.env.process(self.leave_elevator())
+                floor = self.floors[self.get_current_floor()-1]
 
+                if self.get_direction() == "UP":
+                    if self.get_current_floor() < self.num_floors:  # if elevator is currently on top-most level
+                        yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_up()))
+                        # reset status
+                        floor.uncall_up()
+                        floor.unaccept_up_call()
+                elif self.get_direction() == "DOWN":
+                    if self.get_current_floor() > 1:
+                        yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_down()))
+                        # reset status
+                        floor.uncall_down()
+                        floor.unaccept_down_call()
