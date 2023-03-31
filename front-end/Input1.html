@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Multiple Input Fields</title>
+    <link rel="stylesheet" href="Input.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+    <style>
+      .elevator {
+        margin-right: 20px; /* Add some margin between elevators */
+      }
+    </style>
+  </head>
+
+
+  
+  <body>
+    <div id="clock" class = "section">
+      <p class="date">{{ date }}</p>
+      <p class="time">{{ time }}</p>
+    </div> 
+    <script src="DIGITAL CLOCK with Vue.js"></script>
+
+
+
+
+    <div id="input-container" class = "section">
+      <!-- Input fields will be added here -->
+    </div>
+    <button id="add-btn">Add Request</button>
+
+    <script src="Dynamic Input.js"></script>
+
+
+
+
+    <div style="display: flex;">
+      <!-- Elevator 1 -->
+      <div class="elevator">
+        <form name="form1" method="post" action="">
+          <p align="center">电梯1现在位置<span id="now_position"></span>层</p>
+          <p align="center">
+            <input name="Submit9" type="button" id="Submit9" value=" 9" onclick="goto(this);">
+          </p>
+          <p align="center">    
+              <input name="Submit8" type="button" id="Submit8" value=" 8" onclick="goto(this);">
+          </p>
+            <p align="center">    
+              <input name="Submit7" type="button" id="Submit7" value=" 7" onclick="goto(this);">
+          </p>
+            <p align="center">    
+              <input name="Submit6" type="button" id="Submit6" value=" 6" onclick="goto(this);">
+            </p>
+            <p align="center">    <input name="Submit5" type="button" id="Submit5" value=" 5" onclick="goto(this);">
+          </p>
+            <p align="center">    <input name="Submit4" type="button" id="Submit4" value=" 4" onclick="goto(this);">
+          </p>
+            <p align="center">    <input name="Submit3" type="button" id="Submit3" value=" 3" onclick="goto(this);">
+            </p>
+            <p align="center">    <input name="Submit2" type="button" id="Submit2" value=" 2" onclick="goto(this);">
+          </p>
+            <p align="center">    <input name="Submit1" type="button" id="Submit1" value=" 1" onclick="goto(this);">
+          </p>
+        </form>
+        <div align="center">
+          <script>
+              SetLight1(now_value);
+          </script>
+      </div>
+    
+    
+      <script src="app1.js"> 
+          </script>
+      </div>
+  
+      <!-- Elevator 2 -->
+      <div class="elevator">
+        <form name="form2" method="post" action="">
+          <p align="center">电梯2现在位置<span id="now_position"></span>层</p>
+          <p align="center">
+            <input name="Submit9" type="button" id="Submit9" value=" 9" onclick="goto(this);">
+          </p>
+          <p align="center">    
+              <input name="Submit8" type="button" id="Submit8" value=" 8" onclick="goto(this);">
+          </p>
+            <p align="center">    
+              <input name="Submit7" type="button" id="Submit7" value=" 7" onclick="goto(this);">
+          </p>
+            <p align="center">    
+              <input name="Submit6" type="button" id="Submit6" value=" 6" onclick="goto(this);">
+            </p>
+            <p align="center">    <input name="Submit5" type="button" id="Submit5" value=" 5" onclick="goto(this);">
+          </p>
+            <p align="center">    <input name="Submit4" type="button" id="Submit4" value=" 4" onclick="goto(this);">
+          </p>
+            <p align="center">    <input name="Submit3" type="button" id="Submit3" value=" 3" onclick="goto(this);">
+            </p>
+            <p align="center">    <input name="Submit2" type="button" id="Submit2" value=" 2" onclick="goto(this);">
+          </p>
+            <p align="center">    <input name="Submit1" type="button" id="Submit1" value=" 1" onclick="goto(this);">
+          </p>
+        </form>
+        <script>
+          SetLight2(now_value);
+      </script>
+  </div>
+
+
+  <script src="app1.js"> 
+      </script>
+      </div>
+  
+      <!-- Elevator 3 -->
+      <div class="elevator">
+        <form name="form3" method="post" action="">
+          <p align="center">电梯3现在位置<span id="now_position"></span>层</p>
+          <p align="center">
+            <input name="Submit9" type="button" id="Submit9" value=" 9" onclick="goto(this);">
+          </p>
+          <p align="center">    
+              <input name="Submit8" type="button" id="Submit8" value=" 8" onclick="goto(this);">
+          </p>
+            <p align="center">    
+              <input name="Submit7" type="button" id="Submit7" value=" 7" onclick="goto(this);">
+          </p>
+            <p align="center">    
+              <input name="Submit6" type="button" id="Submit6" value=" 6" onclick="goto(this);">
+            </p>
+            <p align="center">    <input name="Submit5" type="button" id="Submit5" value=" 5" onclick="goto(this);">
+          </p>
+            <p align="center">    <input name="Submit4" type="button" id="Submit4" value=" 4" onclick="goto(this);">
+          </p>
+            <p align="center">    <input name="Submit3" type="button" id="Submit3" value=" 3" onclick="goto(this);">
+            </p>
+            <p align="center">    <input name="Submit2" type="button" id="Submit2" value=" 2" onclick="goto(this);">
+          </p>
+            <p align="center">    <input name="Submit1" type="button" id="Submit1" value=" 1" onclick="goto(this);">
+          </p>
+        </form>
+        <script>
+          SetLight3(now_value);
+      </script>
+  </div>
+
+
+  <script src="app.js"> 
+      </script>
+      </div>
+    </div>
+  
+    <div align="center">
+      <script src="app1.js"></script>
+    </div>
+  
+  
+
+
+  </body>
+</html>
+
