@@ -39,6 +39,11 @@ class ElevatorSystem(object):
         """
         return f"Elevator with {len(self.elevators_up)} up and {len(self.elevators_down)} down configuration."
 
+    def to_dict(self) -> dict:
+        """Converts elevator group information into a dictionary with time stamp."""
+        return {self.env.now: [{index+1: elevator.to_dict()} for index, elevator
+                               in enumerate(self.elevators_up + self.elevators_down)]}
+
     def print_system_status(self) -> str:
         """Returns a string representation number of active elevators."""
         num_active_up = len(list(filter(lambda x: x.is_busy(), self.elevators_up)))
