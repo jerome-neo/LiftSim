@@ -42,6 +42,7 @@ class Building(object):
         self.floors = []
         self.elevator_group = None
         self.all_persons_spawned = persons_list
+        self.log = {}  # logs every step
 
     def get_num_floors(self) -> int:
         """Returns the number of floors in the building."""
@@ -80,6 +81,10 @@ class Building(object):
         for person in self.all_persons_spawned.get_person_list():
             self.place_person_on_floor(person)
 
+    def to_dict(self) -> dict:
+        """Returns a dictionary of the logged info."""
+        return self.log
+
     def simulate(self) -> None:
         """
         Simulates the building operation by creating Person instances, placing them in their respective floors,
@@ -91,6 +96,7 @@ class Building(object):
         """
 
         while True:
+            self.log.update(self.elevator_group.to_dict())
             print(f'Current simulation time: {self.env.now}')
             if self.env.now == 0 or self.elevator_group.is_all_idle():
                 next_arrival_time = self.all_persons_spawned.get_earliest_arrival_time()
@@ -100,8 +106,7 @@ class Building(object):
             # activate floor buttons if person 'arrived'
             for floor in self.floors:
                 floor.update()
-            # for floor in self.floors:
-            #     print(floor)
+
             # distribute the instructions to each elevator that is idle()
             self.elevator_group.allocate_rising_call()
             self.elevator_group.allocate_landing_call()
