@@ -98,9 +98,6 @@ class ModernEGCS(object):
         """
         elevator_curr_floor = elevator.get_current_floor()
         elevator_direction = elevator.get_direction()
-        elevator_capacity = elevator.get_capacity()
-        elevator_passengers_count = elevator.get_passenger_count()
-        elevator_passengers_list = elevator.get_passenger_list()
         elevator_carcalls_list = elevator.get_car_calls()
 
         hall_call_floor = hall_call.get_source_floor()
@@ -122,7 +119,7 @@ class ModernEGCS(object):
         initial_elevator_moving_distance = abs(last_car_call_in_list - first_car_call_in_list)
         
         
-        if elevator_direction == hall_call_direction:  
+        if elevator_direction is not None and elevator_direction == hall_call_direction:  
             for floor in elevator_carcalls_list:
                 if floor<hall_call_floor:
                     floors_til_arrival+=1
@@ -134,15 +131,17 @@ class ModernEGCS(object):
             elevator_carcalls_list.sort()
             current_elevator_moving_distance=elevator_carcalls_list[0]-elevator_carcalls_list[-1]
             
-        else:
+        else: #elevator currently either moving in an opposite direction to the hall call or have no direction (currently idle)
             if elevator_direction == "UP":
                 topmost_level = self.floors[-1].get_floor_level()
                 floors_til_arrival = (topmost_level - elevator_carcalls_list[0]) + (elevator_carcalls_list[0]-elevator_curr_floor) + (topmost_level-hall_call_floor) #assume that elevator will operate until top-most level until it switches direction
                 current_elevator_moving_distance = (topmost_level - elevator_carcalls_list[0]) + (topmost_level-hall_call_floor)
-            else:
+            elif elevator_direction == "DOWN":
                 bottommost_level = self.floors[0].get_floor_level()
                 floors_til_arrival = (elevator_carcalls_list[-1]-bottommost_level) + (elevator_curr_floor-elevator_carcalls_list[-1]) + (hall_call_floor-bottommost_level) #assume that elevator will operate until bottom-most level until it switches direction
                 current_elevator_moving_distance = (elevator_carcalls_list[-1] - bottommost_level) + (hall_call_floor-bottommost_level)
+            else:
+                current_elevator_moving_distance = abs(elevator_curr_floor - hall_call_floor)
 
         for person in waiting_passengers_hallcall:
             waiting_passengers_cost += ((now-person.get_arrival_time()) + floors_til_arrival*6)^2
@@ -191,8 +190,8 @@ class ModernEGCS(object):
                         next_best_elevator = self.hallcall_priority_arrays[prioritised_hall_call_index][1][0]
                         tup = (prioritised_hall_call_index,(next_best_elevator,updated_cost))
                         self.hall_call_priority_evaluation.append(tup)
-                else:
-                    self.assign_one_call(prioritised_hall_call_index,current_best_elevator)
+                        pass
+                self.assign_one_call(prioritised_hall_call_index,current_best_elevator)
                 del self.hall_call_priority_evaluation[0]
                 del self.hallcall_priority_arrays[prioritised_hall_call_index] 
                 
