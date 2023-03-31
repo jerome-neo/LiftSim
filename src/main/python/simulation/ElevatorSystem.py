@@ -1,10 +1,11 @@
+
 import Elevator
 
 
 class ElevatorSystem(object):
     """
     A system for controlling a group of elevators in a building.
-
+    Uses traditional Otis elevators logic.
     Attributes:
         env (simpy.Environment): The simulation environment.
         floors (list of Floor): The collection of floors in the building.
@@ -14,32 +15,27 @@ class ElevatorSystem(object):
     def __init__(self, env, collection_floors, num_up, num_down):
         """
         Initializes an ElevatorSystem.
-
         Args:
             env (simpy.Environment): The simulation environment.
             collection_floors (list of Floor): The collection of floors in the building.
             num_up (int): The number of elevators that move up.
             num_down (int): The number of elevators that move down.
-
         """
         self.env = env
         self.floors = collection_floors
-        self.elevators_up = [Elevator.Elevator(env, i, self.floors, 1, num_up+num_down,"UP") for i in range(1, num_up + 1)]
-        self.elevators_down = [Elevator.Elevator(env, i, self.floors, 1, num_up+num_down,"DOWN") for i in range(1, num_down + 1)]
+        self.num_floors = len(collection_floors)
+        self.elevators_up = [Elevator.Elevator(env, i, self.floors, 1, num_up+num_down, direction="UP") for i in range(1, num_up + 1)]
+        self.elevators_down = [Elevator.Elevator(env, i, self.floors, 1, num_up+num_down, direction="DOWN") for i in range(1, num_down + 1)]
 
 
     def __str__(self):
         """
         Returns a string representation of the ElevatorSystem.
-
         Returns:
             str: A string representation of the ElevatorSystem.
-
         """
         return f"Elevator with {len(self.elevators_up)} up and {len(self.elevators_down)} down configuration."
     
-
-
 
     def handle_person(self, person) -> None:
         """
@@ -63,42 +59,53 @@ class ElevatorSystem(object):
     
 
 
-    def handle_landing_call(self) -> None:
+    def print_system_status(self) -> str:
+        """Returns a string representation number of active elevators."""
+        num_active_up = len(list(filter(lambda x: x.is_busy(), self.elevators_up)))
+        num_active_down = len(list(filter(lambda x: x.is_busy(), self.elevators_down)))
+        return f"Elevator system has {num_active_up} UP and {num_active_down} DOWN elevator(s) ACTIVE"
+
+    def is_all_idle(self) -> bool:
+        """Returns True if all the elevators are idle"""
+        return all(map(lambda x: x.is_busy(), self.elevators_up)) \
+            and all(map(lambda x: x.is_busy(), self.elevators_down))
+
+    def allocate_landing_call(self) -> None:
         """Handles a landing call from a person who wants to go down."""
-        while True:
-            if all(map(lambda x: x.is_busy(), self.elevators_down)):
-                yield self.env.timeout(1)
-            else:
-                list_of_elevators = sorted(self.elevators_down, key=lambda x: x.get_current_floor(), reverse=True)
-                chosen_index = 0
+        if all(map(lambda x: x.is_call_down_accepted(), filter(lambda x: x.has_call_down(), self.floors))):
+            return None
+        if not all(map(lambda x: x.is_busy(), self.elevators_down)):
+            list_of_elevators = sorted(self.elevators_down, key=lambda x: x.get_current_floor(), reverse=True)
+            chosen_index = 0
+            elevator = list_of_elevators[chosen_index]
+            while elevator.is_busy():
+                chosen_index += 1
                 elevator = list_of_elevators[chosen_index]
-                while elevator.is_busy():
-                    chosen_index += 1
-                    elevator = list_of_elevators[chosen_index]
-                elevator.set_busy()
-                for floor in self.floors:
-                    if floor.has_call_down() and (floor.get_floor_level() not in elevator.path):
-                        elevator.add_path(floor.get_floor_level())
-                break
+            for floor in self.floors:
+                if floor.is_call_down_accepted():
+                    continue
+                elif floor.has_call_down():
+                    elevator.add_path(floor.get_floor_level())
+                    floor.accept_down_call()
 
-    def handle_rising_call(self) -> None:
+    def allocate_rising_call(self) -> None:
         """Handles a rising call from a person who wants to go up."""
-        while True:
-            if all(map(lambda x: x.is_busy(), self.elevators_up)):
-                yield self.env.timeout(1)
-            else:
-                list_of_elevators = sorted(self.elevators_up, key=lambda x: x.get_current_floor(), reverse=False)
-                chosen_index = 0
+        if all(map(lambda x: x.is_call_up_accepted(), filter(lambda x: x.has_call_up(), self.floors))):
+            return None
+        if not all(map(lambda x: x.is_busy(), self.elevators_up)):
+            list_of_elevators = sorted(self.elevators_up, key=lambda x: x.get_current_floor(), reverse=False)
+            chosen_index = 0
+            elevator = list_of_elevators[chosen_index]
+            while elevator.is_busy():
+                chosen_index += 1
                 elevator = list_of_elevators[chosen_index]
-                while elevator.is_busy():
-                    chosen_index += 1
-                    elevator = list_of_elevators[chosen_index]
-                elevator.set_busy()
-                for floor in self.floors:
-                    if floor.has_call_up() and (floor.get_floor_level() not in elevator.path):
-                        elevator.add_path(floor.get_floor_level())
-                break
-
+            elevator.set_busy()
+            for floor in self.floors:
+                if floor.is_call_up_accepted():
+                    continue
+                elif floor.has_call_up():
+                    elevator.add_path(floor.get_floor_level())
+                    floor.accept_up_call()
 
     def update_status(self) -> None:
         """Updates the elevators to be idle when they have no path."""

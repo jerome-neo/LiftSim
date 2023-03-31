@@ -18,6 +18,7 @@ class ModernEGCS(object):
 
         Args:
             env (simpy.Environment): The simulation environment.
+            building (Building.Building): The Building object where simulation takes place.
             collection_floors (list of Floor): The collection of floors in the building.
             num_elevators (int): The number of elevators in the system.
             w1: w1 for cost calculation in HCPM
@@ -29,6 +30,7 @@ class ModernEGCS(object):
         self.building = building
         self.floors = collection_floors
         self.elevators = [Elevator.Elevator(env, i, self.floors, 1,num_elevators) for i in range(1, num_elevators + 1)]
+        self.unassigned_hall_calls = []
         self.hallcall_priority_arrays = [] #stores complete set of priority arrays
         self.hall_call_priority_evaluation = [] #stores only the first element of each hall call's priority array
         self.w1 = w1
@@ -55,34 +57,6 @@ class ModernEGCS(object):
         ls_1 = (len(self.hallcall_priority_arrays),priority_array[0])
         self.hallcall_priority_arrays.append(ls)
         self.hall_call_priority_evaluation.append(ls_1)
-
-
-    def handle_person(self, person) -> None:
-        """
-        Handles a person who wants to use the elevator system.
-
-        Args:
-            person (Person): The person who wants to use the elevator system.
-        """
-        # Put the person in the floor and call the lift
-        call_direction = person.get_direction()
-        curr_floor = self.floors[person.get_curr_floor() - 1]
-        building = curr_floor.get_building()
-        if call_direction < 0:
-            curr_floor.add_person_going_down(person)
-            if not curr_floor.has_call_down():
-                curr_floor.set_call_down()
-                curr_floor.person_arrived()
-                hall_call = HallCall.HallCall(self.env,curr_floor.get_floor_level(),-1)
-                self.add_hall_call(hall_call)
-
-        else:
-            curr_floor.add_person_going_up(person)
-            if not curr_floor.has_call_up():
-                curr_floor.set_call_up()
-                curr_floor.person_arrived()
-                hall_call = HallCall.HallCall(self.env,curr_floor.get_floor_level(),1)
-                self.add_hall_call(hall_call)
         
     
     def calculate_cost2_minus_cost1_efficient(self,hall_call,elevator):

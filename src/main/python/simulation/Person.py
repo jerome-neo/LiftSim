@@ -1,59 +1,50 @@
-import random
 import LiftRandoms
-import Elevator
+
 
 class Person(object):
     """A person in the building.
-
     Attributes:
         id (int): The unique identifier of the person.
-        env (simpy.Environment): The simulation environment.
         curr_floor (int): The floor where the person is currently located.
         destination_floor (int): The floor where the person wants to go.
         arrival_time (float): The time when the person arrives in the building.
         end_time (float): The time when the person completes their trip.
         has_reached_floor (bool): Whether the person has reached their destination floor.
-
     """
-    def __init__(self, env, index, building):
+    def __init__(self, env, index, arrival_time):
         """Initializes a new Person object.
-
         Args:
             env (simpy.Environment): The simulation environment.
             index (int): The unique identifier of the person.
             building (Building): The building where the person is located.
-
         """
         self.id = index
         self.env = env
-        self.arrival_time = env.now #arrival time of person's request
+        self.arrival_time = arrival_time
         self.elevator_arrival_time = None #time taken for the elevator to reach the person, i.e. for the person's hall call to be answered
-        self.end_time = None
-
-        self.entered_elevator = False
+        self.end_time = None 
+        self.curr_floor, self.destination_floor = LiftRandoms.LiftRandoms().generate_source_dest(self.arrival_time)
         self.has_reached_floor = False
-        random_variable_generator=LiftRandoms.LiftRandoms()
-        self.curr_floor=0
-        self.destination_floor=0
-
-        while self.curr_floor==self.destination_floor:
-            self.curr_floor,self.destination_floor=random_variable_generator.generate_source_dest(self.arrival_time)
-        
-        
-        print(f"Source: {self.curr_floor}, Dest: {self.destination_floor}")
-        print(f"Arrival time: {self.arrival_time}")
+        while self.curr_floor == self.destination_floor:
+            self.curr_floor, self.destination_floor = LiftRandoms.LiftRandoms().generate_source_dest(self.arrival_time)
+        self.assigned_elevator = None
 
     def __str__(self):
         """Returns a string representation of the Person object."""
-        return f"Person {self.id} starting at {self.curr_floor} and going to {self.destination_floor}:"
+        return f"Person {self.id}"
 
-    def calls_elevator(self) -> None:
-        """
-        Simulates a person calling an elevator.
+    def overwrite(self, curr_floor, destination_floor):
+        """Overwrites automatic config of Person class."""
+        self.curr_floor = curr_floor
+        self.destination_floor = destination_floor
+    
+    def get_arrival_time(self):
+        """Returns the arrival_time attribute."""
+        return self.arrival_time
 
-        This method waits for one unit of time to simulate the time taken for a person to call an elevator.
-        """
-        yield self.env.timeout(1)
+    def get_end_time(self):
+        """Returns the end_time attribute."""
+        return self.end_time
 
     def has_reached_destination(self, elevator) -> bool:
         """
@@ -68,7 +59,7 @@ class Person(object):
         """
         return elevator.get_current_floor() == self.destination_floor
 
-    def complete_trip(self) -> None:
+    def complete_trip(self,time) -> None:
         """
         Marks the person's trip as complete.
 
@@ -76,7 +67,7 @@ class Person(object):
         has completed their trip.
 
         """
-        self.end_time = self.env.now
+        self.end_time = time
         self.has_reached_floor = True
 
     def has_completed_trip(self) -> bool:
@@ -123,18 +114,15 @@ class Person(object):
     def get_direction(self) -> int:
         """
         Returns the direction that the person wants to go.
-
         Returns:
             int: -1 if the person wants to go down, 1 if the person wants to go up.
-
         """
-        return -1 if self.curr_floor > self.destination_floor else 1
-
-    def get_assigned_elevator(self)-> Elevator:
-        """
-        Returns the object of the assigned Elevator
-        """
+        return "DOWN" if self.curr_floor > self.destination_floor else "UP"
+    
+    def get_assigned_elevator(self) -> None:
+        """Returns the assigned Elevator object"""
         return self.assigned_elevator
+
 
     def get_elevator_arrival_time(self)-> float:
         """
@@ -169,13 +157,10 @@ class Person(object):
         if assigned_elevator.get_direction() == "DOWN":
             to_wait_for_reaching_dest = len(elevator_remaining_car_calls) - to_wait_for_reaching_dest - 1
         
-        estimated_remaining_travel_time = abs(person_destination_floor-elevator_current_floor)+3*to_wait_for_reaching_dest
+        estimated_remaining_travel_time = abs(person_destination_floor-elevator_current_floor)+3.5*to_wait_for_reaching_dest
         time_taken_to_ride = elevator_arrival_to_now + estimated_remaining_travel_time
         return time_taken_to_ride
 
-    def get_person_arrival_time(self)->float:
-        """Returns person's arrival time"""
-        return self.arrival_time
     
     def get_elevator_waiting_time(self)->float:
         """
@@ -184,26 +169,6 @@ class Person(object):
         Returns:
             float: THe length of time spent waiting for the elevator by the person
         """
-        time_taken_for_elevator_arrival = self.get_elevator_arrival_time() - self.person_arrival_time()
+        time_taken_for_elevator_arrival = self.get_elevator_arrival_time() - self.arrival_time()
         return time_taken_for_elevator_arrival
     
-    def succeeds_entering_elevator(self)->None:
-        """Updates the person's status of success regarding entering the elevator and updates elevator arrival time"""
-        self.entered_elevator = True
-        self.elevator_arrival_time = self.env.now
-    
-    def is_in_elevator(self)->bool:
-        """
-        Returns whether or not person is inside an elevator
-
-        Returns:
-            bool: The person's status of being inside an elevator or not
-        """
-        return self.entered_elevator
-
-    
-    def elevator_arrived(self)->None:
-        """
-        Updates elevator arrival times
-        """
-        self.elevator_arrival_time = self.env.now
