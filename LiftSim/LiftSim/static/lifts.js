@@ -59,38 +59,64 @@ const elevatorStatus = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0]  // Elevator 3
 ];
 
+// Set a certain elevator to the target floor
 function setTargetFloor(elevatorNumber, floorNumber) {
   elevatorStatus[elevatorNumber - 1][floorNumber - 1] = 1;
-  // 获取对应楼层的 DOM 元素
+  // Get the corresponding DOM element of the floor
   const floorElement = document.getElementById(`e${elevatorNumber}f${floorNumber}`);
-  // 修改 DOM 元素的样式
+  // Modify the style of the DOM element
   floorElement.classList.add('target');
 }
 
 function rmTargetFloor(elevatorNumber, floorNumber) {
   elevatorStatus[elevatorNumber - 1][floorNumber - 1] = 1;
-  // 获取对应楼层的 DOM 元素
+  // Get the corresponding DOM element of the floor
   const floorElement = document.getElementById(`e${elevatorNumber}f${floorNumber}`);
-  // 修改 DOM 元素的样式
+  // Modify the style of the DOM element
   floorElement.classList.remove('target');
 }
 
+// Turn On the light of a certain floor in a certain elevator
 function turnOnLight(elevatorNumber, floorNumber) {
   elevatorStatus[elevatorNumber - 1][floorNumber - 1] = 1;
-  // 获取对应楼层的 DOM 元素
+  // Get the corresponding DOM element of the floor
   const floorElement = document.getElementById(`e${elevatorNumber}f${floorNumber}`);
-  // 修改 DOM 元素的样式
+  // Modify the style of the DOM element
   floorElement.classList.add('on');
 }
 
-// 熄灭某个电梯某个楼层的灯
+// Turn off the light of a certain floor in a certain elevator
 function turnOffLight(elevatorNumber, floorNumber) {
   elevatorStatus[elevatorNumber - 1][floorNumber - 1] = 0;
-  // 获取对应楼层的 DOM 元素
+  // Get the corresponding DOM element of the floor
   const floorElement = document.getElementById(`e${elevatorNumber}f${floorNumber}`);
-  // 修改 DOM 元素的样式
+  // Modify the style of the DOM element
   floorElement.classList.remove('on');
 }
 
-setTargetFloor(1, 4)
-turnOnLight(2, 5)
+//setTargetFloor(1, 9)
+//turnOnLight(2, 5)
+
+function updateElevatorStatus(elevatorStatus) {
+  for (let i = 0; i < elevatorStatus.length; i++) {
+    for (let j = 0; j < elevatorStatus[i].length; j++) {
+      const floorElement = document.getElementById(`e${i + 1}f${j + 1}`);
+      if (elevatorStatus[i][j] === 1) {
+        floorElement.classList.add('on');
+      } else if (elevatorStatus[i][j] === 2) {
+        floorElement.classList.add('target');
+      } else {
+        floorElement.classList.remove('on');
+        floorElement.classList.remove('target');
+      }
+    }
+  }
+}
+
+
+const currentStatus = [
+  [0, 0, 0, 1, 0, 0, 2, 0, 0], // Elevator 1
+  [0, 0, 1, 0, 0, 0, 0, 2, 0], // Elevator 2
+  [0, 0, 0, 0, 1, 0, 2, 0, 0]  // Elevator 3
+];
+updateElevatorStatus(currentStatus)
