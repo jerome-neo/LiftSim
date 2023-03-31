@@ -40,7 +40,7 @@ This application is meant to be served on Docker.
 For more information, please see our [User Guide](docs/UserGuide.md).
 
 ## 4. Data
-Data collection was done between February and March 2023. The data was collected at NUS S16 building lift elevators.
+Data collection was done between February and March 2023. The data was collected at NUS S16 building elevators.
 There are a total of 3 lifts in the S16 building.
 
 ## 5. Results
