@@ -1,0 +1,34 @@
+.elevator {
+  width: 90px;
+  height: 492px;
+  border: 5px solid grey;
+  position: relative;
+  margin: 0 20px;
+  float: left;
+  color: grey;
+  background-color: #fff;
+}
+
+.floor {
+  width: 100%;
+  height: 50px;
+  color: grey;
+  border: 1px solid grey;
+  text-align: center;
+  position: relative;
+  font-size: 17px;
+}
+
+h3 {
+  font-size: 20px;
+}
+.on{
+  background-color: yellow;
+}
+
+.target{
+  background-color: #007bff;
+}
+
+
+
