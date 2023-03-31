@@ -71,6 +71,13 @@ class Elevator(object):
         #        f"{self.curr_floor} with {len(self.passengers)} person(s)"
         return f"{self.direction} Elevator {self.index} has passengers: {list(map(lambda x: str(x), self.passengers))}"
 
+    def to_dict(self) -> dict:
+        """Converts elevator information into a dictionary."""
+        floor = {floor + 1: 0 for floor in range(self.num_floors)}
+        floor[self.get_current_floor()] = 1
+        return {'elevator_type': -1 if self.direction == "DOWN" else 1,
+                'floor': floor, 'num_passengers': self.get_num_passengers()}
+
     def get_direction(self) -> str:
         """Returns the direction of travel for the Elevator object."""
         return self.direction
@@ -78,6 +85,10 @@ class Elevator(object):
     def get_current_floor(self) -> int:
         """Returns the current floor the Elevator object is on."""
         return self.curr_floor
+
+    def get_num_passengers(self):
+        """Returns number of passengers inside."""
+        return len(self.passengers)
 
     def add_passengers(self, person) -> None:
         """Adds a passenger to the Elevator object."""
