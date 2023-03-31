@@ -1,0 +1,27 @@
+.elevator {
+  width: 90px;
+  height: 520px;
+  border: 10px solid grey;
+  position: relative;
+  margin: 0 20px;
+  float: left;
+}
+
+.floor {
+  width: 100%;
+  height: 50px;
+  border: 0px solid grey;
+  text-align: center;
+  position: relative;
+}
+
+.on{
+  background-color: yellow;
+}
+
+.target{
+  background-color: #007bff;
+}
+
+
+
