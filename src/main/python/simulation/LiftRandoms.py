@@ -154,45 +154,45 @@ class LiftRandoms:
         """
 
         # morning
-        if arrival_time < LiftRandoms.hours_to_seconds(8):
+        if arrival_time < LiftRandoms.hours_to_seconds(10):
             day_phase = DayPhase.MORNING
         # afternoon
-        elif arrival_time < LiftRandoms.hours_to_seconds(15):
+        elif arrival_time < LiftRandoms.hours_to_seconds(17):
             day_phase = DayPhase.AFTERNOON
-            arrival_time -= LiftRandoms.hours_to_seconds(15)
+            arrival_time -= LiftRandoms.hours_to_seconds(17)
         # evening
         else:
             day_phase = DayPhase.EVENING
-            arrival_time -= LiftRandoms.hours_to_seconds(18)
+            arrival_time -= LiftRandoms.hours_to_seconds(20)
 
         # hr phases
-        if arrival_time < LiftRandoms.hours_to_seconds(6):
+        if arrival_time < LiftRandoms.hours_to_seconds(8):
             hr_phase = HourPhase.PRE_PEAK
-        elif arrival_time < LiftRandoms.hours_to_seconds(8):
-            hr_phase = HourPhase.PEAK
-        elif arrival_time < LiftRandoms.hours_to_seconds(9):
-            hr_phase = HourPhase.POST_PEAK_I
         elif arrival_time < LiftRandoms.hours_to_seconds(10):
-            hr_phase = HourPhase.POST_PEAK_II
+            hr_phase = HourPhase.PEAK
         elif arrival_time < LiftRandoms.hours_to_seconds(11):
-            hr_phase = HourPhase.OFF_PEAK
+            hr_phase = HourPhase.POST_PEAK_I
         elif arrival_time < LiftRandoms.hours_to_seconds(12):
-            hr_phase = HourPhase.PRE_PEAK
-        elif arrival_time < LiftRandoms.hours_to_seconds(13):
-            hr_phase = HourPhase.PEAK
-        elif arrival_time < LiftRandoms.hours_to_seconds(14):
-            hr_phase = HourPhase.POST_PEAK_I
-        elif arrival_time < LiftRandoms.hours_to_seconds(15):
             hr_phase = HourPhase.POST_PEAK_II
-        elif arrival_time < LiftRandoms.hours_to_seconds(16):
+        elif arrival_time < LiftRandoms.hours_to_seconds(13):
             hr_phase = HourPhase.OFF_PEAK
-        elif arrival_time < LiftRandoms.hours_to_seconds(17):
+        elif arrival_time < LiftRandoms.hours_to_seconds(14):
             hr_phase = HourPhase.PRE_PEAK
-        elif arrival_time < LiftRandoms.hours_to_seconds(18):
+        elif arrival_time < LiftRandoms.hours_to_seconds(15):
             hr_phase = HourPhase.PEAK
-        elif arrival_time < LiftRandoms.hours_to_seconds(19):
+        elif arrival_time < LiftRandoms.hours_to_seconds(16):
             hr_phase = HourPhase.POST_PEAK_I
+        elif arrival_time < LiftRandoms.hours_to_seconds(17):
+            hr_phase = HourPhase.POST_PEAK_II
+        elif arrival_time < LiftRandoms.hours_to_seconds(18):
+            hr_phase = HourPhase.OFF_PEAK
+        elif arrival_time < LiftRandoms.hours_to_seconds(19):
+            hr_phase = HourPhase.PRE_PEAK
         elif arrival_time < LiftRandoms.hours_to_seconds(20):
+            hr_phase = HourPhase.PEAK
+        elif arrival_time < LiftRandoms.hours_to_seconds(21):
+            hr_phase = HourPhase.POST_PEAK_I
+        elif arrival_time < LiftRandoms.hours_to_seconds(22):
             hr_phase = HourPhase.POST_PEAK_II
         else:
             hr_phase = HourPhase.OFF_PEAK
