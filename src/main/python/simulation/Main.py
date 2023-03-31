@@ -101,8 +101,9 @@ with open('output.txt', 'w') as f:
     # run the simulation by telling it how long to run, e.g. 200
     # when mode is 'manual', it will read the input file in ../../in
     #Test.run(200, 'Otis', mode='manual') 
-    Test.run(200, 'Otis', mode='default')
-    #Test.run(200, 'ModernEGCS', mode='manual') # Test.run(200, 'ModernEGCS', mode='default')
+    #Test.run(200, 'Otis', mode='default')
+    #Test.run(200, 'ModernEGCS', mode='manual') 
+    Test.run(200, 'ModernEGCS', mode='default')
 
     # Step 3
     # Save the data of all persons that have completed their trip in the simulation

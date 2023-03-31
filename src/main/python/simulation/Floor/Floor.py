@@ -9,6 +9,7 @@ class Floor(object):
 
         Args:
             env (simpy.Environment): The simulation environment.
+            building (Building): The simulation Building
             index (int): The index of the floor.
         """
         self.env = env

@@ -37,28 +37,6 @@ class ElevatorSystem(object):
         return f"Elevator with {len(self.elevators_up)} up and {len(self.elevators_down)} down configuration."
     
 
-    def handle_person(self, person) -> None:
-        """
-        Handles a person who wants to use the elevator system.
-
-        Args:
-            person (Person): The person who wants to use the elevator system.
-        """
-        # Put the person in the floor and call the lift
-        call_direction = person.get_direction()
-        curr_floor = self.floors[person.get_curr_floor() - 1]
-        building = curr_floor.get_building()
-        if call_direction < 0:
-            curr_floor.add_person_going_down(person)
-            curr_floor.person_arrived()
-            curr_floor.set_call_down()
-        else:
-            curr_floor.add_person_going_up(person)
-            curr_floor.person_arrived()
-            curr_floor.set_call_up()
-    
-
-
     def print_system_status(self) -> str:
         """Returns a string representation number of active elevators."""
         num_active_up = len(list(filter(lambda x: x.is_busy(), self.elevators_up)))

@@ -87,11 +87,15 @@ class Building(object):
             self.elevator_group = ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
         elif elevator_algo=="ModernEGCS":
             self.elevator_algo = "ModernEGCS"
-            self.elevator_group = ModernEGCS(env=self.env, floors=self.floors, num_elevators=self.num_elevators,w1=1,w2=1,w3=1)
+            self.elevator_group = ModernEGCS(self.env, self, self.floors, num_elevators=self.num_up+self.num_down,w1=1,w2=1,w3=1)
 
         # Place persons into building
         for person in self.all_persons_spawned.get_person_list():
             self.place_person_on_floor(person)
+
+    def get_elevator_algo_type(self):
+        """Returns in string the type of elevator algorithm implemented"""
+        return self.elevator_algo
 
     def simulate(self) -> None:
         """
@@ -112,7 +116,7 @@ class Building(object):
             for floor in self.floors:
                 floor.update()
 
-            if self.elevator_algo == "Otis":
+            if self.get_elevator_algo_type() == "Otis":
                 self.elevator_group.allocate_rising_call()
                 self.elevator_group.allocate_landing_call()
 
@@ -132,7 +136,7 @@ class Building(object):
                 print(f'\n')
 
             #ModernEGCS handling of persons
-            elif self.elevator_algo == "ModernEGCS":
+            elif self.get_elevator_algo_type() == "ModernEGCS":
                 self.elevator_group.assign_calls()
                 for elevator in self.elevator_group.elevators:
                     self.env.process(elevator.activate())

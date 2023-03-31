@@ -1,12 +1,13 @@
-
-from .Floor import Floor
-import HallCall
-import ModernEGCS
+import simpy
+from Floor import Floor
+from HallCall import HallCall
+from ModernEGCS import ModernEGCS
+import Building
 
 class SandwichFloor(Floor):
     """A class representing a floor of a building with people going up and down,
     which is a subclass of the Floor class."""
-    def __init__(self, env, building, index: int):
+    def __init__(self, env: simpy.Environment, building: Building, index: int):
         """
         Initialize the sandwich floor with the given index.
         Args:
@@ -106,16 +107,19 @@ class SandwichFloor(Floor):
         # to compare with the person's arrival time.
         building = self.get_building()
         system = building.get_elevator_system()
+        system_name = building.get_elevator_algo_type()
         if len(self.going_up_persons) != 0 and self.going_up_persons[0].get_arrival_time() <= self.env.now:
             self.set_call_up()
             self.person_arrived()
-            if isinstance(system,type(ModernEGCS)):
+            if system_name == "ModernEGCS":
+                print("Hall call registered")
                 hall_call = HallCall(self.env,self.floor_index,1)
                 system.add_hall_call(hall_call)
         if len(self.going_down_persons) != 0 and self.going_down_persons[0].get_arrival_time() <= self.env.now:
             self.set_call_down()
             self.person_arrived()
-            if isinstance(system,type(ModernEGCS)):
+            if system_name == "ModernEGCS":
+                print("Hall call registered")
                 hall_call = HallCall(self.env,self.floor_index,-1)
                 system.add_hall_call(hall_call)
     
