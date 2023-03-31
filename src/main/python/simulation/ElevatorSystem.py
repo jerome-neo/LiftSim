@@ -51,11 +51,14 @@ class ElevatorSystem(object):
         # Put the person in the floor and call the lift
         call_direction = person.get_direction()
         curr_floor = self.floors[person.get_curr_floor() - 1]
+        building = curr_floor.get_building()
         if call_direction < 0:
             curr_floor.add_person_going_down(person)
+            curr_floor.person_arrived()
             curr_floor.set_call_down()
         else:
             curr_floor.add_person_going_up(person)
+            curr_floor.person_arrived()
             curr_floor.set_call_up()
     
 

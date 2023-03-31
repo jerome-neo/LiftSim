@@ -5,6 +5,7 @@ import Person
 import ElevatorSystem
 import LiftRandoms
 import ModernEGCS
+import numpy as np
 
 
 class Building(object):
@@ -47,6 +48,7 @@ class Building(object):
         self.floors = []
         self.elevator_group = None
         self.all_persons_spawned = []
+        self.arrival_rates_floors = np.zeros(num_floors)
 
     def get_num_floors(self) -> int:
         """Returns the number of floors in the building."""
@@ -54,9 +56,9 @@ class Building(object):
 
     def initialise(self,lift_algo) -> None:
         """Initialises the building by adding the floors and the elevator system."""
-        self.floors.append(GroundFloor(1))
-        self.floors.extend([SandwichFloor(i) for i in range(2, self.num_floors)])
-        self.floors.append(TopFloor(self.num_floors))
+        self.floors.append(GroundFloor(self.env,self,1))
+        self.floors.extend([SandwichFloor(self.env,self,i) for i in range(2, self.num_floors)])
+        self.floors.append(TopFloor(self.env,self,self.num_floors))
 
         if lift_algo=="Otis":
             self.elevator_group = ElevatorSystem.ElevatorSystem(env=self.env, floors=self.floors, num_up=self.num_up, num_down=self.num_down)
@@ -109,5 +111,17 @@ class Building(object):
 
             else:
                 print("Lift algorithm has not been configured yet")
-            
+
+    def update_floor_arrival_rate(self,floor_index,updated_rate):
+        """Updates the value of arrival rate for a specified floor. Used in ModernEGCS calculations"""
+        self.arrival_rates_floors[floor_index] = updated_rate
+    
+    def get_sum_arrival_rates_floors(self):
+        """Returns the sum of arrival rates across all floors"""
+        return np.sum(self.arrival_rates_floors)
+    
+    def get_busiest_floor(self):
+        """Returns floor level with the highest arrival rate"""
+        return np.argmax(self.arrival_rates_floors)+1
+
             
