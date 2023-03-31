@@ -97,7 +97,173 @@ function turnOffLight(elevatorNumber, floorNumber) {
 //setTargetFloor(1, 9)
 //turnOnLight(2, 5)
 
-function updateElevatorStatus(elevatorStatus) {
+data={
+    "192": [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 1
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 1,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 1
+            }
+        },
+        {
+            "3": {
+                "elevator_type": -1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 1,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+    "197": [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 1
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 1,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 1
+            }
+        },
+        {
+            "3": {
+                "elevator_type": -1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 1,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ]
+}
+
+//const data = JSON.parse(receivedJSON);
+//keys is the sorted timestamps, keys[0] is the first timestamp
+const keys = Object.keys(data).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
+
+/*async function updateFloors() {
+  for (const key of keys) {
+    const value = data[key];
+    const lift1info = value[0]["1"];
+    const lift2info = value[1]["2"];
+    const lift3info = value[2]["3"];
+    const lift1floor = lift1info["floor"];
+    const lift2floor = lift2info["floor"];
+    const lift3floor = lift3info["floor"];
+
+    await new Promise(resolve => setTimeout(resolve, 2000)); // 等待两秒钟
+
+    updateEachFloor(1, lift1floor);
+    updateEachFloor(2, lift2floor);
+    updateEachFloor(3, lift3floor);
+  }
+}*/
+
+keys.forEach(key => {
+  const value = data[key]; //lift "1","2","3"
+  const lift1info = value[0]["1"];
+  const lift2info = value[1]["2"];
+  const lift3info = value[2]["3"];
+  const lift1floor = lift1info["floor"];
+  const lift2floor = lift2info["floor"];
+  const lift3floor = lift3info["floor"];
+  setTimeout(() => {
+    updateEachFloor(1, lift1floor);
+    updateEachFloor(2, lift2floor);
+    updateEachFloor(3, lift3floor);
+  }, 2000);
+});
+
+
+function updateEachFloor(lift, floorStatus) {
+    for (let i = 0; i < 9; i++) {
+      const floorElement = document.getElementById(`e${lift}f${i + 1}`);
+      if (floorStatus[String(i+1)] === 1) {
+        floorElement.classList.add('on');
+      } else if (floorStatus[String(i+1)] === 2) {
+        floorElement.classList.add('target');
+      } else {
+        floorElement.classList.remove('on');
+        floorElement.classList.remove('target');
+      }
+    }
+}
+
+//updateEachFloor(1, {"1": 0, "2": 0, "3": 1, "4": 0, "5": 0, "6": 0, "7": 2, "8": 0, "9": 0})
+//updateEachFloor(2, {"1": 0, "2": 0, "3": 0, "4": 0, "5": 1, "6": 0, "7": 0, "8": 0, "9": 2})
+//updateEachFloor(3, {"1": 0, "2": 1, "3": 0, "4": 2, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0})
+//floorStatus = {"1": 1, "2": 0, "3": 1, "4": 0, "5": 0, "6": 0, "7": 2, "8": 0, "9": 0}
+
+/*function updateElevatorStatus(elevatorStatus) {
   for (let i = 0; i < elevatorStatus.length; i++) {
     for (let j = 0; j < elevatorStatus[i].length; j++) {
       const floorElement = document.getElementById(`e${i + 1}f${j + 1}`);
@@ -119,4 +285,4 @@ const currentStatus = [
   [0, 0, 1, 0, 0, 0, 0, 2, 0], // Elevator 2
   [0, 0, 0, 0, 1, 0, 2, 0, 0]  // Elevator 3
 ];
-updateElevatorStatus(currentStatus)
+updateElevatorStatus(currentStatus)*/
