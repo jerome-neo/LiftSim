@@ -1,5 +1,6 @@
 import Elevator
 import HallCall
+import Building
 
 class ModernEGCS(object):
     """
@@ -11,7 +12,7 @@ class ModernEGCS(object):
         elevators (list of Elevator): The collection of elevators within the building system.
         unassigned_hall_calls (list of two-element tuples): The queue of unassigned hall calls
     """
-    def __init__(self, env, collection_floors, num_elevators,w1,w2,w3):
+    def __init__(self, env, building, collection_floors, num_elevators,w1,w2,w3):
         """
         Initializes a ModernEGCS.
 
@@ -25,6 +26,7 @@ class ModernEGCS(object):
 
         """
         self.env = env
+        self.building = building
         self.floors = collection_floors
         self.elevators = [Elevator.Elevator(env, i, self.floors, 1,num_elevators) for i in range(1, num_elevators + 1)]
         self.hallcall_priority_arrays = [] #stores complete set of priority arrays
@@ -65,10 +67,12 @@ class ModernEGCS(object):
         # Put the person in the floor and call the lift
         call_direction = person.get_direction()
         curr_floor = self.floors[person.get_curr_floor() - 1]
+        building = curr_floor.get_building()
         if call_direction < 0:
             curr_floor.add_person_going_down(person)
             if not curr_floor.has_call_down():
                 curr_floor.set_call_down()
+                curr_floor.person_arrived()
                 hall_call = HallCall.HallCall(self.env,curr_floor.get_floor_level(),-1)
                 self.add_hall_call(hall_call)
 
@@ -76,6 +80,7 @@ class ModernEGCS(object):
             curr_floor.add_person_going_up(person)
             if not curr_floor.has_call_up():
                 curr_floor.set_call_up()
+                curr_floor.person_arrived()
                 hall_call = HallCall.HallCall(self.env,curr_floor.get_floor_level(),1)
                 self.add_hall_call(hall_call)
         
@@ -175,7 +180,7 @@ class ModernEGCS(object):
             converted_priority_array.append(tup)
         return converted_priority_array
 
-    def assign_call(self) -> None:
+    def assign_calls(self) -> None:
         """Assigns hall call to the most suitable elevator based on HCPM method."""
         if len(self.hallcall_priority_arrays)>0:
             while len(self.hall_call_priority_evaluation)>1:
@@ -214,4 +219,12 @@ class ModernEGCS(object):
         """Updates the elevators to be idle when they have no path."""
         for elevator in self.elevators_down + self.elevators_up:
             if not elevator.has_path() and elevator.is_busy():
-                elevator.set_idle()
+                self.assign_calls()
+                if elevator.is_busy():
+                    pass
+                busiest_floor_level = self.building.get_busiest_floor()
+                idling_elevators_deserved = busiest_floor_level.get_num_idling_elevators_deserved()
+                idling_elevators_sent = busiest_floor_level.get_num_idling_elevators_sent()
+                if idling_elevators_deserved>=idling_elevators_sent+1:
+                    elevator.travel(busiest_floor_level)
+                
