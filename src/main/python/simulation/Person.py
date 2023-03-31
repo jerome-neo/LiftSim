@@ -1,12 +1,11 @@
-import random
 import LiftRandoms
+
 
 class Person(object):
     """A person in the building.
 
     Attributes:
         id (int): The unique identifier of the person.
-        env (simpy.Environment): The simulation environment.
         curr_floor (int): The floor where the person is currently located.
         destination_floor (int): The floor where the person wants to go.
         arrival_time (float): The time when the person arrives in the building.
@@ -14,7 +13,7 @@ class Person(object):
         has_reached_floor (bool): Whether the person has reached their destination floor.
 
     """
-    def __init__(self, env, index, building):
+    def __init__(self, index, arrival_time):
         """Initializes a new Person object.
 
         Args:
@@ -24,28 +23,32 @@ class Person(object):
 
         """
         self.id = index
-        self.env = env
-        self.arrival_time = env.now
-        self.curr_floor, self.destination_floor = LiftRandoms.LiftRandoms().generate_source_dest(self.arrival_time)
+        self.arrival_time = arrival_time
         self.end_time = None
+        self.curr_floor, self.destination_floor = LiftRandoms.LiftRandoms().generate_source_dest(self.arrival_time)
         self.has_reached_floor = False
         while self.curr_floor == self.destination_floor:
             self.curr_floor, self.destination_floor = LiftRandoms.LiftRandoms().generate_source_dest(self.arrival_time)
-        print(f"Source: {self.curr_floor}, Dest: {self.destination_floor}")
-        print(f"Arrival time: {self.arrival_time}")
+        # print(f"Source: {self.curr_floor}, Dest: {self.destination_floor}")
+        # print(f"Arrival time: {self.arrival_time}")
 
     def __str__(self):
         """Returns a string representation of the Person object."""
         # return f"Person {self.id} starting at {self.curr_floor} and going to {self.destination_floor}:"
         return f"Person {self.id}"
 
-    def calls_elevator(self) -> None:
-        """
-        Simulates a person calling an elevator.
+    def overwrite(self, curr_floor, destination_floor):
+        """Overwrites automatic config of Person class."""
+        self.curr_floor = curr_floor
+        self.destination_floor = destination_floor
 
-        This method waits for one unit of time to simulate the time taken for a person to call an elevator.
-        """
-        yield self.env.timeout(1)
+    def get_arrival_time(self):
+        """Returns the arrival_time attribute."""
+        return self.arrival_time
+
+    def get_end_time(self):
+        """Returns the end_time attribute."""
+        return self.end_time
 
     def has_reached_destination(self, elevator) -> bool:
         """
@@ -60,7 +63,7 @@ class Person(object):
         """
         return elevator.get_current_floor() == self.destination_floor
 
-    def complete_trip(self) -> None:
+    def complete_trip(self, time) -> None:
         """
         Marks the person's trip as complete.
 
@@ -68,7 +71,7 @@ class Person(object):
         has completed their trip.
 
         """
-        self.end_time = self.env.now
+        self.end_time = time
         self.has_reached_floor = True
 
     def has_completed_trip(self) -> bool:
@@ -120,5 +123,5 @@ class Person(object):
             int: -1 if the person wants to go down, 1 if the person wants to go up.
 
         """
-        return -1 if self.curr_floor > self.destination_floor else 1
+        return "DOWN" if self.curr_floor > self.destination_floor else "UP"
 
