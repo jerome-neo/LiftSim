@@ -94,5 +94,29 @@ function turnOffLight(elevatorNumber, floorNumber) {
   floorElement.classList.remove('on');
 }
 
-setTargetFloor(1, 9)
-turnOnLight(2, 5)
+//setTargetFloor(1, 9)
+//turnOnLight(2, 5)
+
+function updateElevatorStatus(elevatorStatus) {
+  for (let i = 0; i < elevatorStatus.length; i++) {
+    for (let j = 0; j < elevatorStatus[i].length; j++) {
+      const floorElement = document.getElementById(`e${i + 1}f${j + 1}`);
+      if (elevatorStatus[i][j] === 1) {
+        floorElement.classList.add('on');
+      } else if (elevatorStatus[i][j] === 2) {
+        floorElement.classList.add('target');
+      } else {
+        floorElement.classList.remove('on');
+        floorElement.classList.remove('target');
+      }
+    }
+  }
+}
+
+
+const currentStatus = [
+  [0, 0, 0, 1, 0, 0, 2, 0, 0], // Elevator 1
+  [0, 0, 1, 0, 0, 0, 0, 2, 0], // Elevator 2
+  [0, 0, 0, 0, 1, 0, 2, 0, 0]  // Elevator 3
+];
+updateElevatorStatus(currentStatus)
