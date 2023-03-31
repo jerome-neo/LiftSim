@@ -103,6 +103,10 @@ class Elevator(object):
         if floor not in self.car_calls:
             self.car_calls.append(floor)
             self.car_calls.sort()
+        if floor>self.curr_floor:
+            self.direction = "UP"
+        elif floor<self.curr_floor:
+            self.direction = "DOWN"
 
     def elevator_door_open(self, t=3):
         """Simulates door opening."""
@@ -199,7 +203,7 @@ class Elevator(object):
         print(f'{self} moved from {self.curr_floor} to {end}')
         self.curr_floor = end
 
-    def add_path(self, floor_level) -> None:
+    def add_path(self, floor_level, direction) -> None:
         """
         Add a floor to the elevator's path.
         Args:
@@ -207,9 +211,12 @@ class Elevator(object):
         """
         self.path.append(floor_level)
         # self.path = np.unique(self.path).tolist()
-        self.path.sort()
+        if self.direction == direction:
+            self.path.sort()
         if not self.is_busy():
             self.set_busy()
+        if self.direction == "NIL":
+            self.direction = direction
         displayed_path = self.path if self.get_direction() == "UP" else self.path[::-1]
         print(f"{self.direction} elevator {self.index} path logged: {displayed_path}")
 
@@ -235,7 +242,6 @@ class Elevator(object):
 
     def move(self):
         """This moves the elevator in the direction of the next floor in their path."""
-        # todo modify this to change the algorithm when it reaches top level
         if self.is_busy() and self.has_path():
             destination_floor = self.get_path()[0] if self.get_direction() == "UP" else self.get_path()[-1]
             displacement_direction = destination_floor - self.get_current_floor()  # final - initial = change
@@ -337,4 +343,7 @@ class Elevator(object):
             list: self.car_calls
         """
         return self.car_calls
-
+    
+    def unset_direction(self)->None:
+        """Changes direction to NIL once a ModernEGCS elevator has no more calls"""
+        self.direction = "NIL"

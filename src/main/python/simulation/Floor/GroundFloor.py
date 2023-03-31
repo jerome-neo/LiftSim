@@ -1,8 +1,8 @@
 from typing import List
 
-from .Floor import Floor
-import HallCall
-import ModernEGCS
+from Floor import Floor
+from HallCall import HallCall
+from ModernEGCS import ModernEGCS
 import Building
 import simpy
 
@@ -69,11 +69,13 @@ class GroundFloor(Floor):
         # Floor will "check" if people have arrived by peeking at the simulation time
         # to compare with the person's arrival time.
         building = self.get_building()
-        system = building.get_elevator_system()
+        system =building.get_elevator_system()
+        system_name = building.get_elevator_algo_type()
         if len(self.going_up_persons) != 0 and self.going_up_persons[0].get_arrival_time() <= self.env.now and self.has_call_up():
             self.set_call_up()
             self.person_arrived()
-            if isinstance(system,type(ModernEGCS)) and not self.has_call_up():
+            if system_name == "ModernEGCS":
+                print("Hall call registered")
                 hall_call = HallCall(self.env,self.floor_index,1)
                 system.add_hall_call(hall_call)
     

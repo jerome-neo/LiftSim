@@ -1,5 +1,5 @@
 import LiftRandoms
-
+from Elevator import Elevator
 
 class Person(object):
     """A person in the building.
@@ -130,12 +130,14 @@ class Person(object):
         """
         return self.elevator_arrival_time
         
-    def get_riding_time(self)-> float:
+    def get_riding_time(self,elevator: Elevator)-> float:
         """
         Returns the estimated riding time of the person, which is time from the moment the person enters the assigned
         to the moment the person leaves the elevator, i.e. when the elevator has reached the person's destination.
         Used in ModernEGCS cost calculation.
 
+        Args:
+            Elevator: The Elevator object it is assigned to during the calculation
         Returns:
             float: The length of time spent by the person in the elevator
         """
