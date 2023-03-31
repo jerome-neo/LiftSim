@@ -1,9 +1,9 @@
 import csv
+import json
 import simpy
 import statistics
 import Building
 
-from src.main.python.simulation.LiftRandoms import LiftRandoms
 from src.main.python.simulation.PersonList import PersonList
 
 
@@ -72,8 +72,8 @@ class Main(object):
         people = self.person_list.get_person_list()
         return len(list(filter(lambda x: x.has_completed_trip(), people)))
 
-    def output_to_csv(self, path='../../out/'):
-        name = 'output.csv'
+    def output_person_to_csv(self, path='../../out/'):
+        name = 'output_persons.csv'
         header = ['curr', 'dest', 'arrival_time', 'end_time', 'wait_time']
         data = []
         for person in self.person_list.get_person_list():
@@ -89,6 +89,31 @@ class Main(object):
             writer.writerow(header)
             writer.writerows(data)
 
+    def output_person_to_json(self, path='../../out/'):
+        name = 'output_persons.json'
+        data = []
+        for person in self.person_list.get_person_list():
+            if person.has_completed_trip():
+                curr = int(person.get_curr_floor())
+                dest = int(person.get_dest_floor())
+                arrival_time = float(person.get_arrival_time())
+                end_time = float(person.get_end_time())
+                wait_time = float(person.get_wait_time())
+                data.append({
+                    'curr': curr,
+                    'dest': dest,
+                    'arrival_time': arrival_time,
+                    'end_time': end_time,
+                    'wait_time': wait_time
+                })
+        with open(path + name, 'w', encoding='UTF8') as f:
+            json.dump(data, f, indent=4)
+
+    def output_elevator_log_to_json(self, path='../../out/'):
+        name = 'output_elevator.json'
+        json_serializable = json.dumps(self.building.to_dict(), indent=4)
+        with open(path + name, 'w') as f:
+            f.write(json_serializable)
 
 # Example ways of running the simulation
 
@@ -99,11 +124,14 @@ Test = Main(num_up=2, num_down=1, num_floors=9)
 # Step 2
 # run the simulation by telling it how long to run, e.g. 200
 # when mode is 'manual', it will read the input file in ../../in
-Test.run(200, mode='manual') # Test.run(200, mode='default')
+#Test.run(200, mode='manual')
+Test.run(200, mode='default')
 
 # Step 3
 # Save the data of all persons that have completed their trip in the simulation
-Test.output_to_csv()
+Test.output_person_to_csv()
+Test.output_person_to_json()
+Test.output_elevator_log_to_json()
 
 # Additional information to be printed in terminal
 print('Number of people spawned in advance:', len(Test.building.get_all_persons()))
