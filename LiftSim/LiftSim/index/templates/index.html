@@ -8,13 +8,9 @@
   <head>
     <title>Multiple Input Fields</title>
     <link rel="stylesheet" href=" {{ url_for('static', filename='input.css') }} ">
+    <link rel="stylesheet" href="{{ url_for('static', filename='lift.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 
-    <style>
-      .elevator {
-        margin-right: 20px; /* Add some margin between elevators */
-      }
-    </style>
   </head>
 
 
@@ -28,10 +24,11 @@
 
 
 
-
     <div id="input-container" class = "section"></div>
+    <div style="display: flex;">
     <button id="add-btn">Add Request</button>
     <button id="add-btn" onclick="displayInputs()">Submit</button>
+    </div>
 
     <p id="result"></p>
     <script>
@@ -40,8 +37,8 @@
       const inputs = [];
 
       // Loop through each input field and add its value to the inputs array
-      for (let i = 0; i < document.getElementsByName("No. of people taking the lift").length; i++) {
-        const input1 = parseInt(document.getElementsByName("No. of people taking the lift")[i].value);
+      for (let i = 0; i < document.getElementsByName("Time").length; i++) {
+        const input1 = parseInt(document.getElementsByName("Time")[i].value);
         const input2 = document.getElementsByName("Source")[i].value;
         const input3 = document.getElementsByName("Destination")[i].value;
 
@@ -80,133 +77,47 @@
     <div style="display: flex;">
       <!-- Elevator 1 -->
       <div class="elevator">
-        <form name="form1" method="post" action="">
-          <p align="center">Lift 1 Current Floor:<span id="now_position_1"></span></p>
-          <p align="center">
-              <input name="Submit9" type="button" id="Submit9_1" value=" 9" onclick="goto(this,1);">
-          </p>
-          <p align="center">    
-              <input name="Submit8" type="button" id="Submit8_1" value=" 8" onclick="goto(this,1);">
-          </p>
-            <p align="center">    
-              <input name="Submit7" type="button" id="Submit7_1" value=" 7" onclick="goto(this,1);">
-          </p>
-            <p align="center">    
-              <input name="Submit6" type="button" id="Submit6_1" value=" 6" onclick="goto(this,1);">
-            </p>
-            <p align="center">    
-              <input name="Submit5" type="button" id="Submit5_1" value=" 5" onclick="goto(this,1);">
-          </p>
-            <p align="center">    
-              <input name="Submit4" type="button" id="Submit4_1" value=" 4" onclick="goto(this,1);">
-          </p>
-            <p align="center">    
-              <input name="Submit3" type="button" id="Submit3_1" value=" 3" onclick="goto(this,1);">
-            </p>
-            <p align="center">    
-              <input name="Submit2" type="button" id="Submit2_1" value=" 2" onclick="goto(this,1);">
-          </p>
-            <p align="center">    
-              <input name="Submit1" type="button" id="Submit1_1" value=" 1" onclick="goto(this,1);">
-          </p>
-        </form>
-        <div align="center">
-          <script>
-              SetLight(now_value1,1);
-          </script>
-      </div>
-
-
-      <script src=" {{ url_for('static', filename='app.js') }}"></script>
-
+        <h3 align="center">Lift 1</h3>
+        <div class="floor" id="e1f9">9</div>
+        <div class="floor" id="e1f8">8</div>
+        <div class="floor" id="e1f7">7</div>
+        <div class="floor" id="e1f6">6</div>
+        <div class="floor" id="e1f5">5</div>
+        <div class="floor" id="e1f4">4</div>
+        <div class="floor" id="e1f3">3</div>
+        <div class="floor" id="e1f2">2</div>
+        <div class="floor" id="e1f1">1</div>
       </div>
 
       <!-- Elevator 2 -->
       <div class="elevator">
-        <form name="form2" method="post" action="">
-          <p align="center">Lift 2 Current Floor:<span id="now_position_2"></span></p>
-          <p align="center">
-              <input name="Submit9" type="button" id="Submit9_2" value=" 9" onclick="goto(this, 2);">
-          </p>
-          <p align="center">    
-              <input name="Submit8" type="button" id="Submit8_2" value=" 8" onclick="goto(this,2);">
-          </p>
-            <p align="center">    
-              <input name="Submit7" type="button" id="Submit7_2" value=" 7" onclick="goto(this,2);">
-          </p>
-            <p align="center">    
-              <input name="Submit6" type="button" id="Submit6_2" value=" 6" onclick="goto(this,2);">
-            </p>
-            <p align="center">    
-              <input name="Submit5" type="button" id="Submit5_2" value=" 5" onclick="goto(this,2);">
-          </p>
-            <p align="center">    
-              <input name="Submit4" type="button" id="Submit4_2" value=" 4" onclick="goto(this,2);">
-          </p>
-            <p align="center">    
-              <input name="Submit3" type="button" id="Submit3_2" value=" 3" onclick="goto(this,2);">
-            </p>
-            <p align="center">    
-              <input name="Submit2" type="button" id="Submit2_2" value=" 2" onclick="goto(this,2);">
-          </p>
-            <p align="center">    
-              <input name="Submit1" type="button" id="Submit1_2" value=" 1" onclick="goto(this,2);">
-          </p>
-        </form>
-        <div align="center">
-          <script>
-              SetLight(now_value2,2);
-          </script>
-      </div>
-
-
-      <script src=" {{ url_for('static', filename='app.js') }}"></script>
-
+        <h3 align="center">Lift 2</h3>
+        <div class="floor" id="e2f9">9</div>
+        <div class="floor" id="e2f8">8</div>
+        <div class="floor" id="e2f7">7</div>
+        <div class="floor" id="e2f6">6</div>
+        <div class="floor" id="e2f5">5</div>
+        <div class="floor" id="e2f4">4</div>
+        <div class="floor" id="e2f3">3</div>
+        <div class="floor" id="e2f2">2</div>
+        <div class="floor" id="e2f1">1</div>
       </div>
 
       <!-- Elevator 3 -->
       <div class="elevator">
-        <form name="form3" method="post" action="">
-          <p align="center">Lift 3 Current Floor:<span id="now_position_3"></span></p>
-          <p align="center">
-              <input name="Submit9" type="button" id="Submit9_3" value=" 9" onclick="goto(this, 3);">
-          </p>
-          <p align="center">    
-              <input name="Submit8" type="button" id="Submit8_3" value=" 8" onclick="goto(this,3);">
-          </p>
-            <p align="center">    
-              <input name="Submit7" type="button" id="Submit7_3" value=" 7" onclick="goto(this,3);">
-          </p>
-            <p align="center">    
-              <input name="Submit6" type="button" id="Submit6_3" value=" 6" onclick="goto(this,3);">
-            </p>
-            <p align="center">    
-              <input name="Submit5" type="button" id="Submit5_3" value=" 5" onclick="goto(this,3);">
-          </p>
-            <p align="center">    
-              <input name="Submit4" type="button" id="Submit4_3" value=" 4" onclick="goto(this,3);">
-          </p>
-            <p align="center">    
-              <input name="Submit3" type="button" id="Submit3_3" value=" 3" onclick="goto(this,3);">
-            </p>
-            <p align="center">    
-              <input name="Submit2" type="button" id="Submit2_3" value=" 2" onclick="goto(this,3);">
-          </p>
-            <p align="center">    
-              <input name="Submit1" type="button" id="Submit1_3" value=" 1" onclick="goto(this,3);">
-          </p>
-        </form>
-        <div align="center">
-          <script>
-              SetLight(now_value3,3);
-          </script>
+        <h3 align="center">Lift 3</h3>
+        <div class="floor" id="e3f9">9</div>
+        <div class="floor" id="e3f8">8</div>
+        <div class="floor" id="e3f7">7</div>
+        <div class="floor" id="e3f6">6</div>
+        <div class="floor" id="e3f5">5</div>
+        <div class="floor" id="e3f4">4</div>
+        <div class="floor" id="e3f3">3</div>
+        <div class="floor" id="e3f2">2</div>
+        <div class="floor" id="e3f1">1</div>
       </div>
-
-    <div align="center">
-      <script src="{{ url_for('static', filename='app.js') }}"></script>
     </div>
-
-
+    <script src="{{ url_for('static', filename='lifts.js') }}"></script>
 
   </body>
 </html>
