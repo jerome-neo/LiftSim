@@ -137,6 +137,8 @@ class Building(object):
                 for elevator in self.elevator_group.elevators:
                     self.env.process(elevator.activate())
                     self.env.process(elevator.move())
+                self.elevator_group.update_status()
+                yield self.env.timeout(1)
 
             else:
                 print("Lift algorithm has not been configured yet")

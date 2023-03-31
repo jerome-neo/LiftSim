@@ -248,31 +248,6 @@ class Elevator(object):
         else:
             yield self.env.timeout(0)
     
-    #might need to modify for modern EGCS
-    def activate(self) -> None:
-        """Activates elevator such that it immediately moves when a call is placed"""
-        while self.has_path():
-            if self.get_direction() == "UP":
-                next_floor = self.get_path()[::-1].pop()  # remove from the front
-                yield self.env.process(self.travel(next_floor))
-                floor = self.floors[next_floor - 1]
-                
-                if self.get_current_floor() != len(self.floors): #if elevator is currently on top-most level
-                    self.env.process(self.enter_elevator(floor.remove_all_persons_going_up()))
-                self.env.process(self.leave_elevator()) # take out passengers if any
-                floor.uncall_up()
-                print(f"{self} at {self.env.now}")
-
-            else:
-                next_floor = self.get_path().pop()
-                yield self.env.process(self.travel(next_floor))
-                floor = self.floors[next_floor - 1]
-                
-                if self.get_current_floor() != 1:
-                    self.env.process(self.enter_elevator(floor.remove_all_persons_going_down()))
-                self.env.process(self.leave_elevator()) # take out passengers if any
-                floor.uncall_down()
-                print(f"{self} at {self.env.now}")
                 
     def activate(self) -> None:
         """
