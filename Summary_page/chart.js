@@ -108,3 +108,39 @@ for (let i = 0; i < 100; i++) {
       },
     },
   });
+
+  console.log(myChart.data.datasets[0].data)
+  console.log(dataPoints)
+  let origin_data=dataPoints;
+  const timeSelector = document.getElementById('time-selector');
+
+  timeSelector.addEventListener('change', () => {
+    updateChart(timeSelector);
+  });
+  function updateChart(timeSelector) {
+
+    const selectedTime = timeSelector.value;
+    let startTime = 0;
+    let endTime = origin_data.length;
+    
+    switch (selectedTime) {
+      case 'morning':
+        startTime = 0;
+        endTime = origin_data.findIndex(({ x }) => parseInt(x.split(':')[0]) === 12);
+        break;
+      case 'afternoon':
+        startTime = origin_data.findIndex(({ x }) => parseInt(x.split(':')[0]) === 12);
+        endTime = origin_data.findIndex(({ x }) => parseInt(x.split(':')[0]) === 18);
+        break;
+      case 'evening':
+        startTime = origin_data.findIndex(({ x }) => parseInt(x.split(':')[0]) === 18);
+        endTime = origin_data.length;
+        break;
+      default:
+        break;
+    }
+  
+    const newData = origin_data.slice(startTime, endTime);
+    myChart.data.datasets[0].data = newData;
+    myChart.update();
+  }

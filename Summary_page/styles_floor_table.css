@@ -8,7 +8,10 @@ body {
 table {
 	background-color: #fff;
 	border-collapse: collapse;
-	width: 100%;
+	width: 75%;
+	margin: 0 auto;
+	padding:50px
+	
 }
 
 /* Set the font weight, padding, and border for table headers */
@@ -18,16 +21,32 @@ th {
 	border: 1px solid #ddd;
 	background-color: #555;
 	color: #fff;
-	text-align: left;
+	text-align: middle;
 }
 
 /* Set the padding and border for table cells */
 td {
 	padding: 10px;
 	border: 1px solid #ddd;
-	text-align: left;
+	text-align: center;
 }
-
+/* Set width percentage for columns*/
+th:first-child, td:first-child {
+    width: 10%;
+  }
+th:nth-child(2), td:nth-child(2) {
+    width: 20%;
+  }
+th:nth-child(3), td:nth-child(4) {
+    width: 35%;
+  }
+  th:last-child, td:last-child {
+    width: 35%;
+  }
+/* Set data to be centered*/
+tbody {
+	text-align: center;
+  }
 /* Set the background color of alternate table rows */
 tr:nth-child(even) {
 	background-color: #f2f2f2;

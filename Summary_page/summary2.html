@@ -8,6 +8,14 @@
     <link rel="stylesheet" href="styles_floor_table.css">
   </head>
   <body>
+    <label for="time-selector">Select time:</label>
+    <select id="time-selector">
+    <option value="all">All</option>
+    <option value="morning">Morning (6am - 12pm)</option>
+    <option value="afternoon">Afternoon (12pm - 6pm)</option>
+    <option value="evening">Evening (6pm - 10pm)</option>
+    </select>
+    
     <h1>Task Summary with Busy Time Chart</h1>
     <div style="width: 800px; margin: 0 auto;">
       <canvas id="myChart"></canvas>
