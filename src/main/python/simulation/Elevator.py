@@ -1,7 +1,7 @@
 import random
 import simpy
 import numpy as np
-import Floor
+from Floor import Floor
 
 
 MAX_CAPACITY = 13
@@ -126,9 +126,14 @@ class Elevator(object):
         for person in list_of_person:
             if len(self.passengers) < MAX_CAPACITY:
                 self.add_passengers(person)
+                curr_level = self.curr_floor
                 floor_level = person.get_dest_floor()
+                if floor_level > curr_level:
+                    direction = "UP"
+                elif floor_level < curr_level:
+                    direction = "DOWN"
                 if floor_level not in self.path:
-                    self.add_path(floor_level)
+                    self.add_path(floor_level, direction)
                     self.add_car_call(floor_level)
                 print(f"{person} has entered elevator at simulation time: {self.env.now}")
             else:
@@ -209,7 +214,8 @@ class Elevator(object):
         Args:
             floor_level (int): the floor to add to the elevator's path
         """
-        self.path.append(floor_level)
+        if floor_level not in self.path:
+            self.path.append(floor_level)
         # self.path = np.unique(self.path).tolist()
         if self.direction == direction:
             self.path.sort()
@@ -274,10 +280,10 @@ class Elevator(object):
             yield self.env.timeout(0)
         else:
             if self.get_path()[0] != self.get_current_floor():
-                print(f"{self.direction} Elevator {self.index} knows that current floor {self.curr_floor} NOT IN path")
+                print(f"Elevator {self.index} set {self.direction} knows that current floor {self.curr_floor} NOT IN path")
                 yield self.env.timeout(0)
             else:
-                print(f"{self.direction} Elevator {self.index} knows that current floor {self.curr_floor} IN path")
+                print(f"Elevator {self.index} set {self.direction} knows that current floor {self.curr_floor} IN path")
                 self.get_path().pop(0)
 
                 # Assuming we people are gracious

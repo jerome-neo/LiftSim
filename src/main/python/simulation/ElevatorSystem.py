@@ -36,6 +36,10 @@ class ElevatorSystem(object):
         """
         return f"Elevator with {len(self.elevators_up)} up and {len(self.elevators_down)} down configuration."
     
+    def get_algo_type(self):
+        """Returns type of elevator algorithm implemented"""
+        return "Otis"
+    
 
     def print_system_status(self) -> str:
         """Returns a string representation number of active elevators."""

@@ -7,15 +7,14 @@ import Building
 class TopFloor(Floor):
     """ A class representing the top floor of a building."""
 
-    def __init__(self, env: simpy.Environment, building: Building, index: int):
+    def __init__(self, env: simpy.Environment, index: int):
         """
         Initialize the top floor with the given index.
         Args:
             env (simpy.Environment): The simulation environment.
-            building (Building): The simulation Building
             index (int): The index of the Top floor.
         """
-        super().__init__(env, building, index)
+        super().__init__(env, index)
         self.going_down_persons = []
 
     def __str__(self):
@@ -60,21 +59,18 @@ class TopFloor(Floor):
         """Sorts the list of Persons in ascending arrival time."""
         self.going_down_persons.sort(key=lambda person: person.get_arrival_time())
 
-    def update(self) -> None:
+    def update(self, building, elevator_system) -> None:
         """Important to call this method every step of the simulation to update call status of every floor."""
         # Floor will "check" if people have arrived by peeking at the simulation time
         # to compare with the person's arrival time.
-        building = self.get_building()
-        system = building.get_elevator_system()
-        system_name = building.get_elevator_algo_type()
+        elevator_algo = elevator_system.get_algo_type()
         if len(self.going_down_persons) != 0 and self.going_down_persons[0].get_arrival_time() <= self.env.now:
             self.set_call_down()
-            self.person_arrived()
-            if system_name == "ModernEGCS":
+            self.person_arrived(building)
+            if elevator_algo == "ModernEGCS":
                 print("Hall call registered")
                 hall_call = HallCall(self.env,self.floor_index,-1)
-                system.add_hall_call(hall_call)
-    
+                elevator_system.add_hall_call(hall_call)
 
     def get_all_persons_going_down(self) -> list:
         """
