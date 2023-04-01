@@ -216,6 +216,7 @@ class ModernEGCS(object):
                     busiest_floor.new_idling_elevator_sent()
                     elevator.travel(busiest_floor_level)
                     elevator.unset_direction()
+                    elevator.set_idle()
     
     def is_all_idle(self) -> bool:
         """Returns True if all the elevators are idle"""
