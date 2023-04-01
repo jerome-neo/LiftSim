@@ -1,5 +1,5 @@
 import pandas as pd
-
+import datetime as datetime
 from LiftRandoms import LiftRandoms
 from Person import Person
 
@@ -31,19 +31,23 @@ class PersonList:
         """Returns the length of the list."""
         return len(self.list)
 
-    def initialise(self, mode='default', path_to_data="../../in/input.csv"):
+    def initialise(self, mode='default', path_to_data="../../in/input.json"):
         if mode == 'manual':
-            df = pd.read_csv(path_to_data)
+            df = pd.read_json(path_to_data)
             person_id = 1
             for index, row in df.iterrows():
-                curr = row['curr']
-                dest = row['dest']
-                time = row['time']
-                person = Person(self.env, person_id, time)
+                curr = row['Source']
+                dest = row['Destination']
+                time = row['Time']
+                time_converted = datetime.strptime(time, '%H:%M')
+                start_simulation_time = datetime.strptime("06:00", "%H:%M")
+                time = (time_converted - start_simulation_time).total_seconds()
+                print(time)
+                person = Person(person_id, time)
                 person.overwrite(curr, dest)
                 self.list.append(person)
                 person_id += 1
-            self.list.sort(key=lambda x: x.get_arrival_time())
+            self.list.sort(key=lambda x: x.get_arrival_time()
         else:
             time = 0
             person_id = 1

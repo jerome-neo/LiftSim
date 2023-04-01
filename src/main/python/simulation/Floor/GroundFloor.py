@@ -70,7 +70,7 @@ class GroundFloor(Floor):
         if len(self.going_up_persons) != 0 and self.going_up_persons[0].get_arrival_time() <= self.env.now and self.has_call_up():
             self.set_call_up()
             self.person_arrived(building)
-            if elevator_algo == "ModernEGCS":
+            if elevator_algo == "ModernEGCS" and not self.call_up_accepted() == False:
                 hall_call = HallCall(self.env,self.floor_index,1)
                 elevator_system.add_hall_call(hall_call)
     
