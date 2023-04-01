@@ -210,6 +210,7 @@ class ModernEGCS(object):
                 idling_elevators_deserved = busiest_floor.get_num_idling_elevators_deserved()
                 idling_elevators_sent = busiest_floor.get_num_idling_elevators_sent()
                 if idling_elevators_deserved>=idling_elevators_sent+1:
+                    busiest_floor.new_idling_elevator_sent()
                     elevator.travel(busiest_floor_level)
                     elevator.unset_direction()
     

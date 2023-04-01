@@ -213,6 +213,7 @@ class Elevator(object):
         Add a floor to the elevator's path.
         Args:
             floor_level (int): the floor to add to the elevator's path
+            direction (str): the movement direction
         """
         if floor_level not in self.path:
             self.path.append(floor_level)
@@ -224,7 +225,7 @@ class Elevator(object):
         if self.direction == "NIL":
             self.direction = direction
         displayed_path = self.path if self.get_direction() == "UP" else self.path[::-1]
-        print(f"{self.direction} elevator {self.index} path logged: {displayed_path}")
+        print(f"Elevator {self.index} set {self.direction} has path logged: {displayed_path}")
 
     def get_path(self) -> list:
         """

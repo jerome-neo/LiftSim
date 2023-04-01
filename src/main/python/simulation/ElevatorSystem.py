@@ -67,7 +67,7 @@ class ElevatorSystem(object):
                 if floor.is_call_down_accepted():
                     continue
                 elif floor.has_call_down():
-                    elevator.add_path(floor.get_floor_level())
+                    elevator.add_path(floor.get_floor_level(),"DOWN")
                     floor.accept_down_call()
 
     def allocate_rising_call(self) -> None:
@@ -86,7 +86,7 @@ class ElevatorSystem(object):
                 if floor.is_call_up_accepted():
                     continue
                 elif floor.has_call_up():
-                    elevator.add_path(floor.get_floor_level())
+                    elevator.add_path(floor.get_floor_level(),"UP")
                     floor.accept_up_call()
 
     def update_status(self) -> None:
