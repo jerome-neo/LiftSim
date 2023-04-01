@@ -1,5 +1,5 @@
 import pandas as pd
-import simpy
+
 from LiftRandoms import LiftRandoms
 from Person import Person
 
