@@ -136,6 +136,7 @@ class Elevator(object):
         for person in list_of_person:
             if len(self.passengers) < MAX_CAPACITY:
                 self.add_passengers(person)
+                person.elevator_arrival_time = self.env.now
                 curr_level = self.curr_floor
                 floor_level = person.get_dest_floor()
                 if floor_level > curr_level:
@@ -307,7 +308,6 @@ class Elevator(object):
                 print(f"Lift direction: {self.get_direction()}")
                 if self.get_direction() == "UP":
                     if self.get_current_floor() < self.num_floors:
-                        print("This line gets executed")
                         yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_up()))
                         # reset status
                         floor.uncall_up()

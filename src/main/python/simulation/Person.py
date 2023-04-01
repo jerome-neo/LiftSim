@@ -155,7 +155,7 @@ class Person(object):
         if assigned_elevator.get_direction() == "DOWN":
             to_wait_for_reaching_dest = len(elevator_remaining_car_calls) - to_wait_for_reaching_dest - 1
         
-        estimated_remaining_travel_time = abs(person_destination_floor-elevator_current_floor)+3.5*to_wait_for_reaching_dest
+        estimated_remaining_travel_time = abs(person_destination_floor-elevator_current_floor)*3.5+3.5*to_wait_for_reaching_dest
         time_taken_to_ride = elevator_arrival_to_now + estimated_remaining_travel_time
         return time_taken_to_ride
 
