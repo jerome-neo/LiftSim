@@ -49,7 +49,11 @@ gibbs <- function(y){
     }
     
     while (length(n) < t+1){
-      V <- sample((m[t+1]+1):8, 1)
+      if (m[t+1]+1 == 8){
+        V <- 8
+      } else {
+        V <- sample((m[t+1]+1):8, 1)
+      }
       if (log(runif(1)) <= log_ratio(V) - max_log_ratio){
         n[t+1] <- V
       }
@@ -77,7 +81,7 @@ mcmc_n <- mcmc(results_list$n[2001:12000])
 plot(mcmc_n)
 
 # resulting posterior curve for afternoon counts
-results_list <- gibbs(mft_counts)
+results_list <- gibbs(aft_counts)
 
 mcmc_lambda <- mcmc(results_list$lambda[2001:12000])
 plot(mcmc_lambda)
