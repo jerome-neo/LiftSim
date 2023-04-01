@@ -46,6 +46,12 @@ class ModernEGCS(object):
 
         """
         return f"ModernEGCS with {len(self.elevators)} elevators."
+    
+
+    def to_dict(self) -> dict:
+        """Converts elevator group information into a dictionary with time stamp."""
+        return {self.env.now: [{index+1: elevator.to_dict()} for index, elevator
+                                in enumerate(self.elevators)]}
 
     def get_algo_type(self):
         """Returns type of elevator algorithm implemented"""
@@ -159,7 +165,6 @@ class ModernEGCS(object):
     
     def assign_calls(self)-> None:
         """Assigns hall call to the most suitable elevator based on HCPM method."""
-        print(f"Assigning (start of function): {self.unassigned_hall_calls}")
         if len(self.unassigned_hall_calls)>0:
             while len(self.unassigned_hall_calls)>1:
                 self.unassigned_hall_calls.sort(key=lambda x: x.get_first_priority_value(),reverse=True)
@@ -180,7 +185,6 @@ class ModernEGCS(object):
                             pass
                 self.assign_one_call(prioritised_hall_call,current_best_elevator)
                 self.unassigned_hall_calls = self.unassigned_hall_calls[1:]
-                print(f"Assigning (while loop): {self.unassigned_hall_calls}")
 
             if len(self.unassigned_hall_calls) == 1:
                 last_hall_call = self.unassigned_hall_calls[0]
@@ -188,7 +192,6 @@ class ModernEGCS(object):
                 best_elevator = self.elevators[best_elevator_index-1]
                 self.assign_one_call(last_hall_call,best_elevator)
                 self.unassigned_hall_calls = []
-            print(f"Assigning (end of function): {self.unassigned_hall_calls}")
             
     
     def assign_one_call(self,hall_call: HallCall, elevator: Elevator) -> None:
@@ -201,7 +204,7 @@ class ModernEGCS(object):
     def update_status(self) -> None:
         """Updates the elevators to be idle when they have no path."""
         for elevator in self.elevators:
-            if not elevator.has_path() and elevator.is_busy():
+            if elevator.num_active_calls==0 and elevator.is_busy():
                 self.assign_calls()
                 if elevator.is_busy():
                     pass
@@ -220,7 +223,7 @@ class ModernEGCS(object):
 
     def print_system_status(self) -> str:
         """Returns a string representation number of active elevators."""
-        num_active_up = len(list(filter(lambda x: x.is_busy(), self.elevators.direction == "UP")))
-        num_active_down = len(list(filter(lambda x: x.is_busy(), self.elevators.direction == "DOWN")))
+        num_active_up = len(list(filter(lambda x: x.is_busy() and x.direction == "UP", self.elevators)))
+        num_active_down = len(list(filter(lambda x: x.is_busy() and x.direction == "DOWN", self.elevators)))
         return f"Elevator system has {num_active_up} UP and {num_active_down} DOWN elevator(s) ACTIVE"
-                
+    
