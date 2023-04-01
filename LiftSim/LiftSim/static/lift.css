@@ -1,0 +1,59 @@
+.floor-indicator {
+  width: 90px;
+  height: 492px;
+  position: relative;
+  margin: 0 0px;
+  float: left;
+  color: grey;
+}
+
+.floorNum {
+  width: 100%;
+  height: 50px;
+  color: grey;
+  text-align: center;
+  position: relative;
+  font-size: 28px;
+  padding-bottom: 15px;
+}
+
+.elevator {
+  width: 90px;
+  height: 492px;
+  border: 5px solid grey;
+  position: relative;
+  margin: 0 20px;
+  float: left;
+  color: grey;
+  background-color: #fff;
+}
+
+.floor {
+  width: 100%;
+  height: 50px;
+  color: grey;
+  border: 1px solid grey;
+  text-align: center;
+  position: relative;
+  font-size: 17px;
+  padding-top: 10px;
+}
+
+.floor-indicator h3 {
+  font-size: 28px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+.on{
+  background-color: yellow;
+}
+
+.target{
+  background-color: #007bff;
+}
+
+
+

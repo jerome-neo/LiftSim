@@ -1,0 +1,172 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: space-between;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}
+
+header {
+  flex : 0 0 auto;
+}
+
+.container {
+  flex : 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.inner {
+  padding: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 0;
+}
+
+#navinner {
+  padding: 2rem;
+  padding-bottom: 0;
+}
+
+footer {
+  text-align: center;
+  flex : 0 0 auto;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signin .checkbox {
+  font-weight: 400;
+}
+
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.form-signin .top input {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.form-signin .mid input {
+  margin-bottom: -1px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.form-signin .bottom input {
+  margin-bottom: 15px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.nav-link {
+  padding: .25rem 0;
+  font-weight: 700;
+  background-color: transparent;
+  border-bottom: .25rem solid transparent;
+}
+
+.nav-link:hover, .nav-link:focus {
+  border-bottom-color: rgba(13, 78, 195, 0.25);
+}
+
+.nav-link+.nav-link {
+  margin-left: 1rem;
+}
+
+.nav-guide .active, .nav-head .active {
+  color: rgb(13, 78, 195);
+  border-bottom-color: rgb(13, 78, 195);
+}
+
+.nav-guide {
+  margin-left: 30px;
+}
+
+.nav-head {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.forum-head {
+  margin: 0px 0px 10px;
+}
+
+.forum-area {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto
+}
+
+.right-button {
+  float: right;
+  margin-left: 10px;
+  width: 100px;
+}
+
+.page-select {
+  align-self: center;
+  margin-top: auto;
+  margin-bottom: 0;
+}
+
+.reply {
+  margin-top: auto;
+  margin-bottom: 0;
+  align-self: stretch;
+}
+
+.postitem {
+  pointer-events: none;
+}
+
+.postitem a {
+  pointer-events: all;
+}
+
+@media (max-width: 990px) {
+  header,
+  footer,
+  .container/* .forum-area */ {
+    width: 100%;
+  }
+}
+
+@media (max-width: 450px) {
+  .nav-brand {
+    flex-basis: 100%;
+    text-align: center;
+    font-size: 30px;
+  }
+  .nav-guide {
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 991px) {
+  header,
+  footer,
+  .container {
+    width: 60rem;
+  }
+}

@@ -1,0 +1,51 @@
+/* Styling for the input fields and remove button */
+.input-container {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  input[type="text"] {
+    display: block;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    flex: 1;
+  }
+  
+  .remove-btn {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .remove-btn:hover {
+    background-color: #c82333;
+  }
+  
+  /* Styling for the container div and "Add Request" button */
+  #input-container {
+    margin-bottom: 20px;
+  }
+  
+  #add-btn {
+    display: flex;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+  
+  #add-btn:hover {
+    background-color: #0069d9;
+  }
+  
+
+

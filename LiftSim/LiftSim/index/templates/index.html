@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+{% extends "base.html" %}
+
+{% block contents %}
+<html>
+  <head>
+    <title>Multiple Input Fields</title>
+    <link rel="stylesheet" href=" {{ url_for('static', filename='input.css') }} ">
+    <link rel="stylesheet" href="{{ url_for('static', filename='lift.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+  </head>
+
+
+
+  <body>
+    <div id="clock" class = "section">
+      <p class="date">{{ date }}</p>
+      <p class="time">{{ time }}</p>
+    </div>
+    <script src="{{ url_for('static', filename='clock.js') }}"></script>
+
+
+
+    <div id="input-container" class = "section"></div>
+    <div style="display: flex;">
+    <button id="add-btn">Add Request</button>
+    <button id="add-btn" onclick="displayInputs()">Submit</button>
+    </div>
+
+    <p id="result"></p>
+    <script>
+
+      function displayInputs() {
+      const inputs = [];
+
+      // Loop through each input field and add its value to the inputs array
+      for (let i = 0; i < document.getElementsByName("Time").length; i++) {
+        const input1 = parseInt(document.getElementsByName("Time")[i].value);
+        const input2 = document.getElementsByName("Source")[i].value;
+        const input3 = document.getElementsByName("Destination")[i].value;
+
+        inputs.push({
+          "input1": input1,
+          "input2": input2,
+          "input3": input3
+        });
+      }
+
+      // Send a POST request to the backend API endpoint with the inputs data
+      fetch('/api/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(inputs)
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the response from the backend here
+        console.log(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
+
+    </script>
+
+    <script src=" {{ url_for('static', filename='dynamicInput.js') }}"></script>
+
+
+
+
+    <div style="display: flex;">
+
+      <!-- Floor Indicator -->
+      <div class="floor-indicator">
+        <h3 align="center">Floor</h3>
+        <div class="floorNum">9</div>
+        <div class="floorNum">8</div>
+        <div class="floorNum">7</div>
+        <div class="floorNum">6</div>
+        <div class="floorNum">5</div>
+        <div class="floorNum">4</div>
+        <div class="floorNum">3</div>
+        <div class="floorNum">2</div>
+        <div class="floorNum">1</div>
+      </div>
+
+      <!-- Elevator 1 -->
+      <div class="elevator">
+        <h3 align="center">Lift 1</h3>
+        <div class="floor" id="e1f9">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e1f8">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e1f7">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e1f6">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e1f5">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e1f4">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e1f3">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e1f2">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e1f1">
+          <span class="numPeople">0</span>
+        </div>
+      </div>
+
+
+      <!-- Elevator 2 -->
+      <div class="elevator">
+        <h3 align="center">Lift 2</h3>
+        <div class="floor" id="e2f9">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e2f8">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e2f7">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e2f6">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e2f5">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e2f4">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e2f3">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e2f2">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e2f1">
+          <span class="numPeople">0</span>
+        </div>
+      </div>
+
+      <!-- Elevator 3 -->
+      <div class="elevator">
+        <h3 align="center">Lift 3</h3>
+        <div class="floor" id="e3f9">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e3f8">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e3f7">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e3f6">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e3f5">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e3f4">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e3f3">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e3f2">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="e3f1">
+          <span class="numPeople">0</span>
+        </div>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='lifts.js') }}"></script>
+
+  </body>
+</html>
+{% endblock %}

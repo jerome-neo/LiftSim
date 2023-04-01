@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
     <title>Multiple Input Fields</title>
@@ -9,6 +10,7 @@
       .elevator {
         margin-right: 20px; /* Add some margin between elevators */
       }
+      
     </style>
   </head>
 
@@ -19,15 +21,53 @@
       <p class="date">{{ date }}</p>
       <p class="time">{{ time }}</p>
     </div> 
-    <script src="DIGITAL CLOCK with Vue.js"></script>
+    <script src="Clock.js"></script>
 
 
 
 
-    <div id="input-container" class = "section">
-      <!-- Input fields will be added here -->
-    </div>
+    <div id="input-container" class = "section"></div>
     <button id="add-btn">Add Request</button>
+    <button id="add-btn" onclick="displayInputs()">Submit</button>
+
+    <p id="result"></p>
+    <script>
+
+      function displayInputs() {
+      const inputs = [];
+
+      // Loop through each input field and add its value to the inputs array
+      for (let i = 0; i < document.getElementsByName("No. of people taking the lift").length; i++) {
+        const input1 = parseInt(document.getElementsByName("No. of people taking the lift")[i].value);
+        const input2 = document.getElementsByName("Source")[i].value;
+        const input3 = document.getElementsByName("Destination")[i].value;
+        
+        inputs.push({
+          "input1": input1,
+          "input2": input2,
+          "input3": input3
+        });
+      }
+      
+      // Send a POST request to the backend API endpoint with the inputs data
+      fetch('/api/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(inputs)
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the response from the backend here
+        console.log(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
+  
+    </script>
 
     <script src="Dynamic Input.js"></script>
 
@@ -38,95 +78,137 @@
       <!-- Elevator 1 -->
       <div class="elevator">
         <form name="form1" method="post" action="">
-          <p align="center">电梯1现在位置<span id="now_position1"></span>层</p>
+          <p align="center">Lift 1 Current Floor:<span id="now_position_1"></span></p>
           <p align="center">
-            <input name="Submit9" type="button" id="Submit9" value=" 9" onclick="goto(this, 1);">
+              <input name="Submit9" type="button" id="Submit9_1" value=" 9" onclick="goto(this,1);">
           </p>
           <p align="center">    
-              <input name="Submit8" type="button" id="Submit8" value=" 8" onclick="goto(this);">
+              <input name="Submit8" type="button" id="Submit8_1" value=" 8" onclick="goto(this,1);">
           </p>
             <p align="center">    
-              <input name="Submit7" type="button" id="Submit7" value=" 7" onclick="goto(this);">
+              <input name="Submit7" type="button" id="Submit7_1" value=" 7" onclick="goto(this,1);">
           </p>
             <p align="center">    
-              <input name="Submit6" type="button" id="Submit6" value=" 6" onclick="goto(this);">
+              <input name="Submit6" type="button" id="Submit6_1" value=" 6" onclick="goto(this,1);">
             </p>
-            <p align="center">    <input name="Submit5" type="button" id="Submit5" value=" 5" onclick="goto(this);">
+            <p align="center">    
+              <input name="Submit5" type="button" id="Submit5_1" value=" 5" onclick="goto(this,1);">
           </p>
-            <p align="center">    <input name="Submit4" type="button" id="Submit4" value=" 4" onclick="goto(this);">
+            <p align="center">    
+              <input name="Submit4" type="button" id="Submit4_1" value=" 4" onclick="goto(this,1);">
           </p>
-            <p align="center">    <input name="Submit3" type="button" id="Submit3" value=" 3" onclick="goto(this);">
+            <p align="center">    
+              <input name="Submit3" type="button" id="Submit3_1" value=" 3" onclick="goto(this,1);">
             </p>
-            <p align="center">    <input name="Submit2" type="button" id="Submit2" value=" 2" onclick="goto(this);">
+            <p align="center">    
+              <input name="Submit2" type="button" id="Submit2_1" value=" 2" onclick="goto(this,1);">
           </p>
-            <p align="center">    <input name="Submit1" type="button" id="Submit1" value=" 1" onclick="goto(this);">
+            <p align="center">    
+              <input name="Submit1" type="button" id="Submit1_1" value=" 1" onclick="goto(this,1);">
           </p>
         </form>
+        <div align="center">
+          <script>
+              SetLight(now_value1,1);
+          </script>
+      </div>
+    
+    
+      <script src="app.js"> 
+          </script>
+
       </div>
   
       <!-- Elevator 2 -->
       <div class="elevator">
         <form name="form2" method="post" action="">
-          <p align="center">电梯2现在位置<span id="now_position2"></span>层</p>
+          <p align="center">Lift 2 Current Floor:<span id="now_position_2"></span></p>
           <p align="center">
-            <input name="Submit9" type="button" id="Submit9" value=" 9" onclick="goto(this, 2);">
+              <input name="Submit9" type="button" id="Submit9_2" value=" 9" onclick="goto(this, 2);">
           </p>
           <p align="center">    
-              <input name="Submit8" type="button" id="Submit8" value=" 8" onclick="goto(this);">
+              <input name="Submit8" type="button" id="Submit8_2" value=" 8" onclick="goto(this,2);">
           </p>
             <p align="center">    
-              <input name="Submit7" type="button" id="Submit7" value=" 7" onclick="goto(this);">
+              <input name="Submit7" type="button" id="Submit7_2" value=" 7" onclick="goto(this,2);">
           </p>
             <p align="center">    
-              <input name="Submit6" type="button" id="Submit6" value=" 6" onclick="goto(this);">
+              <input name="Submit6" type="button" id="Submit6_2" value=" 6" onclick="goto(this,2);">
             </p>
-            <p align="center">    <input name="Submit5" type="button" id="Submit5" value=" 5" onclick="goto(this);">
+            <p align="center">    
+              <input name="Submit5" type="button" id="Submit5_2" value=" 5" onclick="goto(this,2);">
           </p>
-            <p align="center">    <input name="Submit4" type="button" id="Submit4" value=" 4" onclick="goto(this);">
+            <p align="center">    
+              <input name="Submit4" type="button" id="Submit4_2" value=" 4" onclick="goto(this,2);">
           </p>
-            <p align="center">    <input name="Submit3" type="button" id="Submit3" value=" 3" onclick="goto(this);">
+            <p align="center">    
+              <input name="Submit3" type="button" id="Submit3_2" value=" 3" onclick="goto(this,2);">
             </p>
-            <p align="center">    <input name="Submit2" type="button" id="Submit2" value=" 2" onclick="goto(this);">
+            <p align="center">    
+              <input name="Submit2" type="button" id="Submit2_2" value=" 2" onclick="goto(this,2);">
           </p>
-            <p align="center">    <input name="Submit1" type="button" id="Submit1" value=" 1" onclick="goto(this);">
+            <p align="center">    
+              <input name="Submit1" type="button" id="Submit1_2" value=" 1" onclick="goto(this,2);">
           </p>
         </form>
+        <div align="center">
+          <script>
+              SetLight(now_value2,2);
+          </script>
+      </div>
+    
+    
+      <script src="app.js"> 
+          </script>
       </div>
   
       <!-- Elevator 3 -->
       <div class="elevator">
         <form name="form3" method="post" action="">
-          <p align="center">电梯3现在位置<span id="now_position3"></span>层</p>
+          <p align="center">Lift 3 Current Floor:<span id="now_position_3"></span></p>
           <p align="center">
-            <input name="Submit9" type="button" id="Submit9" value=" 9" onclick="goto(this, 3);">
+              <input name="Submit9" type="button" id="Submit9_3" value=" 9" onclick="goto(this, 3);">
           </p>
           <p align="center">    
-              <input name="Submit8" type="button" id="Submit8" value=" 8" onclick="goto(this);">
+              <input name="Submit8" type="button" id="Submit8_3" value=" 8" onclick="goto(this,3);">
           </p>
             <p align="center">    
-              <input name="Submit7" type="button" id="Submit7" value=" 7" onclick="goto(this);">
+              <input name="Submit7" type="button" id="Submit7_3" value=" 7" onclick="goto(this,3);">
           </p>
             <p align="center">    
-              <input name="Submit6" type="button" id="Submit6" value=" 6" onclick="goto(this);">
+              <input name="Submit6" type="button" id="Submit6_3" value=" 6" onclick="goto(this,3);">
             </p>
-            <p align="center">    <input name="Submit5" type="button" id="Submit5" value=" 5" onclick="goto(this);">
+            <p align="center">    
+              <input name="Submit5" type="button" id="Submit5_3" value=" 5" onclick="goto(this,3);">
           </p>
-            <p align="center">    <input name="Submit4" type="button" id="Submit4" value=" 4" onclick="goto(this);">
+            <p align="center">    
+              <input name="Submit4" type="button" id="Submit4_3" value=" 4" onclick="goto(this,3);">
           </p>
-            <p align="center">    <input name="Submit3" type="button" id="Submit3" value=" 3" onclick="goto(this);">
+            <p align="center">    
+              <input name="Submit3" type="button" id="Submit3_3" value=" 3" onclick="goto(this,3);">
             </p>
-            <p align="center">    <input name="Submit2" type="button" id="Submit2" value=" 2" onclick="goto(this);">
+            <p align="center">    
+              <input name="Submit2" type="button" id="Submit2_3" value=" 2" onclick="goto(this,3);">
           </p>
-            <p align="center">    <input name="Submit1" type="button" id="Submit1" value=" 1" onclick="goto(this);">
+            <p align="center">    
+              <input name="Submit1" type="button" id="Submit1_3" value=" 1" onclick="goto(this,3);">
           </p>
         </form>
+        <div align="center">
+          <script>
+              SetLight(now_value3,3);
+          </script>
+      </div>
+    
+    
+      <script src="app.js"> 
+          </script>
       </div>
     </div>
   
     <div align="center">
       <script src="app.js"></script>
     </div>
-  
   
 
 
