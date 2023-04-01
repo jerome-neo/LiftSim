@@ -1,0 +1,39 @@
+/* Set the font family and font size for the whole page */
+body {
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+}
+
+/* Set the background color of the table */
+table {
+	background-color: #fff;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+/* Set the font weight, padding, and border for table headers */
+th {
+	font-weight: bold;
+	padding: 10px;
+	border: 1px solid #ddd;
+	background-color: #555;
+	color: #fff;
+	text-align: left;
+}
+
+/* Set the padding and border for table cells */
+td {
+	padding: 10px;
+	border: 1px solid #ddd;
+	text-align: left;
+}
+
+/* Set the background color of alternate table rows */
+tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+/* Set the hover effect for table rows */
+tr:hover {
+	background-color: #ddd;
+}

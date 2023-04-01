@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Task Summary with Busy Time Chart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@^0.7.7/dist/chartjs-plugin-zoom.min.js"></script>
+    <link rel="stylesheet" href="styles_floor_table.css">
+  </head>
+  <body>
+    <h1>Task Summary with Busy Time Chart</h1>
+    <div style="width: 800px; margin: 0 auto;">
+      <canvas id="myChart"></canvas>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Floor</th>
+          <th>Number of Tasks</th>
+          <th>Total Waiting Time</th>
+          <th>Average Waiting Time</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+      </tbody>
+    </table>
+    <script src="chart.js"></script>
+    <script src="floor.js"></script>
+  </body>
+</html>
