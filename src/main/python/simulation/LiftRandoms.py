@@ -9,10 +9,10 @@ cur_dir = pathlib.Path(__file__).parent.resolve()
 os.chdir(cur_dir)
 
 # initializing proportion csv as Pandas dataframes
-prop1 = pd.read_csv('../../../data/prop1.csv').iloc[:, 1:].sort_values('p', ascending=False)
-prop2 = pd.read_csv('../../../data/prop2.csv').iloc[:, 1:].sort_values('p', ascending=False)
-prop3 = pd.read_csv('../../../data/prop3.csv').iloc[:, 1:].sort_values('p', ascending=False)
-prop4 = pd.read_csv('../../../data/prop4.csv').iloc[:, 1:].sort_values('p', ascending=False)
+prop1 = pd.read_csv('../../data/prop1.csv').iloc[:, 1:].sort_values('p', ascending=False)
+prop2 = pd.read_csv('../../data/prop2.csv').iloc[:, 1:].sort_values('p', ascending=False)
+prop3 = pd.read_csv('../../data/prop3.csv').iloc[:, 1:].sort_values('p', ascending=False)
+prop4 = pd.read_csv('../../data/prop4.csv').iloc[:, 1:].sort_values('p', ascending=False)
 
 
 class DayPhase(Enum):
