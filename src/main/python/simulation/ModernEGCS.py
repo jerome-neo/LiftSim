@@ -165,7 +165,6 @@ class ModernEGCS(object):
     
     def assign_calls(self)-> None:
         """Assigns hall call to the most suitable elevator based on HCPM method."""
-        print(f"{self.unassigned_hall_calls} (function start)")
         if len(self.unassigned_hall_calls)>0:
             while len(self.unassigned_hall_calls)>1:
                 self.unassigned_hall_calls.sort(key=lambda x: x.get_first_priority_value(),reverse=True)
@@ -193,7 +192,6 @@ class ModernEGCS(object):
                 best_elevator = self.elevators[best_elevator_index-1]
                 self.assign_one_call(last_hall_call,best_elevator)
                 self.unassigned_hall_calls = []
-            print(f"{self.unassigned_hall_calls} (function end)")
             
     
     def assign_one_call(self,hall_call: HallCall, elevator: Elevator) -> None:

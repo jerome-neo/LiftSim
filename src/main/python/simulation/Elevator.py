@@ -74,7 +74,7 @@ class Elevator(object):
 
     def __str__(self):
         """Returns a string representation of the Elevator object."""
-        return f"{self.direction} Elevator {self.index} has passengers: {list(map(lambda x: str(x), self.passengers))}"
+        return f"Elevator {self.index} set {self.direction} has passengers: {list(map(lambda x: str(x), self.passengers))}"
 
     def to_dict(self) -> dict:
         """Converts elevator information into a dictionary."""
@@ -105,7 +105,6 @@ class Elevator(object):
     
     def add_passengers(self, person) -> None:
         """Adds a passenger to the Elevator object."""
-        print(f'{person} has entered elevator {self.direction} {self.index}')
         self.passengers.append(person)
     
     def add_car_call(self,floor) -> None:
@@ -133,6 +132,7 @@ class Elevator(object):
         Yields:
             simpy.events.Timeout: a timeout event representing the time it takes for the passengers to enter
         """
+        print(f"List of person entering elevator: {list_of_person}")
         for person in list_of_person:
             if len(self.passengers) < MAX_CAPACITY:
                 self.add_passengers(person)
@@ -236,8 +236,7 @@ class Elevator(object):
             self.path.sort()
         if not self.is_busy():
             self.set_busy()
-        if self.direction == "NIL":
-            self.direction = direction
+        self.direction = direction
         displayed_path = self.path if self.get_direction() == "UP" else self.path[::-1]
         print(f"Elevator {self.index} set {self.direction} has path logged: {displayed_path}")
 
@@ -305,9 +304,10 @@ class Elevator(object):
                 # i.e. we let people leave the elevator before boarding
                 yield self.env.process(self.leave_elevator())
                 floor = self.floors[self.get_current_floor()-1]
-
+                print(f"Lift direction: {self.get_direction()}")
                 if self.get_direction() == "UP":
-                    if self.get_current_floor() < self.num_floors:  # if elevator is currently on top-most level
+                    if self.get_current_floor() < self.num_floors:
+                        print("This line gets executed")
                         yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_up()))
                         # reset status
                         floor.uncall_up()

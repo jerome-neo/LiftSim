@@ -129,7 +129,7 @@ with open('output.txt', 'w') as f:
     # when mode is 'manual', it will read the input file in ../../in
     #Test.run(200, 'Otis', mode='manual') 
     #Test.run(200, 'Otis', mode='default')
-    Test.run(200, 'ModernEGCS', mode='manual') 
+    Test.run(64800, 'ModernEGCS', mode='manual') 
     #Test.run(200, 'ModernEGCS', mode='default')
 
     # Step 3

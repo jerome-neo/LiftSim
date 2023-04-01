@@ -67,10 +67,12 @@ class GroundFloor(Floor):
         # Floor will "check" if people have arrived by peeking at the simulation time
         # to compare with the person's arrival time.
         elevator_algo = elevator_system.get_algo_type()
-        if len(self.going_up_persons) != 0 and self.going_up_persons[0].get_arrival_time() <= self.env.now and self.has_call_up():
+        if self.env.now == 42840.0:
+            print(f"last person's arrival time: {self.going_up_persons[0].get_arrival_time()}")
+        if len(self.going_up_persons) != 0 and self.going_up_persons[0].get_arrival_time() <= self.env.now:
             self.set_call_up()
             self.person_arrived(building)
-            if elevator_algo == "ModernEGCS" and not self.call_up_accepted() == False:
+            if elevator_algo == "ModernEGCS" and self.is_call_up_accepted() == False:
                 hall_call = HallCall(self.env,self.floor_index,1)
                 elevator_system.add_hall_call(hall_call)
     

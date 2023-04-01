@@ -1,9 +1,23 @@
 [
     {
         "curr": 2,
-        "dest": 4,
-        "arrival_time": 2.0,
-        "end_time": 25.0,
-        "wait_time": 23.0
+        "dest": 8,
+        "arrival_time": 36240.0,
+        "end_time": 36283.0,
+        "wait_time": 43.0
+    },
+    {
+        "curr": 3,
+        "dest": 1,
+        "arrival_time": 37920.0,
+        "end_time": 37946.0,
+        "wait_time": 26.0
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 42840.0,
+        "end_time": 42858.0,
+        "wait_time": 18.0
     }
 ]

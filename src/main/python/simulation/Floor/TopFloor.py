@@ -51,6 +51,7 @@ class TopFloor(Floor):
                 count += 1
             pointer = self.going_down_persons[:count]
             self.going_down_persons = self.going_down_persons[count + 1:]
+            print("else statement executed")
             return pointer
 
     def sort(self) -> None:

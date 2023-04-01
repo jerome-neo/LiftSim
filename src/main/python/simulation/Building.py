@@ -127,12 +127,10 @@ class Building(object):
                 self.elevator_group.allocate_landing_call()
 
                 for elevator in self.elevator_group.elevators_up:
-                    # print(f"{elevator} with path status: {elevator.has_path()}")
                     yield self.env.process(elevator.activate())
                     yield self.env.process(elevator.move())
 
                 for elevator in self.elevator_group.elevators_down:
-                    # print(f"{elevator} path status: {elevator.has_path()}")
                     yield self.env.process(elevator.activate())
                     yield self.env.process(elevator.move())
 
