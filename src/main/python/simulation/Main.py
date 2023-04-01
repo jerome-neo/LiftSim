@@ -2,10 +2,9 @@ import csv
 import json
 import simpy
 import statistics
-from PersonList import PersonList
 import Building
-import sys
-
+#import sys
+from PersonList import PersonList
 
 class Main(object):
     """
@@ -73,8 +72,8 @@ class Main(object):
         people = self.person_list.get_person_list()
         return len(list(filter(lambda x: x.has_completed_trip(), people)))
 
-    def output_to_csv(self, path='../../out/'):
-        name = 'output.csv'
+    def output_person_to_csv(self, path='../../out/'):
+        name = 'output_persons.csv'
         header = ['curr', 'dest', 'arrival_time', 'end_time', 'wait_time']
         data = []
         for person in self.person_list.get_person_list():
@@ -90,27 +89,55 @@ class Main(object):
             writer.writerow(header)
             writer.writerows(data)
 
-with open('output.txt', 'w') as f:
-    sys.stdout = f
-    # Example ways of running the simulation
+    def output_person_to_json(self, path='../../out/'):
+        name = 'output_persons.json'
+        data = []
+        for person in self.person_list.get_person_list():
+            if person.has_completed_trip():
+                curr = int(person.get_curr_floor())
+                dest = int(person.get_dest_floor())
+                arrival_time = float(person.get_arrival_time())
+                end_time = float(person.get_end_time())
+                wait_time = float(person.get_wait_time())
+                data.append({
+                    'curr': curr,
+                    'dest': dest,
+                    'arrival_time': arrival_time,
+                    'end_time': end_time,
+                    'wait_time': wait_time
+                })
+        with open(path + name, 'w', encoding='UTF8') as f:
+            json.dump(data, f, indent=4)
 
-    # Step 1
-    # set up the environment with number of UP elevators, number of DOWN elevators and number of floors"
-    Test = Main(num_up=2, num_down=1, num_floors=9)
+    def output_elevator_log_to_json(self, path='../../out/'):
+        name = 'output_elevator.json'
+        json_serializable = json.dumps(self.building.to_dict(), indent=4)
+        with open(path + name, 'w') as f:
+            f.write(json_serializable)
 
-    # Step 2
-    # run the simulation by telling it how long to run, e.g. 200
-    # when mode is 'manual', it will read the input file in ../../in
-    #Test.run(200, 'Otis', mode='manual') 
-    Test.run(200, 'Otis', mode='default')
-    #Test.run(200, 'ModernEGCS', mode='manual') 
-    #Test.run(200, 'ModernEGCS', mode='default')
+#with open('output.txt', 'w') as f:
+    #sys.stdout = f
+# Example ways of running the simulation
 
-    # Step 3
-    # Save the data of all persons that have completed their trip in the simulation
-    #Test.output_to_csv()
+# Step 1
+# set up the environment with number of UP elevators, number of DOWN elevators and number of floors"
+Test = Main(num_up=2, num_down=1, num_floors=9)
 
-    # Additional information to be printed in terminal
-    print('Number of people spawned in advance:', len(Test.building.get_all_persons()))
-    print('Number of people served:', Test.get_number_of_people_served())
-    print(Test.get_average_waiting_time())
+# Step 2
+# run the simulation by telling it how long to run, e.g. 200
+# when mode is 'manual', it will read the input file in ../../in
+Test.run(200, 'Otis', mode='manual') 
+#Test.run(200, 'Otis', mode='default')
+#Test.run(200, 'ModernEGCS', mode='manual') 
+#Test.run(200, 'ModernEGCS', mode='default')
+
+# Step 3
+# Save the data of all persons that have completed their trip in the simulation
+Test.output_person_to_csv()
+Test.output_person_to_json()
+Test.output_elevator_log_to_json()
+
+# Additional information to be printed in terminal
+print('Number of people spawned in advance:', len(Test.building.get_all_persons()))
+print('Number of people served:', Test.get_number_of_people_served())
+print(Test.get_average_waiting_time())
