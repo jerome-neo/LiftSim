@@ -145,8 +145,8 @@ class Building(object):
             elif self.get_elevator_algo_type() == "ModernEGCS":
                 self.elevator_group.assign_calls()
                 for elevator in self.elevator_group.elevators:
-                    self.env.process(elevator.activate())
-                    self.env.process(elevator.move())
+                    yield self.env.process(elevator.activate())
+                    yield self.env.process(elevator.move())
                 self.elevator_group.update_status()
                 yield self.env.timeout(1)
                 print(self.elevator_group.print_system_status())
