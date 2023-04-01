@@ -1,5 +1,5 @@
 import pandas as pd
-import datetime as datetime
+from datetime import datetime
 from LiftRandoms import LiftRandoms
 from Person import Person
 
@@ -43,11 +43,11 @@ class PersonList:
                 start_simulation_time = datetime.strptime("06:00", "%H:%M")
                 time = (time_converted - start_simulation_time).total_seconds()
                 print(time)
-                person = Person(person_id, time)
+                person = Person(self.env,person_id, time)
                 person.overwrite(curr, dest)
                 self.list.append(person)
                 person_id += 1
-            self.list.sort(key=lambda x: x.get_arrival_time()
+            self.list.sort(key=lambda x: x.get_arrival_time())
         else:
             time = 0
             person_id = 1

@@ -72,7 +72,7 @@ class SandwichFloor(Floor):
             List[Person]: A list of all persons who want to go down from the sandwich floor.
         """
         pointer = []
-        if not self.has_call_up() or self.going_down_persons[0].get_arrival_time() > self.env.now:
+        if not self.has_call_down() or self.going_down_persons[0].get_arrival_time() > self.env.now:
             return pointer
         else:
             n = len(self.going_down_persons)
