@@ -3,7 +3,7 @@ import json
 import simpy
 import statistics
 import Building
-#import sys
+import sys
 from PersonList import PersonList
 
 class Main(object):
@@ -115,29 +115,30 @@ class Main(object):
         with open(path + name, 'w') as f:
             f.write(json_serializable)
 
-#with open('output.txt', 'w') as f:
-    #sys.stdout = f
+
+with open('output.txt', 'w') as f:
+    sys.stdout = f
 # Example ways of running the simulation
 
-# Step 1
-# set up the environment with number of UP elevators, number of DOWN elevators and number of floors"
-Test = Main(num_up=2, num_down=1, num_floors=9)
+    # Step 1
+    # set up the environment with number of UP elevators, number of DOWN elevators and number of floors"
+    Test = Main(num_up=2, num_down=1, num_floors=9)
 
-# Step 2
-# run the simulation by telling it how long to run, e.g. 200
-# when mode is 'manual', it will read the input file in ../../in
-Test.run(200, 'Otis', mode='manual') 
-#Test.run(200, 'Otis', mode='default')
-#Test.run(200, 'ModernEGCS', mode='manual') 
-#Test.run(200, 'ModernEGCS', mode='default')
+    # Step 2
+    # run the simulation by telling it how long to run, e.g. 200
+    # when mode is 'manual', it will read the input file in ../../in
+    #Test.run(200, 'Otis', mode='manual') 
+    #Test.run(200, 'Otis', mode='default')
+    Test.run(200, 'ModernEGCS', mode='manual') 
+    #Test.run(200, 'ModernEGCS', mode='default')
 
-# Step 3
-# Save the data of all persons that have completed their trip in the simulation
-Test.output_person_to_csv()
-Test.output_person_to_json()
-Test.output_elevator_log_to_json()
+    # Step 3
+    # Save the data of all persons that have completed their trip in the simulation
+    Test.output_person_to_csv()
+    Test.output_person_to_json()
+    Test.output_elevator_log_to_json()
 
-# Additional information to be printed in terminal
-print('Number of people spawned in advance:', len(Test.building.get_all_persons()))
-print('Number of people served:', Test.get_number_of_people_served())
-print(Test.get_average_waiting_time())
+    # Additional information to be printed in terminal
+    print('Number of people spawned in advance:', len(Test.building.get_all_persons()))
+    print('Number of people served:', Test.get_number_of_people_served())
+    print(Test.get_average_waiting_time())

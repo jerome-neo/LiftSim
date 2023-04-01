@@ -65,7 +65,7 @@ class TopFloor(Floor):
         if len(self.going_down_persons) != 0 and self.going_down_persons[0].get_arrival_time() <= self.env.now:
             self.set_call_down()
             self.person_arrived(building)
-            if elevator_algo == "ModernEGCS":
+            if elevator_algo == "ModernEGCS" and self.is_call_down_accepted() == False:
                 hall_call = HallCall(self.env,self.floor_index,-1)
                 elevator_system.add_hall_call(hall_call)
 

@@ -165,6 +165,7 @@ class ModernEGCS(object):
     
     def assign_calls(self)-> None:
         """Assigns hall call to the most suitable elevator based on HCPM method."""
+        print(f"{self.unassigned_hall_calls} (function start)")
         if len(self.unassigned_hall_calls)>0:
             while len(self.unassigned_hall_calls)>1:
                 self.unassigned_hall_calls.sort(key=lambda x: x.get_first_priority_value(),reverse=True)
@@ -192,31 +193,41 @@ class ModernEGCS(object):
                 best_elevator = self.elevators[best_elevator_index-1]
                 self.assign_one_call(last_hall_call,best_elevator)
                 self.unassigned_hall_calls = []
+            print(f"{self.unassigned_hall_calls} (function end)")
             
     
     def assign_one_call(self,hall_call: HallCall, elevator: Elevator) -> None:
             """Assign one hall call to the most suitable elevator based on HCPM method, when there is only 1 registered hall call"""
             hall_call_floor = hall_call.get_source_floor()
             hall_call_direction = hall_call.get_direction()
+            elevator.set_busy()
             elevator.add_path(hall_call_floor,hall_call_direction)
+            floor = self.floors[hall_call_floor-1]
+            if hall_call_direction == "UP":
+                floor.accept_up_call()
+            else:
+                floor.accept_down_call()
+            print(f"Hall call from {hall_call_floor} going {hall_call_direction} is assigned to {elevator.index}")
+            
                 
-
     def update_status(self) -> None:
-        """Updates the elevators to be idle when they have no path."""
+        """Updates the elevators to be idle when they have no path.
+        Reassigns hall calls and moves idle elevators to busier floors at ever hour"""
         for elevator in self.elevators:
             if elevator.num_active_calls==0 and elevator.is_busy():
-                self.assign_calls()
-                if elevator.is_busy():
-                    pass
-                busiest_floor_level = self.building.get_busiest_floor()
-                busiest_floor = self.floors[busiest_floor_level-1]
-                idling_elevators_deserved = busiest_floor.get_num_idling_elevators_deserved()
-                idling_elevators_sent = busiest_floor.get_num_idling_elevators_sent()
-                if idling_elevators_deserved>=idling_elevators_sent+1:
-                    busiest_floor.new_idling_elevator_sent()
-                    elevator.travel(busiest_floor_level)
-                    elevator.unset_direction()
-                    elevator.set_idle()
+                if self.env.now % 3600 == 0:
+                    self.assign_calls()
+                    if elevator.is_busy():
+                        pass
+                    busiest_floor_level = self.building.get_busiest_floor()
+                    busiest_floor = self.floors[busiest_floor_level-1]
+                    idling_elevators_deserved = busiest_floor.get_num_idling_elevators_deserved()
+                    idling_elevators_sent = busiest_floor.get_num_idling_elevators_sent()
+                    if idling_elevators_deserved>=idling_elevators_sent+1:
+                        busiest_floor.new_idling_elevator_sent()
+                        elevator.travel(busiest_floor_level)
+                        elevator.unset_direction()
+                elevator.set_idle()
     
     def is_all_idle(self) -> bool:
         """Returns True if all the elevators are idle"""
