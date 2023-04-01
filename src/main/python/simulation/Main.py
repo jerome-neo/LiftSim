@@ -127,7 +127,7 @@ with open('output.txt', 'w') as f:
     # Step 2
     # run the simulation by telling it how long to run, e.g. 200
     # when mode is 'manual', it will read the input file in ../../in
-    #Test.run(200, 'Otis', mode='manual') 
+    #Test.run(64800, 'Otis', mode='manual') 
     #Test.run(200, 'Otis', mode='default')
     Test.run(64800, 'ModernEGCS', mode='manual') 
     #Test.run(200, 'ModernEGCS', mode='default')
