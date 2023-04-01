@@ -2,6 +2,7 @@ import Elevator
 import HallCall
 import Building
 
+
 class ModernEGCS(object):
     """
     A system for controlling a group of elevators in a building using ModernEGCS algorithm.
@@ -31,8 +32,6 @@ class ModernEGCS(object):
         self.floors = collection_floors
         self.elevators = [Elevator.Elevator(env, i, self.floors, 1,num_elevators) for i in range(1, num_elevators + 1)]
         self.unassigned_hall_calls = []
-        self.hallcall_priority_arrays = [] #stores complete set of priority arrays
-        self.hall_call_priority_evaluation = [] #stores only the first element of each hall call's priority array
         self.w1 = w1
         self.w2 = w2
         self.w3 = w3
@@ -48,17 +47,15 @@ class ModernEGCS(object):
         """
         return f"ModernEGCS with {len(self.elevators)} elevators."
 
+    def get_algo_type(self):
+        """Returns type of elevator algorithm implemented"""
+        return "ModernEGCS"
+
     def add_hall_call(self,hall_call) -> None:
-        """Appends a new hall call to the list of unassigned hall calls.
-        Hall calls are represented by a tuple: (source floor of the call, direction of the call)"""
+        """Appends a new HallCall to the list of unassigned hall calls."""
         self.unassigned_hall_calls.append(hall_call)
         priority_array = self.create_call_priority_array(hall_call)
-        ls = [hall_call,priority_array]
-        ls_1 = (len(self.hallcall_priority_arrays),priority_array[0])
-        self.hallcall_priority_arrays.append(ls)
-        self.hall_call_priority_evaluation.append(ls_1)
-        print(self.hall_call_priority_evaluation)
-        print(self.hallcall_priority_arrays)
+        hall_call.set_priority_array(priority_array)
         
     
     def calculate_cost2_minus_cost1_efficient(self,hall_call,elevator):
@@ -155,41 +152,50 @@ class ModernEGCS(object):
             index = priority_array[i][0]
             tup = (index,value_element)
             converted_priority_array.append(tup)
+        last_elevator_index = priority_array[-1][0]
+        tup = (last_elevator_index,-1)
+        converted_priority_array.append(tup)
         return converted_priority_array
-
-    def assign_calls(self) -> None:
-        """Assigns hall call to the most suitable elevator based on HCPM method."""
-        if len(self.hallcall_priority_arrays)>0:
-            while len(self.hall_call_priority_evaluation)>1:
-                self.hall_call_priority_evaluation.sort(key=lambda x: x[1][1],reverse=True)
-                lowest_cost = self.hall_call_priority_evaluation[-1][1][1]
-                prioritised_hall_call_index = self.hall_call_priority_evaluation[0][0]
-                current_best_elevator = self.hall_call_priority_evaluation[0][1][0]
-                current_cost = self.hall_call_priority_evaluation[0][1][1]
-                if self.elevators[current_best_elevator-1].has_more_than_optimum_calls():
-                    updated_cost = current_cost - self.hallcall_priority_arrays[prioritised_hall_call_index][1][1]
-                    if updated_cost>lowest_cost:
-                        next_best_elevator = self.hallcall_priority_arrays[prioritised_hall_call_index][1][0]
-                        tup = (prioritised_hall_call_index,(next_best_elevator,updated_cost))
-                        self.hall_call_priority_evaluation.append(tup)
-                        pass
-                self.assign_one_call(prioritised_hall_call_index,current_best_elevator)
-                del self.hall_call_priority_evaluation[0]
-                del self.hallcall_priority_arrays[prioritised_hall_call_index] 
-                
-            best_elevator_index = self.hall_call_priority_evaluation[0][1][0]
-            self.assign_one_call(0,best_elevator_index)
-            del self.hall_call_priority_evaluation[0]
-            del self.hallcall_priority_arrays[0] 
-
     
-    def assign_one_call(self,prioritised_hall_call_index,best_elevator_index) -> None:
+    def assign_calls(self)-> None:
+        """Assigns hall call to the most suitable elevator based on HCPM method."""
+        print(f"Assigning (start of function): {self.unassigned_hall_calls}")
+        if len(self.unassigned_hall_calls)>0:
+            while len(self.unassigned_hall_calls)>1:
+                self.unassigned_hall_calls.sort(key=lambda x: x.get_first_priority_value(),reverse=True)
+                lowest_value_hall_call = self.unassigned_hall_calls.pop(-1)
+                lowest_cost = lowest_value_hall_call.get_first_priority_value()
+
+                prioritised_hall_call = self.unassigned_hall_calls.pop(0)
+                current_best_elevator_index = prioritised_hall_call.get_current_best_elevator()
+                current_best_elevator = self.elevators[current_best_elevator_index-1]
+                current_cost = prioritised_hall_call.get_first_priority_value()
+
+                if current_best_elevator.has_more_than_optimum_calls() and len(self.unassigned_hall_calls)>1 and prioritised_hall_call.get_priority_array_length()>0:
+                    decrease_in_cost = prioritised_hall_call.get_second_priority_value()
+                    if decrease_in_cost>-1:
+                        updated_cost = current_cost - decrease_in_cost
+                        if updated_cost>lowest_cost:
+                            prioritised_hall_call.remove_frontmost_array_pair()
+                            pass
+                self.assign_one_call(prioritised_hall_call,current_best_elevator)
+                self.unassigned_hall_calls = self.unassigned_hall_calls[1:]
+                print(f"Assigning (while loop): {self.unassigned_hall_calls}")
+
+            if len(self.unassigned_hall_calls) == 1:
+                last_hall_call = self.unassigned_hall_calls[0]
+                best_elevator_index = last_hall_call.get_current_best_elevator()
+                best_elevator = self.elevators[best_elevator_index-1]
+                self.assign_one_call(last_hall_call,best_elevator)
+                self.unassigned_hall_calls = []
+            print(f"Assigning (end of function): {self.unassigned_hall_calls}")
+            
+    
+    def assign_one_call(self,hall_call: HallCall, elevator: Elevator) -> None:
             """Assign one hall call to the most suitable elevator based on HCPM method, when there is only 1 registered hall call"""
-            hall_call = self.hallcall_priority_arrays[prioritised_hall_call_index][0]
             hall_call_floor = hall_call.get_source_floor()
             hall_call_direction = hall_call.get_direction()
-            best_elevator = self.elevators[best_elevator_index]
-            best_elevator.add_path(hall_call_floor,hall_call_direction)
+            elevator.add_path(hall_call_floor,hall_call_direction)
                 
 
     def update_status(self) -> None:
@@ -200,8 +206,9 @@ class ModernEGCS(object):
                 if elevator.is_busy():
                     pass
                 busiest_floor_level = self.building.get_busiest_floor()
-                idling_elevators_deserved = busiest_floor_level.get_num_idling_elevators_deserved()
-                idling_elevators_sent = busiest_floor_level.get_num_idling_elevators_sent()
+                busiest_floor = self.floors[busiest_floor_level-1]
+                idling_elevators_deserved = busiest_floor.get_num_idling_elevators_deserved()
+                idling_elevators_sent = busiest_floor.get_num_idling_elevators_sent()
                 if idling_elevators_deserved>=idling_elevators_sent+1:
                     elevator.travel(busiest_floor_level)
                     elevator.unset_direction()

@@ -118,10 +118,6 @@ class Person(object):
             int: -1 if the person wants to go down, 1 if the person wants to go up.
         """
         return "DOWN" if self.curr_floor > self.destination_floor else "UP"
-    
-    def get_assigned_elevator(self) -> None:
-        """Returns the assigned Elevator object"""
-        return self.assigned_elevator
 
 
     def get_elevator_arrival_time(self)-> float:
@@ -145,7 +141,7 @@ class Person(object):
             elevator_arrival_to_now = 0
         else:
             elevator_arrival_to_now = self.env.now-self.get_elevator_arrival_time()
-        assigned_elevator = self.get_assigned_elevator()
+        assigned_elevator = elevator
         elevator_remaining_car_calls = assigned_elevator.get_car_calls()
         elevator_current_floor = assigned_elevator.get_current_floor()
         person_destination_floor = self.get_dest_floor()

@@ -4,7 +4,7 @@ from Floor import TopFloor, GroundFloor, SandwichFloor
 import Person
 from ElevatorSystem import ElevatorSystem
 import LiftRandoms
-from ModernEGCS import ModernEGCS
+import ModernEGCS
 import numpy as np
 
 class Building(object):
@@ -75,9 +75,12 @@ class Building(object):
     def initialise(self,elevator_algo) -> None:
         """Initialises all components that make up the building"""
         # Place floors into building
-        self.floors.append(GroundFloor(self.env, self, 1))
-        self.floors.extend([SandwichFloor(self.env, self, i) for i in range(2, self.num_floors)])
-        self.floors.append(TopFloor(self.env, self, self.num_floors))
+        self.floors.append(GroundFloor.GroundFloor(self.env, 1))
+
+        self.floors.extend([SandwichFloor.SandwichFloor(self.env, i) for i in range(2, self.num_floors)])
+    
+        self.floors.append(TopFloor.TopFloor(self.env, self.num_floors))
+    
 
         # Place elevators into building
         #self.elevator_group = ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
@@ -87,7 +90,8 @@ class Building(object):
             self.elevator_group = ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
         elif elevator_algo=="ModernEGCS":
             self.elevator_algo = "ModernEGCS"
-            self.elevator_group = ModernEGCS(self.env, self, self.floors, num_elevators=self.num_up+self.num_down,w1=1,w2=1,w3=1)
+            self.elevator_group = ModernEGCS.ModernEGCS(self.env, self, self.floors, num_elevators=self.num_up+self.num_down,w1=1,w2=1,w3=1)
+            print(self.elevator_group)
 
         # Place persons into building
         for person in self.all_persons_spawned.get_person_list():
@@ -114,7 +118,7 @@ class Building(object):
                     yield self.env.timeout(round(next_arrival_time - self.env.now))
             # activate floor buttons if person 'arrived'
             for floor in self.floors:
-                floor.update()
+                floor.update(self, self.elevator_group)
 
             if self.get_elevator_algo_type() == "Otis":
                 self.elevator_group.allocate_rising_call()
