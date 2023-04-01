@@ -1,9 +1,6 @@
 import simpy
-import random
 from Floor import TopFloor, GroundFloor, SandwichFloor
-import Person
 from ElevatorSystem import ElevatorSystem
-import LiftRandoms
 import ModernEGCS
 import numpy as np
 
@@ -20,10 +17,13 @@ class Building(object):
             elevators in the building.
         all_persons_spawned (PersonList): A PersonList object containing all Person instances.
     Methods:
+        get_elevator_system(): Returns the object of the elevator system being implemented, which is either from the class ElevatorSystem (representing Otis) or ModernEGCS
+        get_elevator_algo_type(): Returns in string the elevator system being implemented, which is either Otis or ModernEGCS
         get_num_floors(): Returns the number of floors in the building.
         get_all_persons(): Returns the PersonList object in the building.
         place_person_on_floor(): Distribute Person from PersonList into the floors.
         initialise(): Initialises the building by adding the floors and the elevator system.
+        to_dict(): Returns a dictionary of logged information
         simulate(): Simulates the building operation by creating Person instances, placing them in their
             respective floors, and managing the elevators in the building.
     """
@@ -43,12 +43,17 @@ class Building(object):
         self.floors = []
         self.elevator_group = None
         self.all_persons_spawned = persons_list
+        self.log = {}  # logs every step
         self.arrival_rates_floors = np.zeros(num_floors)
         self.elevator_algo = None
     
     def get_elevator_system(self):
         """Returns either ElevatorSystem or ModernEGCS object which is implemented as the building's elevator system"""
         return self.elevator_group
+    
+    def get_elevator_algo_type(self):
+        """Returns in string the type of elevator algorithm implemented"""
+        return self.elevator_algo
     
     def get_num_floors(self) -> int:
         """Returns the number of floors in the building."""
@@ -81,25 +86,21 @@ class Building(object):
     
         self.floors.append(TopFloor.TopFloor(self.env, self.num_floors))
     
-
         # Place elevators into building
-        #self.elevator_group = ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
-
         if elevator_algo=="Otis":
             self.elevator_algo = "Otis"
             self.elevator_group = ElevatorSystem(self.env, self.floors, self.num_up, self.num_down)
         elif elevator_algo=="ModernEGCS":
             self.elevator_algo = "ModernEGCS"
             self.elevator_group = ModernEGCS.ModernEGCS(self.env, self, self.floors, num_elevators=self.num_up+self.num_down,w1=1,w2=1,w3=1)
-            print(self.elevator_group)
 
         # Place persons into building
         for person in self.all_persons_spawned.get_person_list():
             self.place_person_on_floor(person)
 
-    def get_elevator_algo_type(self):
-        """Returns in string the type of elevator algorithm implemented"""
-        return self.elevator_algo
+    def to_dict(self) -> dict:
+        """Returns a dictionary of the logged info."""
+        return self.log
 
     def simulate(self) -> None:
         """
@@ -110,6 +111,7 @@ class Building(object):
         """
 
         while True:
+            self.log.update(self.elevator_group.to_dict())
             print(f'Current simulation time: {self.env.now}')
             if self.env.now == 0 or self.elevator_group.is_all_idle():
                 next_arrival_time = self.all_persons_spawned.get_earliest_arrival_time()
@@ -147,6 +149,8 @@ class Building(object):
                     self.env.process(elevator.move())
                 self.elevator_group.update_status()
                 yield self.env.timeout(1)
+                print(self.elevator_group.print_system_status())
+                print(f'\n')
 
             else:
                 print("Lift algorithm has not been configured yet")

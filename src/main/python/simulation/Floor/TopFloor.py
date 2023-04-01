@@ -1,8 +1,6 @@
 from Floor import Floor
-import ModernEGCS
 from HallCall import HallCall
 import simpy
-import Building
 
 class TopFloor(Floor):
     """ A class representing the top floor of a building."""

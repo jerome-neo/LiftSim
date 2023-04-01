@@ -1,6 +1,4 @@
-
 import Elevator
-
 
 class ElevatorSystem(object):
     """
@@ -26,8 +24,7 @@ class ElevatorSystem(object):
         self.num_floors = len(collection_floors)
         self.elevators_up = [Elevator.Elevator(env, i, self.floors, 1, num_up+num_down, direction="UP") for i in range(1, num_up + 1)]
         self.elevators_down = [Elevator.Elevator(env, i, self.floors, 1, num_up+num_down, direction="DOWN") for i in range(1, num_down + 1)]
-
-
+    
     def __str__(self):
         """
         Returns a string representation of the ElevatorSystem.
@@ -35,12 +32,16 @@ class ElevatorSystem(object):
             str: A string representation of the ElevatorSystem.
         """
         return f"Elevator with {len(self.elevators_up)} up and {len(self.elevators_down)} down configuration."
+
+    def to_dict(self) -> dict:
+        """Converts elevator group information into a dictionary with time stamp."""
+        return {self.env.now: [{index+1: elevator.to_dict()} for index, elevator
+                               in enumerate(self.elevators_up + self.elevators_down)]}
     
     def get_algo_type(self):
         """Returns type of elevator algorithm implemented"""
         return "Otis"
     
-
     def print_system_status(self) -> str:
         """Returns a string representation number of active elevators."""
         num_active_up = len(list(filter(lambda x: x.is_busy(), self.elevators_up)))

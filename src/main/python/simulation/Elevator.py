@@ -1,8 +1,6 @@
 import random
 import simpy
-import numpy as np
 from Floor import Floor
-
 
 MAX_CAPACITY = 13
 MAX_WEIGHT = 1600 # kilograms
@@ -66,17 +64,25 @@ class Elevator(object):
         self.speed = SPEED  # metres per second
         self.is_working_status = False
         self.passengers = []
-        self.path = []  #all assigned floors in the elevator's current path
+        self.path = []  #all assigned floors in the elevator's current path based on simulation
         self.car_calls = [] #all unserved car calls registered for the elevator
         self.resource = simpy.Resource(env,1)
         self.capacity = MAX_CAPACITY
         self.is_moving = False
         self.total_num_elevators = total_num_elevators
+        self.num_active_calls = 0 #actual number of active calls that the elevator is serving
 
     def __str__(self):
         """Returns a string representation of the Elevator object."""
         return f"{self.direction} Elevator {self.index} has passengers: {list(map(lambda x: str(x), self.passengers))}"
 
+    def to_dict(self) -> dict:
+        """Converts elevator information into a dictionary."""
+        floor = {floor + 1: 0 for floor in range(self.num_floors)}
+        floor[self.get_current_floor()] = 1
+        return {'elevator_type': -1 if self.direction == "DOWN" else 1,
+                'floor': floor, 'num_passengers': self.get_num_passengers()}
+    
     def get_index(self) -> int:
         """Returns the index of the elevator"""
         return self.index
@@ -92,6 +98,10 @@ class Elevator(object):
     def get_current_floor(self) -> int:
         """Returns the current floor the Elevator object is on."""
         return self.curr_floor
+    
+    def get_num_passengers(self):
+        """Returns number of passengers inside."""
+        return len(self.passengers)
     
     def add_passengers(self, person) -> None:
         """Adds a passenger to the Elevator object."""
@@ -169,6 +179,9 @@ class Elevator(object):
                 print(f"{person} has left elevator at simulation time: {self.env.now}")
         for person in to_remove:
             self.passengers.remove(person)
+        if self.curr_floor in self.car_calls:
+            self.car_calls.remove(self.curr_floor)
+        self.num_active_calls-=1
         if len(to_remove) > 0:
             yield self.env.process(self.elevator_door_open())
             yield self.env.timeout(random.randint(2, 5))
@@ -217,6 +230,7 @@ class Elevator(object):
         """
         if floor_level not in self.path:
             self.path.append(floor_level)
+            self.num_active_calls+=1
         # self.path = np.unique(self.path).tolist()
         if self.direction == direction:
             self.path.sort()
