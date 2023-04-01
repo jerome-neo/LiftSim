@@ -80,11 +80,11 @@ class Building(object):
     def initialise(self,elevator_algo) -> None:
         """Initialises all components that make up the building"""
         # Place floors into building
-        self.floors.append(GroundFloor.GroundFloor(self.env, 1))
+        self.floors.append(GroundFloor(self.env, 1))
 
-        self.floors.extend([SandwichFloor.SandwichFloor(self.env, i) for i in range(2, self.num_floors)])
+        self.floors.extend([SandwichFloor(self.env, i) for i in range(2, self.num_floors)])
     
-        self.floors.append(TopFloor.TopFloor(self.env, self.num_floors))
+        self.floors.append(TopFloor(self.env, self.num_floors))
     
         # Place elevators into building
         if elevator_algo=="Otis":

@@ -108,14 +108,12 @@ class SandwichFloor(Floor):
             self.set_call_up()
             self.person_arrived(building)
             if elevator_algo == "ModernEGCS":
-                print("Hall call registered")
                 hall_call = HallCall(self.env,self.floor_index,1)
                 elevator_system.add_hall_call(hall_call)
         if len(self.going_down_persons) != 0 and self.going_down_persons[0].get_arrival_time() <= self.env.now:
             self.set_call_down()
             self.person_arrived(building)
             if elevator_algo == "ModernEGCS":
-                print("Hall call registered")
                 hall_call = HallCall(self.env,self.floor_index,-1)
                 elevator_system.add_hall_call(hall_call)
     
