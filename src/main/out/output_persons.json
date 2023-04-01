@@ -3,7 +3,21 @@
         "curr": 2,
         "dest": 4,
         "arrival_time": 2.0,
-        "end_time": 6.0,
-        "wait_time": 4.0
+        "end_time": 26.0,
+        "wait_time": 24.0
+    },
+    {
+        "curr": 5,
+        "dest": 9,
+        "arrival_time": 59.0,
+        "end_time": 113.0,
+        "wait_time": 54.0
+    },
+    {
+        "curr": 4,
+        "dest": 7,
+        "arrival_time": 100.0,
+        "end_time": 130.0,
+        "wait_time": 30.0
     }
 ]
