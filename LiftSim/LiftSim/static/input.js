@@ -6,8 +6,8 @@ function createInputSet() {
   // Create three input fields
   const input1 = document.createElement("input");
   input1.type = "text";
-  input1.name = "No. of people taking the lift";
-  input1.placeholder = "No. of people taking the lift";
+  input1.name = "Timestamp";
+  input1.placeholder = "Timestamp";
   inputSet.appendChild(input1);
 
   const input2 = document.createElement("input");
@@ -81,6 +81,11 @@ addBtn.addEventListener("click", () => {
 // Add event listener to start button
 const startBtn = document.getElementById("start-btn");
 startBtn.addEventListener("click", () => {
+  stopSimulationFlag = false;
+  pauseSimulationFlag = false;
+  for (let i = 0; i < timers.length; i++) {
+    clearTimeout(timers[i]);
+  }
   updateFloors(1,keys1,data1);
   updateFloors(2,keys2,data2);
 });
@@ -93,6 +98,19 @@ endBtn.addEventListener("click", () => {
   stopSimulation(2);
 });
 
+// Add event listener to pause button
+const pauseBtn = document.getElementById("pause-btn");
+pauseBtn.addEventListener("click", () => {
+  pauseSimulationFlag = !pauseSimulationFlag;
+  /*if (pauseSimulationFlag) {
+    pauseTimestamp = Date.now();
+  } else {
+    resumeTimestamp = Date.now();
+    timeElapsed = resumeTimestamp - pauseTimestamp; // 记录暂停时已经过去的时间
+  }*/
+});
+//pauseBtn.addEventListener("click", togglePause); // add event listener for start button
+/*
 // Append start button to input set
 inputSet.appendChild(startBtn);
 
@@ -124,5 +142,5 @@ inputSet.appendChild(pauseBtn);
 // Append end button to input set
 inputSet.appendChild(endBtn);
 
-
+*/
 

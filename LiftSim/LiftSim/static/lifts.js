@@ -1,101 +1,3 @@
-// Define variables
-let passengers = [];
-
-// Define functions
-function addPassenger() {
-  const numOfPeople = parseInt(document.getElementById("numOfPeople").value);
-  const sourceFloor = parseInt(document.getElementById("sourceFloor").value);
-  const destinationFloor = parseInt(document.getElementById("destinationFloor").value);
-  
-  // Validate input
-  if (numOfPeople <= 0 || sourceFloor < 1 || sourceFloor > 10 || destinationFloor < 1 || destinationFloor > 10) {
-    alert("Please enter valid input.");
-    return;
-  }
-  
-  // Add passenger to list
-  passengers.push({
-    numOfPeople: numOfPeople,
-    sourceFloor: sourceFloor,
-    destinationFloor: destinationFloor
-  });
-  
-  // Add passenger to lift queue
-  addPassengerToQueue(numOfPeople, sourceFloor, destinationFloor);
-  
-  // Clear input fields
-  document.getElementById("numOfPeople").value = "";
-  document.getElementById("sourceFloor").value = "";
-  document.getElementById("destinationFloor").value = "";
-}
-
-function addPassengerToQueue(numOfPeople, sourceFloor, destinationFloor) {
-  // Calculate which lift to add the passenger to
-  let liftNumber = 1;
-  let minDistance = getDistance(1, sourceFloor);
-  for (let i = 2; i <= 3; i++) {
-    const distance = getDistance(i, sourceFloor);
-    if (distance < minDistance) {
-      liftNumber = i;
-      minDistance = distance;
-    }
-  }
-  
-  // Add passenger to lift queue
-  const liftQueue = document.getElementById("lift" + liftNumber);
-  const listItem = document.createElement("li");
-  listItem.textContent = numOfPeople + " person(s) from floor " + sourceFloor + " to floor " + destinationFloor;
-  liftQueue.appendChild(listItem);
-}
-
-function getDistance(liftNumber, floorNumber) {
-  // Calculate distance between lift and floor
-  const liftPosition = (liftNumber - 1) * 3 + 2;
-}
-
-const elevatorStatus = [
-  [0, 0, 0, 0, 0, 0, 0, 0, 0], // Elevator 1
-  [0, 0, 0, 0, 0, 0, 0, 0, 0], // Elevator 2
-  [0, 0, 0, 0, 0, 0, 0, 0, 0]  // Elevator 3
-];
-
-// Set a certain elevator to the target floor
-function setTargetFloor(elevatorNumber, floorNumber) {
-  elevatorStatus[elevatorNumber - 1][floorNumber - 1] = 1;
-  // Get the corresponding DOM element of the floor
-  const floorElement = document.getElementById(`e${elevatorNumber}f${floorNumber}`);
-  // Modify the style of the DOM element
-  floorElement.classList.add('target');
-}
-
-function rmTargetFloor(elevatorNumber, floorNumber) {
-  elevatorStatus[elevatorNumber - 1][floorNumber - 1] = 1;
-  // Get the corresponding DOM element of the floor
-  const floorElement = document.getElementById(`e${elevatorNumber}f${floorNumber}`);
-  // Modify the style of the DOM element
-  floorElement.classList.remove('target');
-}
-
-// Turn On the light of a certain floor in a certain elevator
-function turnOnLight(elevatorNumber, floorNumber) {
-  elevatorStatus[elevatorNumber - 1][floorNumber - 1] = 1;
-  // Get the corresponding DOM element of the floor
-  const floorElement = document.getElementById(`e${elevatorNumber}f${floorNumber}`);
-  // Modify the style of the DOM element
-  floorElement.classList.add('on');
-}
-
-// Turn off the light of a certain floor in a certain elevator
-function turnOffLight(elevatorNumber, floorNumber) {
-  elevatorStatus[elevatorNumber - 1][floorNumber - 1] = 0;
-  // Get the corresponding DOM element of the floor
-  const floorElement = document.getElementById(`e${elevatorNumber}f${floorNumber}`);
-  // Modify the style of the DOM element
-  floorElement.classList.remove('on');
-}
-
-//setTargetFloor(1, 9)
-//turnOnLight(2, 5)
 data2={
     "0"
 :
@@ -2543,51 +2445,58 @@ data1={
 //const data = JSON.parse(receivedJSON);
 //keys is the sorted timestamps, keys[0] is the first timestamp
 const keys1 = Object.keys(data1).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
-
 const keys2 = Object.keys(data2).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
 
 let stopSimulationFlag = false;
+let pauseSimulationFlag = false;
+let timers = [];
 
-const timers = [];
-//use closure to solve the issue of setTimeout function
+//use closure to solve the issue of setTimeout function => use setInterval to solve the problem caused by setTimeout
 function updateFloors(model,key,data) {
-  stopSimulationFlag = false;
-  for (let i = 0; i < key.length; i++) {
-    const timer = setTimeout((function(i) {
-      return function() {
-        if (stopSimulationFlag) { // 如果停止标志位为true，则直接退出更新循环
-            return;
-        }
-        const value = data[key[i]];
-        const lift1info = value[0]["1"];
-        const lift2info = value[1]["2"];
-        const lift3info = value[2]["3"];
-        const lift1type = lift1info["elevator_type"];
-        const lift2type = lift2info["elevator_type"];
-        const lift3type = lift3info["elevator_type"];
-        const lift1floor = lift1info["floor"];
-        const lift2floor = lift2info["floor"];
-        const lift3floor = lift3info["floor"];
-        const lift1people = lift1info["num_passengers"];
-        const lift2people = lift2info["num_passengers"];
-        const lift3people = lift3info["num_passengers"];
-        //turnOffAllLight();
-        updateEachFloor(model, 1, lift1type, lift1floor, lift1people);
-        updateEachFloor(model, 2, lift2type, lift2floor, lift2people);
-        updateEachFloor(model, 3, lift3type, lift3floor, lift3people);
-      }
-    })(i), i * 2000);
-    timers.push(timer);
-  }
+  let i = 0;
+  const interval = setInterval(function() {
+    if (stopSimulationFlag) { // If the flag is true, then exit the loop
+      clearInterval(interval);
+      return;
+    }
+    if (pauseSimulationFlag) {
+      return;
+    }
+    const value = data[key[i]];
+    const lift1info = value[0]["1"];
+    const lift2info = value[1]["2"];
+    const lift3info = value[2]["3"];
+    const lift1type = lift1info["elevator_type"];
+    const lift2type = lift2info["elevator_type"];
+    const lift3type = lift3info["elevator_type"];
+    const lift1floor = lift1info["floor"];
+    const lift2floor = lift2info["floor"];
+    const lift3floor = lift3info["floor"];
+    const lift1people = lift1info["num_passengers"];
+    const lift2people = lift2info["num_passengers"];
+    const lift3people = lift3info["num_passengers"];
+    //turnOffAllLight();
+    updateEachFloor(model, 1, lift1type, lift1floor, lift1people);
+    updateEachFloor(model, 2, lift2type, lift2floor, lift2people);
+    updateEachFloor(model, 3, lift3type, lift3floor, lift3people);
+    i++;
+    if (i >= key.length) {
+      clearInterval(interval);//?
+    }
+  }, 2000);
+  //intervals.push(interval);
 }
 
-//updateFloors(1,keys1,data1);
-//updateFloors(2,keys2,data2);
+
+
 function stopSimulation(model) {
   stopSimulationFlag = true;
   for (let i = 0; i < timers.length; i++) {
     clearTimeout(timers[i]);
   }
+  /*for (let i = 0; i < intervals.length; i++) {
+    clearInterval(intervals[i]);
+  }*/
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 9; j++) {
         const liftElement = document.getElementById(`m${model}e${i + 1}`);
@@ -2607,7 +2516,7 @@ function updateEachFloor(model, lift, typeStatus, floorStatus, peopleStatus) {
       const floorElement = document.getElementById(`m${model}e${lift}f${i + 1}`);
       const numPeopleElement = floorElement.querySelector('.numPeople');
       const elevatorTypeElement = liftElement.querySelector('.elevatorType');
-      // 清空电梯状态
+      // Clear the Lift status
       liftElement.classList.remove('on');
       liftElement.classList.remove('target');
       if (typeStatus === 1) {
@@ -2634,9 +2543,177 @@ function updateEachFloor(model, lift, typeStatus, floorStatus, peopleStatus) {
 
 
 
+//use closure to solve the issue of setTimeout function
+/*function updateFloors(model,key,data) {
+  //stopSimulationFlag = false;
+  for (let i = 0; i < key.length; i++) {
+    const timer = setTimeout((function(i) {
+      return function() {
+        if (stopSimulationFlag) { // 如果停止标志位为true，则直接退出更新循环
+            return;
+        }
+        if (pauseSimulationFlag) {
+            return;
+        }
+        const value = data[key[i]];
+        const lift1info = value[0]["1"];
+        const lift2info = value[1]["2"];
+        const lift3info = value[2]["3"];
+        const lift1type = lift1info["elevator_type"];
+        const lift2type = lift2info["elevator_type"];
+        const lift3type = lift3info["elevator_type"];
+        const lift1floor = lift1info["floor"];
+        const lift2floor = lift2info["floor"];
+        const lift3floor = lift3info["floor"];
+        const lift1people = lift1info["num_passengers"];
+        const lift2people = lift2info["num_passengers"];
+        const lift3people = lift3info["num_passengers"];
+        //turnOffAllLight();
+        updateEachFloor(model, 1, lift1type, lift1floor, lift1people);
+        updateEachFloor(model, 2, lift2type, lift2floor, lift2people);
+        updateEachFloor(model, 3, lift3type, lift3floor, lift3people);
+      }
+    })(i), i * 2000 + timeElapsed);
+    timers.push(timer);
+  }
+}*/
 
+/*let pause = false; // set initial pause state to false
 
+function updateFloors(model,key,data){
+    stopSimulationFlag = false;
+    for (let i = 0; i < key.length; i++) {
+        const timer = setTimeout((function(i) {
+            return function() {
+                if (!pause) { // check pause state
+                const value = data[key[i]];
+                const lift1info = value[0]["1"];
+                const lift2info = value[1]["2"];
+                const lift3info = value[2]["3"];
+                const lift1type = lift1info["elevator_type"];
+                const lift2type = lift2info["elevator_type"];
+                const lift3type = lift3info["elevator_type"];
+                const lift1floor = lift1info["floor"];
+                const lift2floor = lift2info["floor"];
+                const lift3floor = lift3info["floor"];
+                const lift1people = lift1info["num_passengers"];
+                const lift2people = lift2info["num_passengers"];
+                const lift3people = lift3info["num_passengers"];
+                //turnOffAllLight();
+                updateEachFloor(model, 1, lift1type, lift1floor, lift1people);
+                updateEachFloor(model, 2, lift2type, lift2floor, lift2people);
+                updateEachFloor(model, 3, lift3type, lift3floor, lift3people);
+            } } })(i), i * 2000);
+        timers.push(timer);
+    }
+} // toggle pause state when pause button is clicked
 
+function togglePause() {
+    pause = !pause;
+}*/
+
+//updateFloors(1,keys1,data1);
+//updateFloors(2,keys2,data2);
+
+/*// Define variables
+let passengers = [];
+
+// Define functions
+function addPassenger() {
+  const numOfPeople = parseInt(document.getElementById("numOfPeople").value);
+  const sourceFloor = parseInt(document.getElementById("sourceFloor").value);
+  const destinationFloor = parseInt(document.getElementById("destinationFloor").value);
+
+  // Validate input
+  if (numOfPeople <= 0 || sourceFloor < 1 || sourceFloor > 10 || destinationFloor < 1 || destinationFloor > 10) {
+    alert("Please enter valid input.");
+    return;
+  }
+
+  // Add passenger to list
+  passengers.push({
+    numOfPeople: numOfPeople,
+    sourceFloor: sourceFloor,
+    destinationFloor: destinationFloor
+  });
+
+  // Add passenger to lift queue
+  addPassengerToQueue(numOfPeople, sourceFloor, destinationFloor);
+
+  // Clear input fields
+  document.getElementById("numOfPeople").value = "";
+  document.getElementById("sourceFloor").value = "";
+  document.getElementById("destinationFloor").value = "";
+}
+
+function addPassengerToQueue(numOfPeople, sourceFloor, destinationFloor) {
+  // Calculate which lift to add the passenger to
+  let liftNumber = 1;
+  let minDistance = getDistance(1, sourceFloor);
+  for (let i = 2; i <= 3; i++) {
+    const distance = getDistance(i, sourceFloor);
+    if (distance < minDistance) {
+      liftNumber = i;
+      minDistance = distance;
+    }
+  }
+
+  // Add passenger to lift queue
+  const liftQueue = document.getElementById("lift" + liftNumber);
+  const listItem = document.createElement("li");
+  listItem.textContent = numOfPeople + " person(s) from floor " + sourceFloor + " to floor " + destinationFloor;
+  liftQueue.appendChild(listItem);
+}
+
+function getDistance(liftNumber, floorNumber) {
+  // Calculate distance between lift and floor
+  const liftPosition = (liftNumber - 1) * 3 + 2;
+}
+
+const elevatorStatus = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0], // Elevator 1
+  [0, 0, 0, 0, 0, 0, 0, 0, 0], // Elevator 2
+  [0, 0, 0, 0, 0, 0, 0, 0, 0]  // Elevator 3
+];
+
+// Set a certain elevator to the target floor
+function setTargetFloor(elevatorNumber, floorNumber) {
+  elevatorStatus[elevatorNumber - 1][floorNumber - 1] = 1;
+  // Get the corresponding DOM element of the floor
+  const floorElement = document.getElementById(`e${elevatorNumber}f${floorNumber}`);
+  // Modify the style of the DOM element
+  floorElement.classList.add('target');
+}
+
+function rmTargetFloor(elevatorNumber, floorNumber) {
+  elevatorStatus[elevatorNumber - 1][floorNumber - 1] = 1;
+  // Get the corresponding DOM element of the floor
+  const floorElement = document.getElementById(`e${elevatorNumber}f${floorNumber}`);
+  // Modify the style of the DOM element
+  floorElement.classList.remove('target');
+}
+
+// Turn On the light of a certain floor in a certain elevator
+function turnOnLight(elevatorNumber, floorNumber) {
+  elevatorStatus[elevatorNumber - 1][floorNumber - 1] = 1;
+  // Get the corresponding DOM element of the floor
+  const floorElement = document.getElementById(`e${elevatorNumber}f${floorNumber}`);
+  // Modify the style of the DOM element
+  floorElement.classList.add('on');
+}
+
+// Turn off the light of a certain floor in a certain elevator
+function turnOffLight(elevatorNumber, floorNumber) {
+  elevatorStatus[elevatorNumber - 1][floorNumber - 1] = 0;
+  // Get the corresponding DOM element of the floor
+  const floorElement = document.getElementById(`e${elevatorNumber}f${floorNumber}`);
+  // Modify the style of the DOM element
+  floorElement.classList.remove('on');
+}
+
+//setTargetFloor(1, 9)
+//turnOnLight(2, 5)
+*/
 
 /*async function main() {
   //const data = JSON.parse(receivedJSON);
@@ -2726,7 +2803,6 @@ function updateFloors(index) {
 }
 
 updateFloors(0);*/
-
 
 //updateEachFloor(1, {"1": 0, "2": 0, "3": 1, "4": 0, "5": 0, "6": 0, "7": 2, "8": 0, "9": 0})
 //updateEachFloor(2, {"1": 0, "2": 0, "3": 0, "4": 0, "5": 1, "6": 0, "7": 0, "8": 0, "9": 2})
