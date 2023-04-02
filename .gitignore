@@ -7,3 +7,5 @@ src/main/python/simulation/__pycache__/*
 src/main/python/simulation/Floor/__pycache__/*
 src/test/python/main/__pycache__/*
 
+../../out/*
+

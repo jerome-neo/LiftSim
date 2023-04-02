@@ -1,27 +1,27 @@
 import pandas as pd
+from datetime import datetime
+from LiftRandoms import LiftRandoms
+from Person import Person
 
-from src.main.python.simulation.LiftRandoms import LiftRandoms
-from src.main.python.simulation.Person import Person
 
 
 class PersonList:
     """A class representing a custom list of Person objects that have been pre-generated outside the simulation."""
-    def __init__(self, duration_of_simulation, limit=300):
+    def __init__(self, env, duration_of_simulation, limit=300):
         """
         Initialize the list of Person objects taking into account the intended simulation duration and limit.
-
         Args:
+            env: simpy.Environment on which simulation is running
             duration_of_simulation (int): duration to simulate.
             limit (int): maximum cap on the number of Person objects that can be generated.
         """
+        self.env = env
         self.list = []
         self.limit = limit
         self.duration_of_simulation = duration_of_simulation
 
     def __str__(self):
         """
-        Return a string representation of the PersonList.
-
         Returns:
             str: A string representation of the PersonList.
         """
@@ -31,15 +31,19 @@ class PersonList:
         """Returns the length of the list."""
         return len(self.list)
 
-    def initialise(self, mode='default', path_to_data="../../in/input.csv"):
+    def initialise(self, mode='default', path_to_data="../../in/input.json"):
         if mode == 'manual':
-            df = pd.read_csv(path_to_data)
+            df = pd.read_json(path_to_data)
             person_id = 1
             for index, row in df.iterrows():
-                curr = row['curr']
-                dest = row['dest']
-                time = row['time']
-                person = Person(person_id, time)
+                curr = row['Source']
+                dest = row['Destination']
+                time = row['Time']
+                time_converted = datetime.strptime(time, '%H:%M')
+                start_simulation_time = datetime.strptime("06:00", "%H:%M")
+                time = (time_converted - start_simulation_time).total_seconds()
+                print(time)
+                person = Person(self.env,person_id, time)
                 person.overwrite(curr, dest)
                 self.list.append(person)
                 person_id += 1
@@ -54,11 +58,15 @@ class PersonList:
                     # this takes precedence over the duration_of_simulation
                     break
                 time += (next_arrival_time - time)  # update the 'clock'
-                person = Person(person_id, next_arrival_time)
+                person = Person(self.env, person_id, next_arrival_time)
                 self.list.append(person)
                 # update the variables for next iteration
                 person_id += 1
                 next_arrival_time = LiftRandoms().next_arrival_time(time)
+
+    def reset(self):
+        """Resets the initialisation of PersonList, when switching to a different elevator algorithm"""
+        self.list = []
 
     def get_person_list(self) -> list:
         """Returns the list."""

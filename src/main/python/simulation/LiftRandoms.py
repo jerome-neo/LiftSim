@@ -9,10 +9,10 @@ cur_dir = pathlib.Path(__file__).parent.resolve()
 os.chdir(cur_dir)
 
 # initializing proportion csv as Pandas dataframes
-prop1 = pd.read_csv('../../../data/prop1.csv').iloc[:, 1:].sort_values('p', ascending=False)
-prop2 = pd.read_csv('../../../data/prop2.csv').iloc[:, 1:].sort_values('p', ascending=False)
-prop3 = pd.read_csv('../../../data/prop3.csv').iloc[:, 1:].sort_values('p', ascending=False)
-prop4 = pd.read_csv('../../../data/prop4.csv').iloc[:, 1:].sort_values('p', ascending=False)
+prop1 = pd.read_csv('../../data/prop1.csv').iloc[:, 1:].sort_values('p', ascending=False)
+prop2 = pd.read_csv('../../data/prop2.csv').iloc[:, 1:].sort_values('p', ascending=False)
+prop3 = pd.read_csv('../../data/prop3.csv').iloc[:, 1:].sort_values('p', ascending=False)
+prop4 = pd.read_csv('../../data/prop4.csv').iloc[:, 1:].sort_values('p', ascending=False)
 
 
 class DayPhase(Enum):
@@ -31,7 +31,6 @@ class HourPhase(Enum):
 
 class LiftRandoms:
     """Wrapper class for functions to generate the random variables as required in LiftSim.
-
     No attributes.
     """
     @staticmethod
@@ -42,7 +41,7 @@ class LiftRandoms:
         """
         Generates the next arrival time of a rider according to a non-homogeneous Poisson process,
         using the thinning method.
-
+        
         Args: 
             curr_time (float): Current timestamp of the environment in seconds
             max_lambda (float): Default value set to 167/900
@@ -56,7 +55,7 @@ class LiftRandoms:
         while uniform_rv > (self.thinning_fn(arrival_time)/max_lambda):
             arrival_time += rd.expovariate(max_lambda)
             uniform_rv = rd.uniform(0, 1)
-        
+            
         return arrival_time
 
     def thinning_fn(self, x) -> float:
@@ -65,7 +64,6 @@ class LiftRandoms:
 
         Args:
             x (float): Proposed arrival time from next_arrival_time.
-
         Returns:
             float: The corresponding rate parameter at the proposed arrival time.
         """
@@ -141,7 +139,6 @@ class LiftRandoms:
     def phase(arrival_time) -> tuple:
         """
         Helper function for the thinning method, to determine which part of the day it is in the simulation.
-
         Args:
             arrival_time (float): Proposed arrival time from nextArrivalTime.
         

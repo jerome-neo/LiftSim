@@ -1,7 +1,10 @@
 import random
 import simpy
+from Floor import Floor
+
 MAX_CAPACITY = 13
-MAX_WEIGHT = 1600  # kilograms
+MAX_WEIGHT = 1600 # kilograms
+
 SPEED = (0.5, 0.6)
 
 
@@ -39,7 +42,7 @@ class Elevator(object):
         has_path(): Returns whether the elevator has a path to follow.
 
     """
-    def __init__(self, env, index, collection_floors, curr_floor, direction):
+    def __init__(self, env, index, collection_floors, curr_floor, total_num_elevators, direction="NIL"):
         """
         Initializes an Elevator object with the specified parameters.
 
@@ -48,52 +51,74 @@ class Elevator(object):
             index (int): The index of the elevator.
             collection_floors (list): The collection of floors in the building.
             curr_floor (int): The current floor the elevator is on.
-            direction (str): The direction of travel for the elevator.
+            total_num_elevators (int): The number of elevators present in the system.
+            direction (str): The direction of travel for the elevator. If not specified, as in for ModernEGCS, it is initially set as "NIL".
 
         """
         self.env = env
         self.index = index
         self.floors = collection_floors
         self.num_floors = len(collection_floors)
-        self.direction = direction
+        self.direction = direction #if direction is inputted, we are running Otis algo, else we are running modern EGCS algo
         self.max_persons = MAX_CAPACITY  # not implemented
         self.max_weight = MAX_WEIGHT  # not implemented
         self.curr_floor = curr_floor
         self.speed = SPEED  # metres per second
         self.is_working_status = False
         self.passengers = []
-        self.path = []
-        self.resource = simpy.Resource(env, 1)
+        self.path = []  #all assigned floors in the elevator's current path based on simulation
+        self.car_calls = [] #all unserved car calls registered for the elevator
+        self.resource = simpy.Resource(env,1)
+        self.capacity = MAX_CAPACITY
+        self.is_moving = False
+        self.total_num_elevators = total_num_elevators
+        self.num_active_calls = 0 #actual number of active calls that the elevator is serving
 
     def __str__(self):
         """Returns a string representation of the Elevator object."""
-        # return f"elevator {self.index} dedicated to {self.direction} calls is at " \
-        #        f"{self.curr_floor} with {len(self.passengers)} person(s)"
-        return f"{self.direction} Elevator {self.index} has passengers: {list(map(lambda x: str(x), self.passengers))}"
+        return f"Elevator {self.index} set {self.direction} has passengers: {list(map(lambda x: str(x), self.passengers))}"
 
     def to_dict(self) -> dict:
         """Converts elevator information into a dictionary."""
         floor = {floor + 1: 0 for floor in range(self.num_floors)}
         floor[self.get_current_floor()] = 1
-        return {'elevator_type': -1 if self.direction == "DOWN" else 1,
+        return {'elevator_type': -1 if self.direction == "DOWN" else 1 if self.direction == "UP" else 0,
                 'floor': floor, 'num_passengers': self.get_num_passengers()}
+    
+    def get_index(self) -> int:
+        """Returns the index of the elevator"""
+        return self.index
 
     def get_direction(self) -> str:
         """Returns the direction of travel for the Elevator object."""
         return self.direction
 
+    def get_capacity(self) -> int:
+        """Returns the capacity of the Elevator object, i.e. maximum number of people inside the elevator"""
+        return self.capacity
+
     def get_current_floor(self) -> int:
         """Returns the current floor the Elevator object is on."""
         return self.curr_floor
-
+    
     def get_num_passengers(self):
         """Returns number of passengers inside."""
         return len(self.passengers)
-
+  
     def add_passengers(self, person) -> None:
         """Adds a passenger to the Elevator object."""
         print(f'{person} has entered elevator {self.direction} {self.index}')
         self.passengers.append(person)
+    
+    def add_car_call(self,floor) -> None:
+        """Adds a car call to the list of unserved car calls"""
+        if floor not in self.car_calls:
+            self.car_calls.append(floor)
+            self.car_calls.sort()
+        if floor>self.curr_floor:
+            self.direction = "UP"
+        elif floor<self.curr_floor:
+            self.direction = "DOWN"
 
     def elevator_door_open(self, t=3):
         """Simulates door opening."""
@@ -105,20 +130,24 @@ class Elevator(object):
 
     def enter_elevator(self, list_of_person):
         """Simulates passengers entering the Elevator object.
-
         Args:
             list_of_person (list): The list of passengers entering the elevator.
-
         Yields:
             simpy.events.Timeout: a timeout event representing the time it takes for the passengers to enter
-
         """
         for person in list_of_person:
             if len(self.passengers) < MAX_CAPACITY:
                 self.add_passengers(person)
+                person.elevator_arrival_time = self.env.now
+                curr_level = self.curr_floor
                 floor_level = person.get_dest_floor()
+                if floor_level > curr_level:
+                    direction = "UP"
+                elif floor_level < curr_level:
+                    direction = "DOWN"
                 if floor_level not in self.path:
-                    self.path.append(floor_level)
+                    self.add_path(floor_level, direction)
+                    self.add_car_call(floor_level)
                 print(f"{person} has entered elevator at simulation time: {self.env.now}")
             else:
                 # Put them back into the floor if the elevator is full
@@ -141,10 +170,8 @@ class Elevator(object):
     def leave_elevator(self):
         """
         Simulate passengers leaving the elevator.
-
         Yields:
             simpy.events.Timeout: a timeout event representing the time it takes for the passengers to leave
-
         """
         to_remove = []
         for person in self.passengers:
@@ -155,12 +182,19 @@ class Elevator(object):
                 print(f"{person} has left elevator at simulation time: {self.env.now}")
         for person in to_remove:
             self.passengers.remove(person)
+        if self.curr_floor in self.car_calls:
+            self.car_calls.remove(self.curr_floor)
+        self.num_active_calls-=1
         if len(to_remove) > 0:
             yield self.env.process(self.elevator_door_open())
             yield self.env.timeout(random.randint(2, 5))
             yield self.env.process(self.elevator_door_close())
         else:
             yield self.env.timeout(0)
+            
+    def has_more_than_optimum_calls(self) -> bool:
+        """Checks if elevator's number of calls is more than total number of floors // total number of elevators. Used in ModernEGCS."""
+        return len(self.path)>len(self.floors)//self.total_num_elevators
 
     def is_busy(self) -> bool:
         """
@@ -185,32 +219,30 @@ class Elevator(object):
     def travel(self, end) -> None:
         """
         Simulate the elevator traveling to a new floor.
-
         Args:
             end (int): the destination floor of the elevator
         """
         print(f'{self} moved from {self.curr_floor} to {end}')
         self.curr_floor = end
-        #
-        # with self.resource.request() as req:
-        #     yield req
-        #     yield self.env.timeout(abs(end - self.curr_floor) * 3)
 
-    def add_path(self, floor_level) -> None:
+    def add_path(self, floor_level, direction) -> None:
         """
         Add a floor to the elevator's path.
-
         Args:
             floor_level (int): the floor to add to the elevator's path
-
+            direction (str): the movement direction
         """
-        self.path.append(floor_level)
+        if floor_level not in self.path:
+            self.path.append(floor_level)
+            self.num_active_calls+=1
         # self.path = np.unique(self.path).tolist()
-        self.path.sort()
+        if self.direction == direction:
+            self.path.sort()
         if not self.is_busy():
             self.set_busy()
+        self.direction = direction
         displayed_path = self.path if self.get_direction() == "UP" else self.path[::-1]
-        print(f"{self.direction} elevator {self.index} path logged: {displayed_path}")
+        print(f"Elevator {self.index} set {self.direction} has path logged: {displayed_path}")
 
     def get_path(self) -> list:
         """
@@ -234,7 +266,6 @@ class Elevator(object):
 
     def move(self):
         """This moves the elevator in the direction of the next floor in their path."""
-        # todo modify this to change the algorithm when it reaches top level
         if self.is_busy() and self.has_path():
             destination_floor = self.get_path()[0] if self.get_direction() == "UP" else self.get_path()[-1]
             displacement_direction = destination_floor - self.get_current_floor()  # final - initial = change
@@ -266,10 +297,11 @@ class Elevator(object):
             yield self.env.timeout(0)
         else:
             if self.get_path()[0] != self.get_current_floor():
-                print(f"{self.direction} Elevator {self.index} knows that current floor {self.curr_floor} NOT IN path")
+                print(f"Elevator {self.index} set {self.direction} knows that current floor {self.curr_floor} NOT IN path")
                 yield self.env.timeout(0)
             else:
-                print(f"{self.direction} Elevator {self.index} knows that current floor {self.curr_floor} IN path")
+                print(f"Elevator {self.index} set {self.direction} knows that current floor {self.curr_floor} IN path")
+                
                 self.get_path().pop(0)
 
                 # Assuming we people are gracious
@@ -278,7 +310,7 @@ class Elevator(object):
                 floor = self.floors[self.get_current_floor()-1]
 
                 if self.get_direction() == "UP":
-                    if self.get_current_floor() < self.num_floors:  # if elevator is currently on top-most level
+                    if self.get_current_floor() < self.num_floors:  
                         yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_up()))
                         # reset status
                         floor.uncall_up()
@@ -289,3 +321,54 @@ class Elevator(object):
                         # reset status
                         floor.uncall_down()
                         floor.unaccept_down_call()
+    
+    def get_current_floor_object(self)->Floor:
+        """
+        Returns the object of the current floor where the elevator is at.
+
+        Returns:
+            Floor: floor object of current floor where the elevator is at
+        """
+        floor_index = self.get_current_floor()-1
+        return self.floors[floor_index]
+
+    def get_passenger_count(self)->int:
+        """
+        Returns the number of passengers that are currently in the elevator.
+
+        Returns:
+            int: length of self.passengers
+        """
+        return len(self.passengers)
+
+    def get_passenger_list(self)->list:
+        """
+        Returns a list of passengers that are currently in the elevator.
+
+        Returns:
+            list: list of Person objects of people currently inside the elevator
+        """
+        return self.passengers
+    
+    def car_calls_left(self)-> int:
+        """
+        Returns the number of car calls left
+
+        Returns:
+            int: length of self.car_calls
+        """
+        return len(self.car_calls)
+    
+    def get_car_calls(self)-> list:
+        """
+        Returns a list of floor levels for remaining car calls
+        
+        Returns:
+            list: self.car_calls
+        """
+        return self.car_calls
+    
+    def unset_direction(self)->None:
+        """Changes direction to NIL once a ModernEGCS elevator has no more calls"""
+        self.direction = "NIL"
+
