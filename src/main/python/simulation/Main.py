@@ -129,7 +129,7 @@ class Main(object):
         with open(path + name, 'w') as f:
             f.write(json_serializable)
     
-def compare_two_algos():
+def compare_two_algos(mode):
     # Example ways of running the simulation
 
     # Step 1
@@ -138,9 +138,11 @@ def compare_two_algos():
 
     # Step 2
     # run the simulation by telling it how long to run, e.g. 6800 (from 6 am to 12 am at the same day)
-    # when mode is 'manual', it will read the input file in ../../in
-    Test.run(64800, mode='manual') 
-    #Test.run(6800, mode='default')
+    
+    Test.run(64800, mode=mode) 
 
-compare_two_algos()
+compare_two_algos('manual')
+# when mode is 'manual', it will read the input file in ../../in
+#compare_two_algos('default')
+
 
