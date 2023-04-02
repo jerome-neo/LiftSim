@@ -2,9 +2,9 @@ import csv
 import json
 import simpy
 import statistics
-import Building
+import src.main.python.simulation.Building as Building
 
-from PersonList import PersonList
+from src.main.python.simulation.PersonList import PersonList
 
 
 class Main(object):
@@ -104,7 +104,7 @@ class Main(object):
             writer.writerows(data)
 
     def output_person_to_json(self, lift_algo, path='../../out/'):
-        name = 'output_persons'+lift_algo+'.json'
+        name = 'output_persons_'+lift_algo+'.json'
         data = []
         for person in self.person_list.get_person_list():
             if person.has_completed_trip():
@@ -124,7 +124,7 @@ class Main(object):
             json.dump(data, f, indent=4)
 
     def output_elevator_log_to_json(self, lift_algo, path='../../out/'):
-        name = 'output_elevator'+lift_algo+'.json'
+        name = 'output_elevator_'+lift_algo+'.json'
         json_serializable = json.dumps(self.building.to_dict(), indent=4)
         with open(path + name, 'w') as f:
             f.write(json_serializable)
@@ -141,7 +141,7 @@ def compare_two_algos(mode):
     
     Test.run(64800, mode=mode) 
 
-compare_two_algos('manual')
+#compare_two_algos('manual')
 # when mode is 'manual', it will read the input file in ../../in
 #compare_two_algos('default')
 

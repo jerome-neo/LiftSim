@@ -1,6 +1,6 @@
 import random
 import simpy
-from Floor import Floor
+from src.main.python.simulation.Floor import Floor
 
 MAX_CAPACITY = 13
 MAX_WEIGHT = 1600 # kilograms
