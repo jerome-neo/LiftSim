@@ -64,6 +64,10 @@ class PersonList:
                 person_id += 1
                 next_arrival_time = LiftRandoms().next_arrival_time(time)
 
+    def reset(self):
+        """Resets the initialisation of PersonList, when switching to a different elevator algorithm"""
+        self.list = []
+
     def get_person_list(self) -> list:
         """Returns the list."""
         return self.list
