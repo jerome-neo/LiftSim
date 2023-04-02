@@ -8,7 +8,6 @@ class Floor(object):
 
         Args:
             env (simpy.Environment): The simulation environment.
-            building (Building): The simulation Building
             index (int): The index of the floor.
         """
         self.env = env
@@ -21,8 +20,7 @@ class Floor(object):
         self.people_arrival_rate = 0
         self.idling_elevators_deserved = 0
         self.idling_elevators_sent = 0
-        
-
+       
     def __str__(self):
         """
         Return a string representation of the floor.
@@ -33,16 +31,11 @@ class Floor(object):
         return f"Floor {self.floor_index}"
 
     def has_call_down(self) -> bool:
-        """
-        Return True if there is a call for the elevator going down on this floor.
-
-        Returns:
-            bool: True if there is a call for the elevator going down on this floor, False otherwise.
-        """
+        """Returns the call_down flag."""
         return self.call_down
 
     def has_call_up(self) -> bool:
-        """Checks whether there is a registered UP hall call from this floor"""
+        """Returns the call_up flag"""
         return self.call_up
 
     def set_call_up(self) -> bool:

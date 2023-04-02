@@ -4,6 +4,7 @@ from LiftRandoms import LiftRandoms
 from Person import Person
 
 
+
 class PersonList:
     """A class representing a custom list of Person objects that have been pre-generated outside the simulation."""
     def __init__(self, env, duration_of_simulation, limit=300):
@@ -21,7 +22,6 @@ class PersonList:
 
     def __str__(self):
         """
-        Return a string representation of the PersonList.
         Returns:
             str: A string representation of the PersonList.
         """

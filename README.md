@@ -15,14 +15,33 @@ elevator management strategies, and analyze the impact of those strategies on el
 By empowering data-driven decisions, LiftSim helps building managers to maximize efficiency, reduce wait times, and 
 improve the overall experience for elevator users.
 
-Project authors: AY22/23 DSA3101 Group 07-S16
+<em>Project Team: AY22/23 DSA3101 Group 07-S16</em>
+
+<strong>
+
+Front-end authors:
+[Xiangyu Zhang](https://github.com/Oliverzhang0314),
+[Yating Tang](https://github.com/TY789),
+[Zixuan Wang](https://github.com/Wang-Zixuann) and
+[Yuxin Li](https://github.com/xxEthene)
+
+Back-end authors:
+[Dorothy Boyle](https://github.com/pintubread),
+[Jerome Neo](https://github.com/jerome-neo),
+[Kevin Christian](https://github.com/kevinchs0808) and
+[Steven Seah](https://github.com/stevvseah)
+
+</strong>
 
 ## 2. Installation
-Download and run.
+This application is meant to be served on Docker.
+
 ## 3. Usage
 For more information, please see our [User Guide](docs/UserGuide.md).
+
 ## 4. Data
-In-progress.
+Data collection was done between February and March 2023. The data was collected at NUS S16 building elevators.
+There are a total of 3 lifts in the S16 building.
 
 ## 5. Results
 
@@ -33,5 +52,6 @@ In-progress.
 ## 8. Acknowledgments
 
 ## 9. References
+Simpy documentation.
 
 

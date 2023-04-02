@@ -48,6 +48,7 @@ class SandwichFloor(Floor):
     def remove_all_persons_going_up(self) -> list:
         """
         Remove all persons who want to go up from the ground floor and return them as a list.
+        
         Returns:
             List[Person]: A list of all persons who want to go up from the ground floor.
         """
@@ -84,8 +85,7 @@ class SandwichFloor(Floor):
             pointer = self.going_down_persons[:count]
             self.going_down_persons = self.going_down_persons[count + 1:]
             return pointer
-
-    
+            
     def get_all_persons_going_up(self) -> list:
         """
         Returns the list of all persons who want to go up from the sandwich floor
@@ -125,4 +125,3 @@ class SandwichFloor(Floor):
             List[Person]: A list of all persons who want to go down from the sandwich floor.
         """
         return self.going_down_persons
-

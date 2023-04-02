@@ -4,6 +4,7 @@ class ElevatorSystem(object):
     """
     A system for controlling a group of elevators in a building.
     Uses traditional Otis elevators logic.
+    
     Attributes:
         env (simpy.Environment): The simulation environment.
         floors (list of Floor): The collection of floors in the building.
@@ -41,7 +42,7 @@ class ElevatorSystem(object):
     def get_algo_type(self):
         """Returns type of elevator algorithm implemented"""
         return "Otis"
-    
+
     def print_system_status(self) -> str:
         """Returns a string representation number of active elevators."""
         num_active_up = len(list(filter(lambda x: x.is_busy(), self.elevators_up)))

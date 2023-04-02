@@ -4,6 +4,7 @@ from Floor import Floor
 
 MAX_CAPACITY = 13
 MAX_WEIGHT = 1600 # kilograms
+
 SPEED = (0.5, 0.6)
 
 
@@ -15,6 +16,7 @@ class Elevator(object):
         env (simpy.Environment): The simulation environment.
         index (int): The index of the elevator.
         floors (list): The collection of floors in the building.
+        num_floors (int): Number of floors it is connected to.
         direction (str): The direction of travel for the elevator.
         max_persons (int): The maximum number of passengers the elevator can hold.
         max_weight (int): The maximum weight the elevator can hold.
@@ -82,11 +84,10 @@ class Elevator(object):
         floor[self.get_current_floor()] = 1
         return {'elevator_type': -1 if self.direction == "DOWN" else 1,
                 'floor': floor, 'num_passengers': self.get_num_passengers()}
-    
     def get_index(self) -> int:
         """Returns the index of the elevator"""
         return self.index
-    
+
     def get_direction(self) -> str:
         """Returns the direction of travel for the Elevator object."""
         return self.direction
@@ -102,9 +103,10 @@ class Elevator(object):
     def get_num_passengers(self):
         """Returns number of passengers inside."""
         return len(self.passengers)
-    
+  
     def add_passengers(self, person) -> None:
         """Adds a passenger to the Elevator object."""
+        print(f'{person} has entered elevator {self.direction} {self.index}')
         self.passengers.append(person)
     
     def add_car_call(self,floor) -> None:
@@ -124,7 +126,7 @@ class Elevator(object):
     def elevator_door_close(self, t=3):
         """Simulates door closing."""
         yield self.env.timeout(t)
-    
+
     def enter_elevator(self, list_of_person):
         """Simulates passengers entering the Elevator object.
         Args:
@@ -164,7 +166,7 @@ class Elevator(object):
             yield self.env.process(self.elevator_door_close())
         else:
             yield self.env.timeout(0)
-    
+
     def leave_elevator(self):
         """
         Simulate passengers leaving the elevator.
@@ -189,8 +191,7 @@ class Elevator(object):
             yield self.env.process(self.elevator_door_close())
         else:
             yield self.env.timeout(0)
- 
-    
+            
     def has_more_than_optimum_calls(self) -> bool:
         """Checks if elevator's number of calls is more than total number of floors // total number of elevators. Used in ModernEGCS."""
         return len(self.path)>len(self.floors)//self.total_num_elevators
@@ -208,11 +209,13 @@ class Elevator(object):
     def set_busy(self) -> None:
         """Set the elevator to be busy."""
         self.is_working_status = True
+        print(f'{self.direction} Elevator {self.index} has been set busy')
 
     def set_idle(self) -> None:
         """Set the elevator to be idle."""
         self.is_working_status = False
-    
+        print(f'{self.direction} Elevator {self.index} has been set idle')
+
     def travel(self, end) -> None:
         """
         Simulate the elevator traveling to a new floor.
@@ -223,6 +226,12 @@ class Elevator(object):
         self.curr_floor = end
 
     def add_path(self, floor_level, direction) -> None:
+        #
+        # with self.resource.request() as req:
+        #     yield req
+        #     yield self.env.timeout(abs(end - self.curr_floor) * 3)
+
+    def add_path(self, floor_level) -> None:
         """
         Add a floor to the elevator's path.
         Args:
@@ -259,7 +268,7 @@ class Elevator(object):
             bool: True if the elevator has a path, False otherwise
 
         """
-        return len(self.path) != 0
+        return len(self.path) > 0
 
     def move(self):
         """This moves the elevator in the direction of the next floor in their path."""
@@ -274,8 +283,7 @@ class Elevator(object):
             yield self.env.timeout(random.randint(3, 4))
         else:
             yield self.env.timeout(0)
-    
-                
+
     def activate(self) -> None:
         """
         This activates the logic of the elevator at the floor, here are the important functions:
@@ -299,15 +307,16 @@ class Elevator(object):
                 yield self.env.timeout(0)
             else:
                 print(f"Elevator {self.index} set {self.direction} knows that current floor {self.curr_floor} IN path")
+                
                 self.get_path().pop(0)
 
                 # Assuming we people are gracious
                 # i.e. we let people leave the elevator before boarding
                 yield self.env.process(self.leave_elevator())
                 floor = self.floors[self.get_current_floor()-1]
-                print(f"Lift direction: {self.get_direction()}")
+
                 if self.get_direction() == "UP":
-                    if self.get_current_floor() < self.num_floors:
+                    if self.get_current_floor() < self.num_floors:  
                         yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_up()))
                         # reset status
                         floor.uncall_up()
@@ -368,3 +377,4 @@ class Elevator(object):
     def unset_direction(self)->None:
         """Changes direction to NIL once a ModernEGCS elevator has no more calls"""
         self.direction = "NIL"
+

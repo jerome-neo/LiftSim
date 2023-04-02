@@ -3,8 +3,9 @@ import json
 import simpy
 import statistics
 import Building
-import sys
+
 from PersonList import PersonList
+
 
 class Main(object):
     """
@@ -52,21 +53,20 @@ class Main(object):
                                           self.person_list)
         self.building.initialise(lift_algo)
         self.env.process(self.building.simulate())
-        
         while self.env.peek() < duration:
             self.env.step()
 
     def get_average_waiting_time(self):
-            waiting_time = []
-            people = self.person_list.get_person_list()
-            for person in people:
-                if person.has_completed_trip():
-                    waiting_time.append(person.get_wait_time())
+        waiting_time = []
+        people = self.person_list.get_person_list()
+        for person in people:
+            if person.has_completed_trip():
+                waiting_time.append(person.get_wait_time())
 
-            if len(waiting_time) == 0:
-                return -1
-            else:
-                return statistics.mean(waiting_time)
+        if len(waiting_time) == 0:
+            return -1
+        else:
+            return statistics.mean(waiting_time)
 
     def get_number_of_people_served(self):
         people = self.person_list.get_person_list()
@@ -115,9 +115,6 @@ class Main(object):
         with open(path + name, 'w') as f:
             f.write(json_serializable)
 
-
-with open('output.txt', 'w') as f:
-    sys.stdout = f
 # Example ways of running the simulation
 
     # Step 1
@@ -125,12 +122,12 @@ with open('output.txt', 'w') as f:
     Test = Main(num_up=2, num_down=1, num_floors=9)
 
     # Step 2
-    # run the simulation by telling it how long to run, e.g. 200
+    # run the simulation by telling it how long to run, e.g. 6800 (from 6 am to 12 am at the same day)
     # when mode is 'manual', it will read the input file in ../../in
     #Test.run(64800, 'Otis', mode='manual') 
-    #Test.run(200, 'Otis', mode='default')
+    #Test.run(6800, 'Otis', mode='default')
     Test.run(64800, 'ModernEGCS', mode='manual') 
-    #Test.run(200, 'ModernEGCS', mode='default')
+    #Test.run(6800, 'ModernEGCS', mode='default')
 
     # Step 3
     # Save the data of all persons that have completed their trip in the simulation
@@ -142,3 +139,4 @@ with open('output.txt', 'w') as f:
     print('Number of people spawned in advance:', len(Test.building.get_all_persons()))
     print('Number of people served:', Test.get_number_of_people_served())
     print(Test.get_average_waiting_time())
+
