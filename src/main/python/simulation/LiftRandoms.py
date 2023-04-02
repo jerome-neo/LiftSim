@@ -139,11 +139,6 @@ class LiftRandoms:
     def phase(arrival_time) -> tuple:
         """
         Helper function for the thinning method, to determine which part of the day it is in the simulation.
-
-    @staticmethod
-    def phase(arrival_time) -> tuple:
-        """
-        Helper function for the thinning method, to determine which part of the day it is in the simulation.
         Args:
             arrival_time (float): Proposed arrival time from nextArrivalTime.
         

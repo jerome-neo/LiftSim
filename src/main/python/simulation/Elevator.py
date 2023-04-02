@@ -82,8 +82,9 @@ class Elevator(object):
         """Converts elevator information into a dictionary."""
         floor = {floor + 1: 0 for floor in range(self.num_floors)}
         floor[self.get_current_floor()] = 1
-        return {'elevator_type': -1 if self.direction == "DOWN" else 1,
+        return {'elevator_type': -1 if self.direction == "DOWN" else 1 if self.direction == "UP" else 0,
                 'floor': floor, 'num_passengers': self.get_num_passengers()}
+    
     def get_index(self) -> int:
         """Returns the index of the elevator"""
         return self.index
@@ -134,7 +135,6 @@ class Elevator(object):
         Yields:
             simpy.events.Timeout: a timeout event representing the time it takes for the passengers to enter
         """
-        print(f"List of person entering elevator: {list_of_person}")
         for person in list_of_person:
             if len(self.passengers) < MAX_CAPACITY:
                 self.add_passengers(person)
@@ -226,12 +226,6 @@ class Elevator(object):
         self.curr_floor = end
 
     def add_path(self, floor_level, direction) -> None:
-        #
-        # with self.resource.request() as req:
-        #     yield req
-        #     yield self.env.timeout(abs(end - self.curr_floor) * 3)
-
-    def add_path(self, floor_level) -> None:
         """
         Add a floor to the elevator's path.
         Args:

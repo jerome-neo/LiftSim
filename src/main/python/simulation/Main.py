@@ -27,14 +27,15 @@ class Main(object):
             num_floors (int): The number of floors in the building.
 
         """
-        self.env = simpy.Environment()
+        self.env = None
         self.num_up = num_up
         self.num_down = num_down
         self.num_floors = num_floors
         self.building = None
         self.person_list = None
+        self.lift_algos = ['Otis', 'ModernEGCS']
 
-    def run(self, duration, lift_algo, mode = 'default'):
+    def run(self, duration, mode = 'default'):
         """
         Runs the simulation for a specified duration.
 
@@ -43,18 +44,31 @@ class Main(object):
             lift_algo (string): The type of lift algo ran by the simulation
 
         """
-        print(f"Running S16 elevator simulation with {lift_algo} algorithm")
         self.person_list = PersonList(self.env,duration, limit=300) # person generated cannot exceed 300
-        self.person_list.initialise(mode=mode)
-        self.building = Building.Building(self.env,
+        
+        for lift_algo in self.lift_algos:
+            self.env = simpy.Environment()
+            self.person_list.initialise(mode=mode)
+            print(f"Running S16 elevator simulation with {lift_algo} algorithm")
+            self.building = Building.Building(self.env,
                                           self.num_up,
                                           self.num_down,
                                           self.num_floors,
                                           self.person_list)
-        self.building.initialise(lift_algo)
-        self.env.process(self.building.simulate())
-        while self.env.peek() < duration:
-            self.env.step()
+            self.building.initialise(lift_algo)
+            self.env.process(self.building.simulate())
+            while self.env.peek() < duration:
+                self.env.step()
+            self.output_person_to_csv(lift_algo)
+            self.output_person_to_json(lift_algo)
+            self.output_elevator_log_to_json(lift_algo)
+
+            # Additional information to be printed in terminal
+            print('Number of people spawned in advance:', len(self.building.get_all_persons()))
+            print('Number of people served:', self.get_number_of_people_served())
+            print(self.get_average_waiting_time())
+
+            self.person_list.reset()
 
     def get_average_waiting_time(self):
         waiting_time = []
@@ -72,8 +86,8 @@ class Main(object):
         people = self.person_list.get_person_list()
         return len(list(filter(lambda x: x.has_completed_trip(), people)))
 
-    def output_person_to_csv(self, path='../../out/'):
-        name = 'output_persons.csv'
+    def output_person_to_csv(self, lift_algo, path='../../out/'):
+        name = 'output_persons_'+lift_algo+'.csv'
         header = ['curr', 'dest', 'arrival_time', 'end_time', 'wait_time']
         data = []
         for person in self.person_list.get_person_list():
@@ -89,8 +103,8 @@ class Main(object):
             writer.writerow(header)
             writer.writerows(data)
 
-    def output_person_to_json(self, path='../../out/'):
-        name = 'output_persons.json'
+    def output_person_to_json(self, lift_algo, path='../../out/'):
+        name = 'output_persons'+lift_algo+'.json'
         data = []
         for person in self.person_list.get_person_list():
             if person.has_completed_trip():
@@ -109,13 +123,14 @@ class Main(object):
         with open(path + name, 'w', encoding='UTF8') as f:
             json.dump(data, f, indent=4)
 
-    def output_elevator_log_to_json(self, path='../../out/'):
-        name = 'output_elevator.json'
+    def output_elevator_log_to_json(self, lift_algo, path='../../out/'):
+        name = 'output_elevator'+lift_algo+'.json'
         json_serializable = json.dumps(self.building.to_dict(), indent=4)
         with open(path + name, 'w') as f:
             f.write(json_serializable)
-
-# Example ways of running the simulation
+    
+def compare_two_algos():
+    # Example ways of running the simulation
 
     # Step 1
     # set up the environment with number of UP elevators, number of DOWN elevators and number of floors"
@@ -124,19 +139,8 @@ class Main(object):
     # Step 2
     # run the simulation by telling it how long to run, e.g. 6800 (from 6 am to 12 am at the same day)
     # when mode is 'manual', it will read the input file in ../../in
-    #Test.run(64800, 'Otis', mode='manual') 
-    #Test.run(6800, 'Otis', mode='default')
-    Test.run(64800, 'ModernEGCS', mode='manual') 
-    #Test.run(6800, 'ModernEGCS', mode='default')
+    Test.run(64800, mode='manual') 
+    #Test.run(6800, mode='default')
 
-    # Step 3
-    # Save the data of all persons that have completed their trip in the simulation
-    Test.output_person_to_csv()
-    Test.output_person_to_json()
-    Test.output_elevator_log_to_json()
-
-    # Additional information to be printed in terminal
-    print('Number of people spawned in advance:', len(Test.building.get_all_persons()))
-    print('Number of people served:', Test.get_number_of_people_served())
-    print(Test.get_average_waiting_time())
+compare_two_algos()
 
