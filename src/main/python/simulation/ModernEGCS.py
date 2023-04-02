@@ -1,6 +1,6 @@
-import Elevator
-import HallCall
-import Building
+import src.main.python.simulation.Elevator as Elevator
+import src.main.python.simulation.HallCall as HallCall
+import src.main.python.simulation.Building as Building
 
 
 class ModernEGCS(object):

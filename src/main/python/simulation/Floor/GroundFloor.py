@@ -1,7 +1,7 @@
 from typing import List
 
-from Floor import Floor
-from HallCall import HallCall
+from src.main.python.simulation.Floor import Floor
+from src.main.python.simulation.HallCall import HallCall
 import simpy
 
 class GroundFloor(Floor):
@@ -68,8 +68,10 @@ class GroundFloor(Floor):
         # Floor will "check" if people have arrived by peeking at the simulation time
         # to compare with the person's arrival time.
         elevator_algo = elevator_system.get_algo_type()
+        '''
         if self.env.now == 42840.0:
             print(f"last person's arrival time: {self.going_up_persons[0].get_arrival_time()}")
+        '''
         if len(self.going_up_persons) != 0 and self.going_up_persons[0].get_arrival_time() <= self.env.now:
             self.set_call_up()
             self.person_arrived(building)

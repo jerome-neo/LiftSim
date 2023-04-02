@@ -1,4 +1,4 @@
-import Elevator
+import src.main.python.simulation.Elevator as Elevator
 
 class ElevatorSystem(object):
     """
