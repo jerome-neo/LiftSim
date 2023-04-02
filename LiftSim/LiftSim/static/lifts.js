@@ -96,8 +96,1440 @@ function turnOffLight(elevatorNumber, floorNumber) {
 
 //setTargetFloor(1, 9)
 //turnOnLight(2, 5)
+data2={
+    "0"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36244"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 1,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36258"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 1,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 1
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36262"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 1,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 1
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36267"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 1,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 1
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36271"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 1,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 1
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36275"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 1,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 1
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36279"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 1
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36290"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36291"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36292"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36293"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36294"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36295"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36296"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36297"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36298"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36299"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36300"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36301"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36302"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36303"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36304"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36305"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36306"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ],
+        "36307"
+:
+    [
+        {
+            "1": {
+                "elevator_type": 1,
+                "floor": {
+                    "1": 0,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 1,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "2": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        },
+        {
+            "3": {
+                "elevator_type": 0,
+                "floor": {
+                    "1": 1,
+                    "2": 0,
+                    "3": 0,
+                    "4": 0,
+                    "5": 0,
+                    "6": 0,
+                    "7": 0,
+                    "8": 0,
+                    "9": 0
+                },
+                "num_passengers": 0
+            }
+        }
+    ]
+}
 
-data={
+data1={
     "0": [
         {
             "1": {
@@ -1110,31 +2542,39 @@ data={
 
 //const data = JSON.parse(receivedJSON);
 //keys is the sorted timestamps, keys[0] is the first timestamp
-const keys = Object.keys(data).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
+const keys1 = Object.keys(data1).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
+
+const keys2 = Object.keys(data2).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
 
 //use closure to solve the issue of setTimeout function
-function updateFloors() {
-  for (let i = 0; i < keys.length; i++) {
+function updateFloors(model,key,data) {
+  for (let i = 0; i < key.length; i++) {
     setTimeout((function(i) {
       return function() {
-        const value = data[keys[i]];
+        const value = data[key[i]];
         const lift1info = value[0]["1"];
         const lift2info = value[1]["2"];
         const lift3info = value[2]["3"];
+        const lift1type = lift1info["elevator_type"];
+        const lift2type = lift2info["elevator_type"];
+        const lift3type = lift3info["elevator_type"];
         const lift1floor = lift1info["floor"];
         const lift2floor = lift2info["floor"];
         const lift3floor = lift3info["floor"];
-        turnOffAllLight();
-        updateEachFloor(1, lift1floor);
-        updateEachFloor(2, lift2floor);
-        updateEachFloor(3, lift3floor);
+        const lift1people = lift1info["num_passengers"];
+        const lift2people = lift2info["num_passengers"];
+        const lift3people = lift3info["num_passengers"];
+        //turnOffAllLight();
+        updateEachFloor(model, 1, lift1type, lift1floor, lift1people);
+        updateEachFloor(model, 2, lift2type, lift2floor, lift2people);
+        updateEachFloor(model, 3, lift3type, lift3floor, lift3people);
       }
     })(i), i * 2000);
   }
 }
 
-updateFloors();
-
+updateFloors(1,keys1,data1);
+updateFloors(2,keys2,data2);
 
 /*async function main() {
   //const data = JSON.parse(receivedJSON);
@@ -1225,27 +2665,39 @@ function updateFloors(index) {
 
 updateFloors(0);*/
 
-function turnOffAllLight() {
+/*function turnOffAllLight() {
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 9; j++) {
-      const floorElement = document.getElementById(`e${i + 1}f${j + 1}`);
+      const floorElement = document.getElementById(`m1e${i + 1}f${j + 1}`);
       floorElement.classList.remove('on');
       floorElement.classList.remove('target');
     }
   }
-}
+}*/
 
 
-function updateEachFloor(lift, floorStatus) {
+function updateEachFloor(model, lift, typeStatus, floorStatus, peopleStatus) {
     for (let i = 0; i < 9; i++) {
-      const floorElement = document.getElementById(`e${lift}f${i + 1}`);
+      const liftElement = document.getElementById(`m${model}e${lift}`);
+      const floorElement = document.getElementById(`m${model}e${lift}f${i + 1}`);
+      const numPeopleElement = floorElement.querySelector('.numPeople');
+      const elevatorTypeElement = liftElement.querySelector('.elevatorType');
+      if (typeStatus === 1) {
+          elevatorTypeElement.innerHTML = "UP";
+      } else if (typeStatus === -1) {
+          elevatorTypeElement.innerHTML = "DOWN";
+      } else {
+          elevatorTypeElement.innerHTML = "NIL";
+      }
       if (floorStatus[String(i+1)] === 1) {
         floorElement.classList.add('on');
+        numPeopleElement.innerHTML = peopleStatus;
       } else if (floorStatus[String(i+1)] === 2) {
         floorElement.classList.add('target');
       } else {
         floorElement.classList.remove('on');
         floorElement.classList.remove('target');
+        numPeopleElement.innerHTML = "0";
       }
     }
 }
