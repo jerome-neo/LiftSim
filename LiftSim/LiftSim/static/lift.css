@@ -1,6 +1,20 @@
+.model1 {
+  margin-right: 30px;
+}
+
+.model2 {
+  margin-left: 30px;
+}
+
+.elevatorTag {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+}
+
 .floor-indicator {
   width: 90px;
-  height: 492px;
+  height: 526px;
   position: relative;
   margin: 0 0px;
   float: left;
@@ -14,12 +28,12 @@
   text-align: center;
   position: relative;
   font-size: 28px;
-  padding-bottom: 15px;
+  padding-top: 18px;
 }
 
 .elevator {
   width: 90px;
-  height: 492px;
+  height: 526px;
   border: 5px solid grey;
   position: relative;
   margin: 0 20px;
@@ -41,6 +55,7 @@
 
 .floor-indicator h3 {
   font-size: 28px;
+  padding-top: 15px;
 }
 
 h3 {
