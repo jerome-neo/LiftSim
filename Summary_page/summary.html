@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Task Summary with Busy Time Chart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@^0.7.7/dist/chartjs-plugin-zoom.min.js"></script>
+    <link rel="stylesheet" href="styles_waiting_time_table.css">
+  </head>
+  <body>
+    <label for="time-selector">Select time:</label>
+    <select id="time-selector">
+    <option value="all">All</option>
+    <option value="morning">Morning (6am - 12pm)</option>
+    <option value="afternoon">Afternoon (12pm - 6pm)</option>
+    <option value="evening">Evening (6pm - 10pm)</option>
+    </select>
+    
+    <h1>Task Summary with Busy Time Chart</h1>
+    <div style="width: 800px; margin: 0 auto;">
+      <canvas id="myChart"></canvas>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Floor</th>
+          <th>Number of Tasks</th>
+          <th>Total Waiting Time</th>
+          <th>Average Waiting Time</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+      </tbody>
+    </table>
+    <script src="crowdedness_barchart.js"></script>
+    <script src="waiting_time_table.js"></script>
+  </body>
+</html>

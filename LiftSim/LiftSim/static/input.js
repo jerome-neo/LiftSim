@@ -83,9 +83,6 @@ const startBtn = document.getElementById("start-btn");
 startBtn.addEventListener("click", () => {
   stopSimulationFlag = false;
   pauseSimulationFlag = false;
-  for (let i = 0; i < timers.length; i++) {
-    clearTimeout(timers[i]);
-  }
   updateFloors(1,keys1,data1);
   updateFloors(2,keys2,data2);
 });
@@ -102,45 +99,4 @@ endBtn.addEventListener("click", () => {
 const pauseBtn = document.getElementById("pause-btn");
 pauseBtn.addEventListener("click", () => {
   pauseSimulationFlag = !pauseSimulationFlag;
-  /*if (pauseSimulationFlag) {
-    pauseTimestamp = Date.now();
-  } else {
-    resumeTimestamp = Date.now();
-    timeElapsed = resumeTimestamp - pauseTimestamp; // 记录暂停时已经过去的时间
-  }*/
 });
-//pauseBtn.addEventListener("click", togglePause); // add event listener for start button
-/*
-// Append start button to input set
-inputSet.appendChild(startBtn);
-
-// Create the pause button
-const pauseBtn = document.createElement("button");
-pauseBtn.type = "button";
-pauseBtn.innerHTML = "Pause";
-
-// Add event listener to pause button
-let timerId;
-pauseBtn.addEventListener("click", () => {
-  if (timerId) {
-    // Pausing the simulation
-    clearInterval(timerId);
-    timerId = null;
-    pauseBtn.innerHTML = "Resume";
-  } else {
-    // Resuming the simulation
-    timerId = setInterval(updateFloors, 2000);
-    pauseBtn.innerHTML = "Pause";
-  }
-});
-
-// Append pause button to input set
-inputSet.appendChild(pauseBtn);
-
-
-
-// Append end button to input set
-inputSet.appendChild(endBtn);
-
-*/
-
