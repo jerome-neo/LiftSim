@@ -1,0 +1,13 @@
+# MAC
+.DS_Store
+
+# Environments
+.env
+.venv
+env/
+venv/
+
+# Caches
+__pycache__
+cache/*
+
