@@ -4,6 +4,7 @@ from ElevatorSystem import ElevatorSystem
 import ModernEGCS
 import numpy as np
 
+
 class Building(object):
     """
     A class representing a building.
@@ -93,7 +94,7 @@ class Building(object):
         elif elevator_algo=="ModernEGCS":
             self.elevator_algo = "ModernEGCS"
             self.elevator_group = ModernEGCS.ModernEGCS(self.env, self, self.floors, num_elevators=self.num_up+self.num_down,w1=1,w2=1,w3=1)
-
+            
         # Place persons into building
         for person in self.all_persons_spawned.get_person_list():
             self.place_person_on_floor(person)
@@ -164,5 +165,3 @@ class Building(object):
     def get_busiest_floor(self):
         """Returns floor level with the highest arrival rate"""
         return np.argmax(self.arrival_rates_floors)+1
-
-            

@@ -41,6 +41,7 @@ class LiftRandoms:
         """
         Generates the next arrival time of a rider according to a non-homogeneous Poisson process,
         using the thinning method.
+        
         Args: 
             curr_time (float): Current timestamp of the environment in seconds
             max_lambda (float): Default value set to 167/900
@@ -54,12 +55,13 @@ class LiftRandoms:
         while uniform_rv > (self.thinning_fn(arrival_time)/max_lambda):
             arrival_time += rd.expovariate(max_lambda)
             uniform_rv = rd.uniform(0, 1)
-        
+            
         return arrival_time
 
     def thinning_fn(self, x) -> float:
         """
         Helper function for nextArrivalTime to augment the rate parameter of the Exp random variable.
+
         Args:
             x (float): Proposed arrival time from next_arrival_time.
         Returns:
@@ -102,6 +104,7 @@ class LiftRandoms:
         Generates a random source and destination floor for use in instantiating a Person class,
         according to data collected (see prop1.csv).
         Performed by ordered inversion method for discrete random variable simulation.
+
         Args:
             x (float): Simulation clock timestamp.
         
@@ -131,6 +134,11 @@ class LiftRandoms:
             probability += prop_data.iloc[index, 2]
 
         return tuple(prop_data.iloc[index, 0:2].astype('int'))
+
+    @staticmethod
+    def phase(arrival_time) -> tuple:
+        """
+        Helper function for the thinning method, to determine which part of the day it is in the simulation.
 
     @staticmethod
     def phase(arrival_time) -> tuple:

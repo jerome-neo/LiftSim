@@ -1,6 +1,7 @@
 import LiftRandoms
 from Elevator import Elevator
 
+
 class Person(object):
     """A person in the building.
     Attributes:
@@ -27,7 +28,6 @@ class Person(object):
         self.has_reached_floor = False
         while self.curr_floor == self.destination_floor:
             self.curr_floor, self.destination_floor = LiftRandoms.LiftRandoms().generate_source_dest(self.arrival_time)
-        self.assigned_elevator = None
 
     def __str__(self):
         """Returns a string representation of the Person object."""
@@ -39,7 +39,7 @@ class Person(object):
         self.destination_floor = destination_floor
     
     def get_arrival_time(self):
-        """Returns the arrival_time attribute."""
+        """Returns the person's arrival_time attribute."""
         return self.arrival_time
 
     def get_end_time(self):
@@ -59,7 +59,8 @@ class Person(object):
         """
         return elevator.get_current_floor() == self.destination_floor
 
-    def complete_trip(self,time) -> None:
+
+    def complete_trip(self, time) -> None:
         """
         Marks the person's trip as complete.
 

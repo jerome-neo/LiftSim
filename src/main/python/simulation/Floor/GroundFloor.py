@@ -11,6 +11,7 @@ class GroundFloor(Floor):
         Initialize the ground floor with the given index.
 
         Args:
+            env (simpy.Environment): The simulation environment.
             index (int): The index of the ground floor.
 
         """
@@ -56,7 +57,7 @@ class GroundFloor(Floor):
             pointer = self.going_up_persons[:count]
             self.going_up_persons = self.going_up_persons[count+1:]
             return pointer
-        
+            
     def sort(self) -> None:
         """Sorts the list of Persons in ascending arrival time."""
         self.going_up_persons.sort(key=lambda person: person.get_arrival_time())
@@ -83,3 +84,4 @@ class GroundFloor(Floor):
             List[Person]: A list of all persons who want to go up from the ground floor.
         """
         return self.going_up_persons
+

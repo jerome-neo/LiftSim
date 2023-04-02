@@ -4,7 +4,6 @@ import simpy
 
 class TopFloor(Floor):
     """ A class representing the top floor of a building."""
-
     def __init__(self, env: simpy.Environment, index: int):
         """
         Initialize the top floor with the given index.
@@ -51,7 +50,6 @@ class TopFloor(Floor):
                 count += 1
             pointer = self.going_down_persons[:count]
             self.going_down_persons = self.going_down_persons[count + 1:]
-            print("else statement executed")
             return pointer
 
     def sort(self) -> None:
