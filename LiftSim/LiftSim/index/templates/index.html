@@ -8,7 +8,7 @@
   <head>
     <title>Multiple Input Fields</title>
     <link rel="stylesheet" href=" {{ url_for('static', filename='input.css') }} ">
-    <link rel="stylesheet" href="{{ url_for('static', filename='lift.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='lifts.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 
   </head>
@@ -16,18 +16,17 @@
 
 
   <body>
-    <div id="clock" class = "section">
-      <p class="date">{{ date }}</p>
-      <p class="time">{{ time }}</p>
-    </div>
-    <script src="{{ url_for('static', filename='clock.js') }}"></script>
-
-
 
     <div id="input-container" class = "section"></div>
     <div style="display: flex;">
     <button id="add-btn">Add Request</button>
     <button id="add-btn" onclick="displayInputs()">Submit</button>
+    </div>
+
+    <div id="button-container">
+      <button id="start-btn" type="button">Start</button>
+      <button id="pause-btn" type="button">Pause</button>
+      <button id="end-btn" type="button">End</button>
     </div>
 
     <p id="result"></p>
@@ -69,7 +68,7 @@
 
     </script>
 
-    <script src=" {{ url_for('static', filename='dynamicInput.js') }}"></script>
+    <script src=" {{ url_for('static', filename='input.js') }}"></script>
 
 
     <div style="display: flex;">
@@ -95,7 +94,7 @@
       <div class="elevator">
         <h3 class="elevatorTag" id="m1e1", align="center">
           <span>Lift 1</span>
-          <span class="elevatorType">UP</span>
+          <span class="elevatorType">NIL</span>
         </h3>
         <div class="floor" id="m1e1f9">
           <span class="numPeople">0</span>
@@ -131,7 +130,7 @@
       <div class="elevator">
         <h3 class="elevatorTag" id="m1e2", align="center">
           <span>Lift 2</span>
-          <span class="elevatorType">UP</span>
+          <span class="elevatorType">NIL</span>
         </h3>
         <div class="floor" id="m1e2f9">
           <span class="numPeople">0</span>
@@ -166,7 +165,7 @@
       <div class="elevator">
         <h3 class="elevatorTag" id="m1e3", align="center">
           <span>Lift 3</span>
-          <span class="elevatorType">DOWN</span>
+          <span class="elevatorType">NIL</span>
         </h3>
         <div class="floor" id="m1e3f9">
           <span class="numPeople">0</span>
@@ -219,7 +218,7 @@
       <div class="elevator">
         <h3 class="elevatorTag" id="m2e1", align="center">
           <span>Lift 1</span>
-          <span class="elevatorType">UP</span>
+          <span class="elevatorType">NIL</span>
         </h3>
         <div class="floor" id="m2e1f9">
           <span class="numPeople">0</span>
@@ -255,7 +254,7 @@
       <div class="elevator">
         <h3 class="elevatorTag" id="m2e2", align="center">
           <span>Lift 2</span>
-          <span class="elevatorType">UP</span>
+          <span class="elevatorType">NIL</span>
         </h3>
         <div class="floor" id="m2e2f9">
           <span class="numPeople">0</span>
@@ -290,7 +289,7 @@
       <div class="elevator">
         <h3 class="elevatorTag" id="m2e3", align="center">
           <span>Lift 3</span>
-          <span class="elevatorType">UP</span>
+          <span class="elevatorType">NIL</span>
         </h3>
         <div class="floor" id="m2e3f9">
           <span class="numPeople">0</span>

@@ -2546,11 +2546,18 @@ const keys1 = Object.keys(data1).sort((a, b) => parseInt(a) - parseInt(b)); //so
 
 const keys2 = Object.keys(data2).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
 
+let stopSimulationFlag = false;
+
+const timers = [];
 //use closure to solve the issue of setTimeout function
 function updateFloors(model,key,data) {
+  stopSimulationFlag = false;
   for (let i = 0; i < key.length; i++) {
-    setTimeout((function(i) {
+    const timer = setTimeout((function(i) {
       return function() {
+        if (stopSimulationFlag) { // 如果停止标志位为true，则直接退出更新循环
+            return;
+        }
         const value = data[key[i]];
         const lift1info = value[0]["1"];
         const lift2info = value[1]["2"];
@@ -2570,11 +2577,66 @@ function updateFloors(model,key,data) {
         updateEachFloor(model, 3, lift3type, lift3floor, lift3people);
       }
     })(i), i * 2000);
+    timers.push(timer);
   }
 }
 
-updateFloors(1,keys1,data1);
-updateFloors(2,keys2,data2);
+//updateFloors(1,keys1,data1);
+//updateFloors(2,keys2,data2);
+function stopSimulation(model) {
+  stopSimulationFlag = true;
+  for (let i = 0; i < timers.length; i++) {
+    clearTimeout(timers[i]);
+  }
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 9; j++) {
+        const liftElement = document.getElementById(`m${model}e${i + 1}`);
+        const floorElement = document.getElementById(`m${model}e${i + 1}f${i + 1}`);
+        const numPeopleElement = floorElement.querySelector('.numPeople');
+        const elevatorTypeElement = liftElement.querySelector('.elevatorType');
+        numPeopleElement.innerHTML = "0";
+        elevatorTypeElement.innerHTML = "NIL";
+        updateEachFloor(model, i + 1, 0, {}, 0);
+    }
+  }
+}
+
+function updateEachFloor(model, lift, typeStatus, floorStatus, peopleStatus) {
+    for (let i = 0; i < 9; i++) {
+      const liftElement = document.getElementById(`m${model}e${lift}`);
+      const floorElement = document.getElementById(`m${model}e${lift}f${i + 1}`);
+      const numPeopleElement = floorElement.querySelector('.numPeople');
+      const elevatorTypeElement = liftElement.querySelector('.elevatorType');
+      // 清空电梯状态
+      liftElement.classList.remove('on');
+      liftElement.classList.remove('target');
+      if (typeStatus === 1) {
+          elevatorTypeElement.innerHTML = "UP";
+      } else if (typeStatus === -1) {
+          elevatorTypeElement.innerHTML = "DOWN";
+      } else {
+          elevatorTypeElement.innerHTML = "NIL";
+      }
+      if (floorStatus[String(i+1)] === 1) {
+        floorElement.classList.add('on');
+        numPeopleElement.innerHTML = peopleStatus;
+      } else if (floorStatus[String(i+1)] === 2) {
+        floorElement.classList.add('target');
+      } else {
+        floorElement.classList.remove('on');
+        floorElement.classList.remove('target');
+        numPeopleElement.innerHTML = "0";
+      }
+    }
+}
+
+
+
+
+
+
+
+
 
 /*async function main() {
   //const data = JSON.parse(receivedJSON);
@@ -2665,42 +2727,6 @@ function updateFloors(index) {
 
 updateFloors(0);*/
 
-/*function turnOffAllLight() {
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 9; j++) {
-      const floorElement = document.getElementById(`m1e${i + 1}f${j + 1}`);
-      floorElement.classList.remove('on');
-      floorElement.classList.remove('target');
-    }
-  }
-}*/
-
-
-function updateEachFloor(model, lift, typeStatus, floorStatus, peopleStatus) {
-    for (let i = 0; i < 9; i++) {
-      const liftElement = document.getElementById(`m${model}e${lift}`);
-      const floorElement = document.getElementById(`m${model}e${lift}f${i + 1}`);
-      const numPeopleElement = floorElement.querySelector('.numPeople');
-      const elevatorTypeElement = liftElement.querySelector('.elevatorType');
-      if (typeStatus === 1) {
-          elevatorTypeElement.innerHTML = "UP";
-      } else if (typeStatus === -1) {
-          elevatorTypeElement.innerHTML = "DOWN";
-      } else {
-          elevatorTypeElement.innerHTML = "NIL";
-      }
-      if (floorStatus[String(i+1)] === 1) {
-        floorElement.classList.add('on');
-        numPeopleElement.innerHTML = peopleStatus;
-      } else if (floorStatus[String(i+1)] === 2) {
-        floorElement.classList.add('target');
-      } else {
-        floorElement.classList.remove('on');
-        floorElement.classList.remove('target');
-        numPeopleElement.innerHTML = "0";
-      }
-    }
-}
 
 //updateEachFloor(1, {"1": 0, "2": 0, "3": 1, "4": 0, "5": 0, "6": 0, "7": 2, "8": 0, "9": 0})
 //updateEachFloor(2, {"1": 0, "2": 0, "3": 0, "4": 0, "5": 1, "6": 0, "7": 0, "8": 0, "9": 2})
