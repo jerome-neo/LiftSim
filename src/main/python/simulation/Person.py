@@ -1,5 +1,5 @@
-import LiftRandoms
-from Elevator import Elevator
+import src.main.python.simulation.LiftRandoms as LiftRandoms
+from src.main.python.simulation.Elevator import Elevator
 
 
 class Person(object):

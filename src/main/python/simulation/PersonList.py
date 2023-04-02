@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime
-from LiftRandoms import LiftRandoms
-from Person import Person
+from src.main.python.simulation.LiftRandoms import LiftRandoms
+from src.main.python.simulation.Person import Person
 
 
 
