@@ -75,3 +75,54 @@ addBtn.addEventListener("click", () => {
 });
 
 
+
+
+
+// Add event listener to start button
+const startBtn = document.getElementById("start-btn");
+startBtn.addEventListener("click", () => {
+  updateFloors(1,keys1,data1);
+  updateFloors(2,keys2,data2);
+});
+
+// Add event listener to end button
+const endBtn = document.getElementById("end-btn");
+endBtn.addEventListener("click", () => {
+  stopSimulationFlag = true;
+  stopSimulation(1);
+  stopSimulation(2);
+});
+
+// Append start button to input set
+inputSet.appendChild(startBtn);
+
+// Create the pause button
+const pauseBtn = document.createElement("button");
+pauseBtn.type = "button";
+pauseBtn.innerHTML = "Pause";
+
+// Add event listener to pause button
+let timerId;
+pauseBtn.addEventListener("click", () => {
+  if (timerId) {
+    // Pausing the simulation
+    clearInterval(timerId);
+    timerId = null;
+    pauseBtn.innerHTML = "Resume";
+  } else {
+    // Resuming the simulation
+    timerId = setInterval(updateFloors, 2000);
+    pauseBtn.innerHTML = "Pause";
+  }
+});
+
+// Append pause button to input set
+inputSet.appendChild(pauseBtn);
+
+
+
+// Append end button to input set
+inputSet.appendChild(endBtn);
+
+
+
