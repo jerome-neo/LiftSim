@@ -117,16 +117,10 @@ class ModernEGCS(object):
                 current_elevator_moving_distance=elevator_carcalls_list[0]-elevator_carcalls_list[-1]
                 
             else: #elevator currently either moving in an opposite direction to the hall call or have no direction (currently idle)
-                if elevator_direction == "UP":
-                    topmost_level = self.floors[-1].get_floor_level()
-                    floors_til_arrival = (topmost_level - elevator_carcalls_list[0]) + (elevator_carcalls_list[0]-elevator_curr_floor) + (topmost_level-hall_call_floor) #assume that elevator will operate until top-most level until it switches direction
-                    current_elevator_moving_distance = (topmost_level - elevator_carcalls_list[0]) + (topmost_level-hall_call_floor)
-                elif elevator_direction == "DOWN":
-                    bottommost_level = self.floors[0].get_floor_level()
-                    floors_til_arrival = (elevator_carcalls_list[-1]-bottommost_level) + (elevator_curr_floor-elevator_carcalls_list[-1]) + (hall_call_floor-bottommost_level) #assume that elevator will operate until bottom-most level until it switches direction
-                    current_elevator_moving_distance = (elevator_carcalls_list[-1] - bottommost_level) + (hall_call_floor-bottommost_level)
-                else:
+                if elevator_direction == "NIL":
                     current_elevator_moving_distance = abs(elevator_curr_floor - hall_call_floor)
+                else:
+                    return -1
             elevator_moving_distance_cost=(current_elevator_moving_distance - initial_elevator_moving_distance)
 
         for person in waiting_passengers_hallcall:
@@ -147,6 +141,8 @@ class ModernEGCS(object):
         elevators = self.elevators
         for elevator in elevators:
             value = self.calculate_cost2_minus_cost1_efficient(hall_call,elevator)
+            if value == -1:
+                pass
             elevator_index = elevator.get_index()
             tup = (elevator_index,value)
             priority_array.append(tup)
@@ -176,7 +172,8 @@ class ModernEGCS(object):
                 current_best_elevator = self.elevators[current_best_elevator_index-1]
                 current_cost = prioritised_hall_call.get_first_priority_value()
 
-                if current_best_elevator.has_more_than_optimum_calls() and len(self.unassigned_hall_calls)>1 and prioritised_hall_call.get_priority_array_length()>0:
+                if (current_best_elevator.is_busy()) and prioritised_hall_call.get_priority_array_length()>0:
+                #if (self.is_there_idle() or current_best_elevator.has_more_than_optimum_calls()) and prioritised_hall_call.get_priority_array_length()>0:
                     decrease_in_cost = prioritised_hall_call.get_second_priority_value()
                     if decrease_in_cost>-1:
                         updated_cost = current_cost - decrease_in_cost
@@ -188,10 +185,25 @@ class ModernEGCS(object):
 
             if len(self.unassigned_hall_calls) == 1:
                 last_hall_call = self.unassigned_hall_calls[0]
+                floor_index = last_hall_call.get_source_floor()
+                direction = last_hall_call.get_direction()
+                if direction == "UP":
+                    direction_arg = 1
+                else:
+                    direction_arg = -1
                 best_elevator_index = last_hall_call.get_current_best_elevator()
                 best_elevator = self.elevators[best_elevator_index-1]
-                self.assign_one_call(last_hall_call,best_elevator)
-                self.unassigned_hall_calls = []
+                while best_elevator.is_busy() and last_hall_call.get_priority_array_length()>1:
+                    last_hall_call.remove_frontmost_array_pair()
+                    best_elevator_index = last_hall_call.get_current_best_elevator()
+                    best_elevator = self.elevators[best_elevator_index-1]
+                if best_elevator.is_busy() and last_hall_call.get_priority_array_length()==1:
+                    self.unassigned_hall_calls = []
+                    hall_call = HallCall.HallCall(self.env,floor_index,direction_arg)
+                    self.add_hall_call(hall_call)
+                else:
+                    self.assign_one_call(last_hall_call,best_elevator)
+                    self.unassigned_hall_calls = []
             
     
     def assign_one_call(self,hall_call: HallCall, elevator: Elevator) -> None:
@@ -225,7 +237,7 @@ class ModernEGCS(object):
                         busiest_floor.new_idling_elevator_sent()
                         elevator.travel(busiest_floor_level)
                         elevator.unset_direction()
-                elevator.set_idle()
+                elevator.set_idle("ModernEGCS")
     
     def is_all_idle(self) -> bool:
         """Returns True if all the elevators are idle"""
@@ -237,3 +249,6 @@ class ModernEGCS(object):
         num_active_down = len(list(filter(lambda x: x.is_busy() and x.direction == "DOWN", self.elevators)))
         return f"Elevator system has {num_active_up} UP and {num_active_down} DOWN elevator(s) ACTIVE"
     
+    def is_there_idle(self) -> bool:
+        """Returns True if there are any idle elevators"""
+        return any(map(lambda x: x.is_busy(), self.elevators))
