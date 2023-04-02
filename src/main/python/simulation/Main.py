@@ -27,7 +27,7 @@ class Main(object):
             num_floors (int): The number of floors in the building.
 
         """
-        self.env = None
+        self.env = simpy.Environment()
         self.num_up = num_up
         self.num_down = num_down
         self.num_floors = num_floors
@@ -44,11 +44,10 @@ class Main(object):
             lift_algo (string): The type of lift algo ran by the simulation
 
         """
-        self.person_list = PersonList(self.env,duration, limit=300) # person generated cannot exceed 300
+        self.person_list = PersonList(self.env,duration, limit=600) # person generated cannot exceed 300
+        self.person_list.initialise(mode=mode)
         
         for lift_algo in self.lift_algos:
-            self.env = simpy.Environment()
-            self.person_list.initialise(mode=mode)
             print(f"Running S16 elevator simulation with {lift_algo} algorithm")
             self.building = Building.Building(self.env,
                                           self.num_up,
@@ -66,9 +65,12 @@ class Main(object):
             # Additional information to be printed in terminal
             print('Number of people spawned in advance:', len(self.building.get_all_persons()))
             print('Number of people served:', self.get_number_of_people_served())
-            print(self.get_average_waiting_time())
+            print(f"Average waiting time for {lift_algo}: {self.get_average_waiting_time()}")
 
-            self.person_list.reset()
+            self.env = simpy.Environment()
+            self.person_list.reset(self.env)
+
+            
 
     def get_average_waiting_time(self):
         waiting_time = []
@@ -143,6 +145,6 @@ def compare_two_algos(mode):
 
 #compare_two_algos('manual')
 # when mode is 'manual', it will read the input file in ../../in
-#compare_two_algos('default')
+compare_two_algos('default')
 
 
