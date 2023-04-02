@@ -1,5 +1,5 @@
-from Floor.Floor import Floor
-from Floor.TopFloor import TopFloor
-from Floor.SandwichFloor import SandwichFloor
-from Floor.GroundFloor import GroundFloor
+from src.main.python.simulation.Floor.Floor import Floor
+from src.main.python.simulation.Floor.TopFloor import TopFloor
+from src.main.python.simulation.Floor.SandwichFloor import SandwichFloor
+from src.main.python.simulation.Floor.GroundFloor import GroundFloor
 

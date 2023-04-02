@@ -1,7 +1,7 @@
 from typing import List
 
-from Floor import Floor
-from HallCall import HallCall
+from src.main.python.simulation.Floor import Floor
+from src.main.python.simulation.HallCall import HallCall
 import simpy
 
 class GroundFloor(Floor):
