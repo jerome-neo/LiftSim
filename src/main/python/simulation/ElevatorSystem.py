@@ -1,11 +1,10 @@
 import Elevator
 
-
 class ElevatorSystem(object):
     """
     A system for controlling a group of elevators in a building.
     Uses traditional Otis elevators logic.
-
+    
     Attributes:
         env (simpy.Environment): The simulation environment.
         floors (list of Floor): The collection of floors in the building.
@@ -15,27 +14,23 @@ class ElevatorSystem(object):
     def __init__(self, env, collection_floors, num_up, num_down):
         """
         Initializes an ElevatorSystem.
-
         Args:
             env (simpy.Environment): The simulation environment.
             collection_floors (list of Floor): The collection of floors in the building.
             num_up (int): The number of elevators that move up.
             num_down (int): The number of elevators that move down.
-
         """
         self.env = env
         self.floors = collection_floors
         self.num_floors = len(collection_floors)
-        self.elevators_up = [Elevator.Elevator(env, i, self.floors, 1, "UP") for i in range(1, num_up + 1)]
-        self.elevators_down = [Elevator.Elevator(env, i, self.floors, 1, "DOWN") for i in range(1, num_down + 1)]
-
+        self.elevators_up = [Elevator.Elevator(env, i, self.floors, 1, num_up+num_down, direction="UP") for i in range(1, num_up + 1)]
+        self.elevators_down = [Elevator.Elevator(env, i, self.floors, 1, num_up+num_down, direction="DOWN") for i in range(1, num_down + 1)]
+    
     def __str__(self):
         """
         Returns a string representation of the ElevatorSystem.
-
         Returns:
             str: A string representation of the ElevatorSystem.
-
         """
         return f"Elevator with {len(self.elevators_up)} up and {len(self.elevators_down)} down configuration."
 
@@ -43,6 +38,10 @@ class ElevatorSystem(object):
         """Converts elevator group information into a dictionary with time stamp."""
         return {self.env.now: [{index+1: elevator.to_dict()} for index, elevator
                                in enumerate(self.elevators_up + self.elevators_down)]}
+    
+    def get_algo_type(self):
+        """Returns type of elevator algorithm implemented"""
+        return "Otis"
 
     def print_system_status(self) -> str:
         """Returns a string representation number of active elevators."""
@@ -70,7 +69,7 @@ class ElevatorSystem(object):
                 if floor.is_call_down_accepted():
                     continue
                 elif floor.has_call_down():
-                    elevator.add_path(floor.get_floor_level())
+                    elevator.add_path(floor.get_floor_level(),"DOWN")
                     floor.accept_down_call()
 
     def allocate_rising_call(self) -> None:
@@ -89,7 +88,7 @@ class ElevatorSystem(object):
                 if floor.is_call_up_accepted():
                     continue
                 elif floor.has_call_up():
-                    elevator.add_path(floor.get_floor_level())
+                    elevator.add_path(floor.get_floor_level(),"UP")
                     floor.accept_up_call()
 
     def update_status(self) -> None:
