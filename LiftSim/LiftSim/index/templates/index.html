@@ -13,15 +13,17 @@
 
   </head>
 
-
-
   <body>
 
-    <div id="input-container" class = "section"></div>
-    <div style="display: flex;">
-    <button id="add-btn">Add Request</button>
-    <button id="add-btn" onclick="displayInputs()">Submit</button>
+  <form id="input-form">
+    <div id="form-container" class = "section">
+      <!-- form inputs will be added here dynamically -->
     </div>
+    <div style="display: flex;">
+    <button id="add-btn" type="button" onclick="createInputSet()">Add Request</button>
+    <button id="submit-btn" type="button">Submit</button>
+    </div>
+  </form>
 
     <div id="button-container">
       <button id="start-btn" type="button">Start</button>
@@ -29,44 +31,6 @@
       <button id="end-btn" type="button">End</button>
     </div>
 
-    <p id="result"></p>
-    <script>
-
-      function displayInputs() {
-      const inputs = [];
-
-      // Loop through each input field and add its value to the inputs array
-      for (let i = 0; i < document.getElementsByName("Time").length; i++) {
-        const input1 = parseInt(document.getElementsByName("Time")[i].value);
-        const input2 = document.getElementsByName("Source")[i].value;
-        const input3 = document.getElementsByName("Destination")[i].value;
-
-        inputs.push({
-          "input1": input1,
-          "input2": input2,
-          "input3": input3
-        });
-      }
-
-      // Send a POST request to the backend API endpoint with the inputs data
-      fetch('/api/predict', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(inputs)
-      })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the response from the backend here
-        console.log(data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-    }
-
-    </script>
 
     <script src=" {{ url_for('static', filename='input.js') }}"></script>
 

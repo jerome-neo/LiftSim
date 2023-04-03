@@ -9,7 +9,7 @@ index = Blueprint('index', __name__, template_folder='templates')
 
 def getNewRequest():
     form = addRequestForm()
-    num_of_pax = request.form.get('num_of_pax')
+    time = request.form.get('num_of_pax')
     src = request.form.get('src')
     dest = request.form.get('dest')
     return [num_of_pax, src, dest]
