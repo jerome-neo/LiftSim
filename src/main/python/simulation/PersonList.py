@@ -42,7 +42,6 @@ class PersonList:
                 time_converted = datetime.strptime(time, '%H:%M')
                 start_simulation_time = datetime.strptime("06:00", "%H:%M")
                 time = (time_converted - start_simulation_time).total_seconds()
-                print(time)
                 person = Person(self.env,person_id, time)
                 person.overwrite(curr, dest)
                 self.list.append(person)

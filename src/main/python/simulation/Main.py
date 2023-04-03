@@ -144,11 +144,11 @@ def compare_two_algos(mode):
     
     Test.run(64800, mode=mode) 
 
-#with open('output.txt', 'w') as f:
+with open('output.txt', 'w') as f:
     # Redirect standard output to the file
-    #sys.stdout = f
-#compare_two_algos('manual')
+    sys.stdout = f
+    compare_two_algos('manual')
 # when mode is 'manual', it will read the input file in ../../in
-compare_two_algos('default')
+    #compare_two_algos('default')
 
 
