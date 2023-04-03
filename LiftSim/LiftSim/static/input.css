@@ -1,17 +1,18 @@
 /* Styling for the input fields and remove button */
-.input-container {
+.form-container {
     display: flex;
     margin-bottom: 10px;
   }
   
   input[type="text"] {
-    display: block;
+    display: inline-block;
     margin-bottom: 10px;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-right: 10px;
     flex: 1;
+    vertical-align: top;
   }
   
   .remove-btn {
@@ -33,7 +34,7 @@
   }
   
   #add-btn {
-    display: flex;
+    display: inline-block;
     background-color: #4169e1;
     color: #fff;
     border: none;
@@ -47,7 +48,20 @@
     background-color: #0069d9;
   }
   
+  #submit-btn {
+    display: inline-block;
+    background-color: #4169e1;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-right: 20px;
+  }
 
+  #submit-btn:hover {
+    background-color: #0069d9;
+  }
   
 /* Styling for button container */
 #button-container {
