@@ -1,3 +1,4 @@
+import sys
 import csv
 import json
 import simpy
@@ -44,7 +45,7 @@ class Main(object):
             lift_algo (string): The type of lift algo ran by the simulation
 
         """
-        self.person_list = PersonList(self.env,duration, limit=600) # person generated cannot exceed 300
+        self.person_list = PersonList(self.env,duration, limit=300) # person generated cannot exceed 300
         self.person_list.initialise(mode=mode)
         
         for lift_algo in self.lift_algos:
@@ -143,6 +144,9 @@ def compare_two_algos(mode):
     
     Test.run(64800, mode=mode) 
 
+#with open('output.txt', 'w') as f:
+    # Redirect standard output to the file
+    #sys.stdout = f
 #compare_two_algos('manual')
 # when mode is 'manual', it will read the input file in ../../in
 compare_two_algos('default')
