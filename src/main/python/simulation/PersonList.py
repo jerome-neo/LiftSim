@@ -2,8 +2,8 @@ import pandas as pd
 from datetime import datetime
 from src.main.python.simulation.LiftRandoms import LiftRandoms
 from src.main.python.simulation.Person import Person
-
-
+import json
+import logging
 
 class PersonList:
     """A class representing a custom list of Person objects that have been pre-generated outside the simulation."""
@@ -33,15 +33,18 @@ class PersonList:
 
     def initialise(self, mode='default', path_to_data="../../in/input.json"):
         if mode == 'manual':
-            df = pd.read_json(path_to_data)
+            f = open(path_to_data)
+            df = json.load(f)
+            logging.warning(df)
             person_id = 1
-            for index, row in df.iterrows():
-                curr = row['Source']
-                dest = row['Destination']
-                time = row['Time']
-                time_converted = datetime.strptime(time, '%H:%M')
-                start_simulation_time = datetime.strptime("06:00", "%H:%M")
-                time = (time_converted - start_simulation_time).total_seconds()
+            for row in df:
+                logging.warning(row)
+                curr = row['src']
+                dest = row['dest']
+                time = row['time']
+                #time_converted = datetime.strptime(time, '%H:%M')
+                #start_simulation_time = datetime.strptime("06:00", "%H:%M")
+                #time = (time_converted - start_simulation_time).total_seconds()
                 print(time)
                 person = Person(self.env,person_id, time)
                 person.overwrite(curr, dest)

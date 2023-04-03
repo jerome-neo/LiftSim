@@ -1,10 +1,13 @@
 from flask import Flask, request, json, render_template
+from flask_cors import CORS, cross_origin
 import os
 import glob
 import logging
 import csv
+import json
 
 app = Flask(__name__)
+CORS(app)
 
 # Define Folder Path
 INPUT_FOLDER = os.path.join(os.getcwd(), 'src/main/in')
@@ -13,6 +16,7 @@ app.config['INPUT_FOLDER'] = INPUT_FOLDER
 app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
 
 @app.route("/random", methods=['GET'])
+@cross_origin()
 def random_simulation():
 
   logging.warning('Started')
@@ -63,6 +67,7 @@ def random_simulation():
   return data
 
 @app.route("/manual", methods=['GET', 'POST'])
+@cross_origin()
 def manual_simulation():
 
   logging.warning('Started')
@@ -82,11 +87,13 @@ def manual_simulation():
   # get the uploaded file
   json_input = request.get_json()
 
+  logging.warning(json_input)
+
   file_path = os.path.join(app.config['INPUT_FOLDER'], 'input.json')
 
   # set the file path
   with open(file_path, 'w') as f:
-    f.write(json_input)
+    json.dump(json_input, f)
 
   # execute the simulation process
   from src.main.python.simulation.Main import compare_two_algos
