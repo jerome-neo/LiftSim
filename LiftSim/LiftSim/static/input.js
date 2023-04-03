@@ -1,3 +1,8 @@
+import path from "path";
+import fs from "fs";
+
+let data1Person;
+let data2Person;
 // Function to create a set of three input fields
 function createInputSet() {
 
@@ -51,27 +56,35 @@ submitBtn.addEventListener("click", (event) => {
   event.preventDefault();
   let inputs = [];
     // Loop through each input field and add its value to the inputs array
-  for (let i = 0; i < document.getElementsByName("Arrival Time").length; i++) {
-    const inputTime = document.getElementsByName("Arrival Time")[i].value;
-    const [hours, minutes] = inputTime.split(":");
-    const input1 = hours * 3600 + minutes * 60;
+  for (let i = 0; i < document.getElementsByName("Time").length; i++) {
+    const inputTime = document.getElementsByName("Time")[i].value;
+    //const [hours, minutes] = inputTime.split(":");
+    //const input1 = (parseInt(hours) - 6) * 3600 + parseInt(minutes) * 60;
     const input2 = parseInt(document.getElementsByName("Source")[i].value);
     const input3 = parseInt(document.getElementsByName("Destination")[i].value);
 
     inputs.push({
-      "Time": input1,
-      "Source": input2,
-      "Destination": input3
+      "Time": String(inputTime),
+      "Source": String(input2),
+      "Destination": String(input3)
     });
   }
 
-  // Convert array to JSON string
+  // Convert the inputs received to a json.file
+  const fs = require('fs');
+  const path = require('path');
+  const filePath = path.join(__dirname, '..', 'DSA3101-07-S16', 'src', 'main', 'in', 'input.json');
   const inputJson = JSON.stringify(inputs);
+  fs.writeFileSync(filePath, inputJson);
+
+
+  const myFileInput = document.querySelector('input[type="file"]');
+  const file = myFileInput.files[0];
 
   // Send JSON to backend using fetch API
   fetch('http://127.0.0.1:9001/manual', {
     method: 'POST',
-    body: inputJson,
+    body: file,
     headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*'
@@ -95,6 +108,7 @@ submitBtn.addEventListener("click", (event) => {
 });
 
 
+
 // Add event listener to start button
 const startBtn = document.getElementById("start-btn");
 startBtn.addEventListener("click", () => {
@@ -105,6 +119,8 @@ startBtn.addEventListener("click", () => {
       console.log('Success:', data);
       const data1 = data['Otis']['Elevators'];
       const data2 = data['ModernEGCS']['Elevators'];
+      data1Person = data['Otis']['Persons'];
+      data2Person = data['ModernEGCS']['Persons'];
       const keys1 = Object.keys(data1).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
       const keys2 = Object.keys(data2).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
       stopSimulationFlag = false;
@@ -122,6 +138,7 @@ startBtn.addEventListener("click", () => {
   //updateFloors(2,keys2,data2);
 });
 
+
 // Add event listener to end button
 const endBtn = document.getElementById("end-btn");
 endBtn.addEventListener("click", () => {
@@ -136,7 +153,29 @@ pauseBtn.addEventListener("click", () => {
   pauseSimulationFlag = !pauseSimulationFlag;
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+  const showPageButton = document.getElementById('show-page-btn');
+  showPageButton.addEventListener("click", () => {
+    showPage();
+  });
+});
 
+function showPage() {
+  // Show the summary page
+  window.location.href = "summary";
+}
+
+
+/*const showPageButton = document.getElementById('show-page-btn');
+showPageButton.addEventListener("click", () => {
+  showPage();
+});
+
+function showPage() {
+  // Show the summary page
+  window.location.href = "summary.html";
+}
+*/
 /*function displayInputs() {
 
   // Loop through each input field and add its value to the inputs array

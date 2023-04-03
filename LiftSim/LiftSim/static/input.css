@@ -43,11 +43,7 @@
     cursor: pointer;
     margin-right: 20px;
   }
-  
-  #add-btn:hover {
-    background-color: #0069d9;
-  }
-  
+
   #submit-btn {
     display: inline-block;
     background-color: #4169e1;
@@ -58,10 +54,6 @@
     cursor: pointer;
     margin-right: 20px;
   }
-
-  #submit-btn:hover {
-    background-color: #0069d9;
-  }
   
 /* Styling for button container */
 #button-container {
@@ -70,7 +62,7 @@
 }
 
 /* Styling for the 'Start', 'Pause', and 'End' button */
-#start-btn, #pause-btn, #end-btn {
+#start-btn, #pause-btn, #end-btn, #show-page-btn {
   display: flex;
   background-color: #28a745;
   color: #fff;
@@ -81,6 +73,11 @@
   margin-right: 20px;
 }
 
+#show-page-btn {
+  margin-top: 20px;
+  background-color: #4169e1;
+}
+
 #pause-btn {
   background-color: #f5a623;
 }
@@ -89,7 +86,7 @@
   background-color: #dc3545;
 }
 
-#start-btn:hover, #pause-btn:hover, #end-btn:hover {
+#start-btn:hover, #pause-btn:hover, #end-btn:hover, #add-btn:hover, #submit-btn:hover, #show-page-btn:hover{
   opacity: 0.8;
 }
 
