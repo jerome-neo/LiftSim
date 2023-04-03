@@ -1,7 +1,7 @@
 import simpy
-from Floor import TopFloor, GroundFloor, SandwichFloor
-from ElevatorSystem import ElevatorSystem
-import ModernEGCS
+from src.main.python.simulation.Floor import TopFloor, GroundFloor, SandwichFloor
+from src.main.python.simulation.ElevatorSystem import ElevatorSystem
+import src.main.python.simulation.ModernEGCS as ModernEGCS
 import numpy as np
 
 
