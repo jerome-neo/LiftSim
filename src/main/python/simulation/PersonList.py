@@ -4,7 +4,6 @@ from src.main.python.simulation.LiftRandoms import LiftRandoms
 from src.main.python.simulation.Person import Person
 
 
-
 class PersonList:
     """A class representing a custom list of Person objects that have been pre-generated outside the simulation."""
     def __init__(self, env, duration_of_simulation, limit=300):
@@ -43,7 +42,7 @@ class PersonList:
                 start_simulation_time = datetime.strptime("06:00", "%H:%M")
                 time = (time_converted - start_simulation_time).total_seconds()
                 print(time)
-                person = Person(self.env,person_id, time)
+                person = Person(self.env, person_id, time)
                 person.overwrite(curr, dest)
                 self.list.append(person)
                 person_id += 1
@@ -64,7 +63,7 @@ class PersonList:
                 person_id += 1
                 next_arrival_time = LiftRandoms().next_arrival_time(time)
 
-    def reset(self,new_env):
+    def reset(self, new_env):
         """Resets the initialisation of PersonList, when switching to a different elevator algorithm"""
         self.env = new_env
         for person in self.list:
