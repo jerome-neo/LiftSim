@@ -9,3 +9,4 @@ src/test/python/main/__pycache__/*
 
 ../../out/*
 
+.DS_Store
