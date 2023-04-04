@@ -4,7 +4,6 @@ from src.main.python.simulation.LiftRandoms import LiftRandoms
 from src.main.python.simulation.Person import Person
 
 
-
 class PersonList:
     """A class representing a custom list of Person objects that have been pre-generated outside the simulation."""
     def __init__(self, env, duration_of_simulation, limit=300):
@@ -43,7 +42,7 @@ class PersonList:
                 start_simulation_time = datetime.strptime("06:00", "%H:%M")
                 time = (time_converted - start_simulation_time).total_seconds()
                 print(time)
-                person = Person(self.env,person_id, time)
+                person = Person(self.env, person_id, time)
                 person.overwrite(curr, dest)
                 self.list.append(person)
                 person_id += 1
@@ -64,8 +63,8 @@ class PersonList:
                 person_id += 1
                 next_arrival_time = LiftRandoms().next_arrival_time(time)
 
-    def reset(self,new_env):
-        """Resets the initialisation of PersonList, when switching to a different elevator algorithm"""
+    def reset(self, new_env):
+        """Resets the initialisation of PersonList, when switching to a different elevator algorithm."""
         self.env = new_env
         for person in self.list:
             person.reset(new_env)
@@ -75,13 +74,13 @@ class PersonList:
         return self.list
 
     def get_earliest_arrival_time(self) -> float:
-        """Returns the earliest arrival time among the Persons in the PersonList"""
+        """Returns the earliest arrival time among the Persons in the PersonList."""
         for person in self.list:
             if not person.has_completed_trip():
                 print(f'{person} arriving at floor {person.get_curr_floor()}, '
                       f'going to floor {person.get_dest_floor()} has not completed trip')
                 return person.get_arrival_time()
-
+        return 64800  # end simulation time todo: make this an enum
     def get(self, index) -> Person:
         """Returns the Person at the specified index"""
         return self.list[index]

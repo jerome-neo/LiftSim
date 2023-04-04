@@ -3,8 +3,7 @@ import simpy
 from src.main.python.simulation.Floor import Floor
 
 MAX_CAPACITY = 13
-MAX_WEIGHT = 1600 # kilograms
-
+MAX_WEIGHT = 1600  # kilograms
 SPEED = (0.5, 0.6)
 
 
@@ -52,31 +51,33 @@ class Elevator(object):
             collection_floors (list): The collection of floors in the building.
             curr_floor (int): The current floor the elevator is on.
             total_num_elevators (int): The number of elevators present in the system.
-            direction (str): The direction of travel for the elevator. If not specified, as in for ModernEGCS, it is initially set as "NIL".
+            direction (str): The direction of travel for the elevator. If not specified, as in for ModernEGCS,
+            it is initially set as "NIL".
 
         """
         self.env = env
         self.index = index
         self.floors = collection_floors
         self.num_floors = len(collection_floors)
-        self.direction = direction #if direction is inputted, we are running Otis algo, else we are running modern EGCS algo
-        self.max_persons = MAX_CAPACITY  # not implemented
-        self.max_weight = MAX_WEIGHT  # not implemented
+        self.direction = direction  # Otis algo if direction exist else ModernEGCS algo
+        self.max_persons = MAX_CAPACITY  # todo: not implemented
+        self.max_weight = MAX_WEIGHT  # todo: not implemented
         self.curr_floor = curr_floor
         self.speed = SPEED  # metres per second
         self.is_working_status = False
         self.passengers = []
-        self.path = []  #all assigned floors in the elevator's current path based on simulation
-        self.car_calls = [] #all unserved car calls registered for the elevator
+        self.path = []  # all assigned floors in the elevator's current path based on simulation
+        self.car_calls = []  # all un-served car calls registered for the elevator
         self.resource = simpy.Resource(env,1)
         self.capacity = MAX_CAPACITY
         self.is_moving = False
         self.total_num_elevators = total_num_elevators
-        self.num_active_calls = 0 #actual number of active calls that the elevator is serving
+        self.num_active_calls = 0  # actual number of active calls that the elevator is serving
 
     def __str__(self):
         """Returns a string representation of the Elevator object."""
-        return f"Elevator {self.index} set {self.direction} has passengers: {list(map(lambda x: str(x), self.passengers))}"
+        return f"Elevator {self.index} set {self.direction} " \
+               f"has passengers: {list(map(lambda x: str(x), self.passengers))}"
 
     def to_dict(self) -> dict:
         """Converts elevator information into a dictionary."""
@@ -110,14 +111,14 @@ class Elevator(object):
         print(f'{person} has entered elevator {self.direction} {self.index}')
         self.passengers.append(person)
     
-    def add_car_call(self,floor) -> None:
+    def add_car_call(self, floor) -> None:
         """Adds a car call to the list of unserved car calls"""
         if floor not in self.car_calls:
             self.car_calls.append(floor)
             self.car_calls.sort()
-        if floor>self.curr_floor:
+        if floor > self.curr_floor:
             self.direction = "UP"
-        elif floor<self.curr_floor:
+        elif floor < self.curr_floor:
             self.direction = "DOWN"
 
     def elevator_door_open(self, t=3):
@@ -193,7 +194,8 @@ class Elevator(object):
             yield self.env.timeout(0)
             
     def has_more_than_optimum_calls(self) -> bool:
-        """Checks if elevator's number of calls is more than total number of floors // total number of elevators. Used in ModernEGCS."""
+        """Checks if elevator's number of calls is more than total number of floors // total number of elevators.
+        Used in ModernEGCS."""
         return len(self.path)>len(self.floors)//self.total_num_elevators
 
     def is_busy(self) -> bool:
@@ -299,10 +301,12 @@ class Elevator(object):
             yield self.env.timeout(0)
         else:
             if self.get_path()[0] != self.get_current_floor():
-                print(f"Elevator {self.index} set {self.direction} knows that current floor {self.curr_floor} NOT IN path")
+                print(f"Elevator {self.index} set {self.direction} "
+                      f"knows that current floor {self.curr_floor} NOT IN path")
                 yield self.env.timeout(0)
             else:
-                print(f"Elevator {self.index} set {self.direction} knows that current floor {self.curr_floor} IN path")
+                print(f"Elevator {self.index} set {self.direction} "
+                      f"knows that current floor {self.curr_floor} IN path")
                 
                 self.get_path().pop(0)
 
@@ -324,7 +328,7 @@ class Elevator(object):
                         floor.uncall_down()
                         floor.unaccept_down_call()
     
-    def get_current_floor_object(self)->Floor:
+    def get_current_floor_object(self) -> Floor:
         """
         Returns the object of the current floor where the elevator is at.
 
@@ -334,7 +338,7 @@ class Elevator(object):
         floor_index = self.get_current_floor()-1
         return self.floors[floor_index]
 
-    def get_passenger_count(self)->int:
+    def get_passenger_count(self) -> int:
         """
         Returns the number of passengers that are currently in the elevator.
 
@@ -343,7 +347,7 @@ class Elevator(object):
         """
         return len(self.passengers)
 
-    def get_passenger_list(self)->list:
+    def get_passenger_list(self) -> list:
         """
         Returns a list of passengers that are currently in the elevator.
 
@@ -352,7 +356,7 @@ class Elevator(object):
         """
         return self.passengers
     
-    def car_calls_left(self)-> int:
+    def car_calls_left(self) -> int:
         """
         Returns the number of car calls left
 
@@ -361,7 +365,7 @@ class Elevator(object):
         """
         return len(self.car_calls)
     
-    def get_car_calls(self)-> list:
+    def get_car_calls(self) -> list:
         """
         Returns a list of floor levels for remaining car calls
         
@@ -370,7 +374,7 @@ class Elevator(object):
         """
         return self.car_calls
     
-    def unset_direction(self)->None:
+    def unset_direction(self) -> None:
         """Changes direction to NIL once a ModernEGCS elevator has no more calls"""
         self.direction = "NIL"
 

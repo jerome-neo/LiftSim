@@ -1,5 +1,6 @@
 import src.main.python.simulation.Elevator as Elevator
 
+
 class ElevatorSystem(object):
     """
     A system for controlling a group of elevators in a building.
@@ -23,8 +24,12 @@ class ElevatorSystem(object):
         self.env = env
         self.floors = collection_floors
         self.num_floors = len(collection_floors)
-        self.elevators_up = [Elevator.Elevator(env, i, self.floors, 1, num_up+num_down, direction="UP") for i in range(1, num_up + 1)]
-        self.elevators_down = [Elevator.Elevator(env, i, self.floors, 1, num_up+num_down, direction="DOWN") for i in range(1, num_down + 1)]
+        self.elevators_up = \
+            [Elevator
+             .Elevator(env, i, self.floors, 1, num_up+num_down, direction="UP") for i in range(1, num_up + 1)]
+        self.elevators_down = \
+            [Elevator
+             .Elevator(env, i, self.floors, 1, num_up+num_down, direction="DOWN") for i in range(1, num_down + 1)]
     
     def __str__(self):
         """
@@ -69,7 +74,7 @@ class ElevatorSystem(object):
                 if floor.is_call_down_accepted():
                     continue
                 elif floor.has_call_down():
-                    elevator.add_path(floor.get_floor_level(),"DOWN")
+                    elevator.add_path(floor.get_floor_level(), "DOWN")
                     floor.accept_down_call()
 
     def allocate_rising_call(self) -> None:
@@ -88,7 +93,7 @@ class ElevatorSystem(object):
                 if floor.is_call_up_accepted():
                     continue
                 elif floor.has_call_up():
-                    elevator.add_path(floor.get_floor_level(),"UP")
+                    elevator.add_path(floor.get_floor_level(), "UP")
                     floor.accept_up_call()
 
     def update_status(self) -> None:
