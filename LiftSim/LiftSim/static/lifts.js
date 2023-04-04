@@ -5,7 +5,6 @@
 
 let stopSimulationFlag = false;
 let pauseSimulationFlag = false;
-let timers = [];
 
 //use closure to solve the issue of setTimeout function => use setInterval to solve the problem caused by setTimeout
 function updateFloors(model,key,data) {

@@ -1,28 +1,8 @@
-
-import { persons_data_otis } from './input.js';
-import { persons_data_egcs} from './input.js';
-const elevatorAlgorithmSelector = document.getElementById('elevator-algorithm-selector');
-const selectedAlog= "Otis"
-elevatorAlgorithmSelector.addEventListener('change', () => {
-  selectedAlog= elevatorAlgorithmSelector.value;
-  console.log(selectedAlog);
-});
-
-
-switch (selectedAlog) {
-  case "Otis":
-    data=persons_data_otis;
-    break;
-  case "ModernEGCS":
-    data=persons_data_egcs;
-    break;
-  default:
-    break;
-}
-
-  const TIME_BLOCK_SIZE = 3600; // 1 hour block size
-
-  const dataByHour = {};
+var data=window.data1Person;
+var selectedAlog="Otis";
+var selectedTime="The Whole Day";
+const TIME_BLOCK_SIZE = 3600; // 1 hour block size
+const dataByHour = {};
   for (let i = 6; i < 22; i++) {
 	dataByHour[i] = 0;
   }
@@ -119,39 +99,76 @@ switch (selectedAlog) {
   });
   
 
-
-  let origin_data=dataPoints;
   let origin_xaxis=myChart.data.labels;
   const timeSelector = document.getElementById('time-selector');
-
+  const elevatorAlgorithmSelector = document.getElementById('elevator-algorithm-selector');
   timeSelector.addEventListener('change', () => {
-    updateChart(timeSelector);
+    selectedTime= timeSelector.value
+    updateChart(selectedTime,selectedAlog);
   });
-  function updateChart(timeSelector) {
 
-    const selectedTime = timeSelector.value;
+  elevatorAlgorithmSelector.addEventListener('change', () => {
+    selectedAlog= elevatorAlgorithmSelector.value;
+    updateChart(selectedTime,selectedAlog);
+  });
+  
+
+  function updateChart(selectedTime,selectedAlog) {
+    
+    switch (selectedAlog) {
+      case "Otis":
+        data=window.data1Person;
+        console.log(data);
+        break;
+      case "ModernEGCS":
+        data=window.data2Person;
+        console.log(data);
+        break;
+      default:
+        break;
+    }
+    const dataByHour = {};
+  for (let i = 6; i < 22; i++) {
+	dataByHour[i] = 0;
+  }
+  
+  data.forEach(({ arrival_time, end_time }) => {
+	const startBlock = Math.floor(arrival_time / TIME_BLOCK_SIZE);
+	const endBlock = Math.ceil(end_time / TIME_BLOCK_SIZE);
+	for (let i = startBlock; i < endBlock; i++) {
+	  dataByHour[Math.floor(i)]++;
+	}
+  });
+  
+  const dataPoints = [];
+  for (let i = 6; i < 22; i++) {
+	const hour = i < 10 ? `0${i}:00` : `${i}:00`;
+	const busyLevel = dataByHour[i];
+	dataPoints.push({ x: hour, y: busyLevel });
+  }
+
     let startTime = 0;
-    let endTime = origin_data.length;
+    let endTime = dataPoints.length;
     const myHeading = document.querySelector('#my-heading');
-    myHeading.textContent = "Number of Task During "+selectedTime;
+    myHeading.textContent = "Number of Task During "+selectedTime+" with "+selectedAlog+" Alogrithm";
     switch (selectedTime) {
       case 'Morning':
         startTime = 0;
-        endTime = origin_data.findIndex(({ x }) => parseInt(x.split(':')[0]) === 12);
+        endTime = dataPoints.findIndex(({ x }) => parseInt(x.split(':')[0]) === 12);
         break;
       case 'Afternoon':
-        startTime = origin_data.findIndex(({ x }) => parseInt(x.split(':')[0]) === 12);
-        endTime = origin_data.findIndex(({ x }) => parseInt(x.split(':')[0]) === 18);
+        startTime = dataPoints.findIndex(({ x }) => parseInt(x.split(':')[0]) === 12);
+        endTime = dataPoints.findIndex(({ x }) => parseInt(x.split(':')[0]) === 18);
         break;
       case 'Evening':
-        startTime = origin_data.findIndex(({ x }) => parseInt(x.split(':')[0]) === 18);
-        endTime = origin_data.length;
+        startTime = dataPoints.findIndex(({ x }) => parseInt(x.split(':')[0]) === 18);
+        endTime = dataPoints.length;
         break;
       default:
         break;
     }
   
-    const newData = origin_data.slice(startTime, endTime);
+    const newData = dataPoints.slice(startTime, endTime);
     const newLabels = origin_xaxis.slice(startTime, endTime);
     myChart.data.datasets[0].data = newData;
     myChart.data.labels = newLabels;

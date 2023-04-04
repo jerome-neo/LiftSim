@@ -76,11 +76,11 @@ h1 {
   }
   
   label {
-	font-size: 22px;
+	font-size: 15px;
   }
 
   select {
-	font-size: 22px;
+	font-size: 15px;
 	padding: 5px;
 	width: 220px;
   }
@@ -105,4 +105,3 @@ h1 {
   #elevator-algorithm-selector {
 	margin-left: 10px;
   }
-  

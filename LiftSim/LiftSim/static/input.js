@@ -1,8 +1,5 @@
-import path from "path";
-import fs from "fs";
-
-let data1Person;
-let data2Person;
+//let data1Person;
+//let data2Person;
 // Function to create a set of three input fields
 function createInputSet() {
 
@@ -71,20 +68,13 @@ submitBtn.addEventListener("click", (event) => {
   }
 
   // Convert the inputs received to a json.file
-  const fs = require('fs');
-  const path = require('path');
-  const filePath = path.join(__dirname, '..', 'DSA3101-07-S16', 'src', 'main', 'in', 'input.json');
   const inputJson = JSON.stringify(inputs);
-  fs.writeFileSync(filePath, inputJson);
 
-
-  const myFileInput = document.querySelector('input[type="file"]');
-  const file = myFileInput.files[0];
 
   // Send JSON to backend using fetch API
   fetch('http://127.0.0.1:9001/manual', {
     method: 'POST',
-    body: file,
+    body: inputJson,
     headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*'
@@ -119,8 +109,8 @@ startBtn.addEventListener("click", () => {
       console.log('Success:', data);
       const data1 = data['Otis']['Elevators'];
       const data2 = data['ModernEGCS']['Elevators'];
-      data1Person = data['Otis']['Persons'];
-      data2Person = data['ModernEGCS']['Persons'];
+      window.data1Person = data['Otis']['Persons'];
+      window.data2Person = data['ModernEGCS']['Persons'];
       const keys1 = Object.keys(data1).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
       const keys2 = Object.keys(data2).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
       stopSimulationFlag = false;
@@ -131,11 +121,6 @@ startBtn.addEventListener("click", () => {
     .catch((error) => {
       console.error('Error:', error);
     });
-
-  //stopSimulationFlag = false;
-  //pauseSimulationFlag = false;
-  //updateFloors(1,keys1,data1);
-  //updateFloors(2,keys2,data2);
 });
 
 

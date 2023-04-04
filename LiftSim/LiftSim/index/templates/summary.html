@@ -8,12 +8,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles_waiting_time_table.css') }}">
   </head>
   <body>
+
     <label for="time-selector">Select time:</label>
     <select id="time-selector">
-    <option value="The Whole Day">Whole Day</option>
-    <option value="Morning">Morning (6am - 12pm)</option>
-    <option value="Afternoon">Afternoon (12pm - 6pm)</option>
-    <option value="Evening">Evening (6pm - 10pm)</option>
+      <option value="The Whole Day">Whole Day</option>
+      <option value="Morning" >Morning (6am - 12pm)</option>
+      <option value="Afternoon" >Afternoon (12pm - 6pm)</option>
+      <option value="Evening">Evening (6pm - 10pm)</option>
     </select>
     <div class="selectors-container">
       <label for="elevator-algorithm-selector">Select Elevator Algorithm:</label>

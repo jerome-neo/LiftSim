@@ -1,26 +1,17 @@
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
-from .forms import addRequestForm
-
-# from ..simulation import Main
-
-index = Blueprint('index', __name__, template_folder='templates')
 
 
-def getNewRequest():
-    form = addRequestForm()
-    time = request.form.get('num_of_pax')
-    src = request.form.get('src')
-    dest = request.form.get('dest')
-    return [num_of_pax, src, dest]
+simulation = Blueprint('simulation', __name__, template_folder='templates')
+summary = Blueprint('summary', __name__, template_folder='templates')
 
 
-@index.route('/liftsim')
+@simulation.route('/simulation')
 def page1():
-    return render_template('index.html')
+    return render_template('simulation.html')
 
 
-@index.route('/summary')
+@summary.route('/summary')
 def page2():
     return render_template('summary.html')
