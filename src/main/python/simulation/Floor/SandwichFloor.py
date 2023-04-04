@@ -1,6 +1,6 @@
 import simpy
-from Floor import Floor
-from HallCall import HallCall
+from src.main.python.simulation.Floor import Floor
+from src.main.python.simulation.HallCall import HallCall
 
 class SandwichFloor(Floor):
     """A class representing a floor of a building with people going up and down,

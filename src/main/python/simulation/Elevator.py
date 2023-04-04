@@ -1,6 +1,6 @@
 import random
 import simpy
-from Floor import Floor
+from src.main.python.simulation.Floor import Floor
 
 MAX_CAPACITY = 13
 MAX_WEIGHT = 1600 # kilograms
@@ -211,9 +211,11 @@ class Elevator(object):
         self.is_working_status = True
         print(f'{self.direction} Elevator {self.index} has been set busy')
 
-    def set_idle(self) -> None:
+    def set_idle(self, lift_algo="Otis") -> None:
         """Set the elevator to be idle."""
         self.is_working_status = False
+        if lift_algo == "ModernEGCS":
+            self.direction = "NIL"
         print(f'{self.direction} Elevator {self.index} has been set idle')
 
     def travel(self, end) -> None:

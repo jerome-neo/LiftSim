@@ -1,5 +1,5 @@
-import LiftRandoms
-from Elevator import Elevator
+import src.main.python.simulation.LiftRandoms as LiftRandoms
+from src.main.python.simulation.Elevator import Elevator
 
 
 class Person(object):
@@ -32,6 +32,13 @@ class Person(object):
     def __str__(self):
         """Returns a string representation of the Person object."""
         return f"Person {self.id}"
+    
+    def reset(self, new_env):
+        """Resets attributes so the same Person can be used in simulation using a different algorithm"""
+        self.env = new_env
+        self.elevator_arrival_time = None #time taken for the elevator to reach the person, i.e. for the person's hall call to be answered
+        self.end_time = None 
+        self.has_reached_floor = False
 
     def overwrite(self, curr_floor, destination_floor):
         """Overwrites automatic config of Person class."""
