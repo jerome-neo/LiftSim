@@ -17,12 +17,13 @@ class Person(object):
         Args:
             env (simpy.Environment): The simulation environment.
             index (int): The unique identifier of the person.
-            building (Building): The building where the person is located.
+            arrival_time (float): Time person spawns.
         """
         self.id = index
         self.env = env
         self.arrival_time = arrival_time
-        self.elevator_arrival_time = None #time taken for the elevator to reach the person, i.e. for the person's hall call to be answered
+        self.elevator_arrival_time = None  # time taken for the elevator to reach the person,
+        # i.e. for the person's hall call to be answered
         self.end_time = None 
         self.curr_floor, self.destination_floor = LiftRandoms.LiftRandoms().generate_source_dest(self.arrival_time)
         self.has_reached_floor = False
@@ -34,9 +35,10 @@ class Person(object):
         return f"Person {self.id}"
     
     def reset(self, new_env):
-        """Resets attributes so the same Person can be used in simulation using a different algorithm"""
+        """Resets attributes so the same Person can be used in simulation using a different algorithm."""
         self.env = new_env
-        self.elevator_arrival_time = None #time taken for the elevator to reach the person, i.e. for the person's hall call to be answered
+        self.elevator_arrival_time = None  # time taken for the elevator to reach the person,
+        # i.e. for the person's hall call to be answered
         self.end_time = None 
         self.has_reached_floor = False
 
@@ -65,7 +67,6 @@ class Person(object):
 
         """
         return elevator.get_current_floor() == self.destination_floor
-
 
     def complete_trip(self, time) -> None:
         """
@@ -119,7 +120,7 @@ class Person(object):
         """
         return self.destination_floor
 
-    def get_direction(self) -> int:
+    def get_direction(self) -> str:
         """
         Returns the direction that the person wants to go.
         Returns:
@@ -127,21 +128,20 @@ class Person(object):
         """
         return "DOWN" if self.curr_floor > self.destination_floor else "UP"
 
-
-    def get_elevator_arrival_time(self)-> float:
+    def get_elevator_arrival_time(self) -> float:
         """
         Returns the person's assigned elevator's arrival time
         """
         return self.elevator_arrival_time
         
-    def get_riding_time(self,elevator: Elevator)-> float:
+    def get_riding_time(self, elevator: Elevator) -> float:
         """
         Returns the estimated riding time of the person, which is time from the moment the person enters the assigned
         to the moment the person leaves the elevator, i.e. when the elevator has reached the person's destination.
         Used in ModernEGCS cost calculation.
 
         Args:
-            Elevator: The Elevator object it is assigned to during the calculation
+            elevator: The Elevator object it is assigned to during the calculation
         Returns:
             float: The length of time spent by the person in the elevator
         """
@@ -156,25 +156,24 @@ class Person(object):
         person_source_floor = self.get_curr_floor()
         to_wait_for_reaching_dest=0
         for floor in elevator_remaining_car_calls:
-            if floor>person_source_floor and floor<person_destination_floor:
-                to_wait_for_reaching_dest+=1
-            if floor>=person_destination_floor:
+            if (floor > person_source_floor) and (floor < person_destination_floor):
+                to_wait_for_reaching_dest += 1
+            if floor >= person_destination_floor:
                 break
         if assigned_elevator.get_direction() == "DOWN":
             to_wait_for_reaching_dest = len(elevator_remaining_car_calls) - to_wait_for_reaching_dest - 1
         
-        estimated_remaining_travel_time = abs(person_destination_floor-elevator_current_floor)*3.5+3.5*to_wait_for_reaching_dest
+        estimated_remaining_travel_time = abs(person_destination_floor-elevator_current_floor) * 3.5\
+            + 3.5 * to_wait_for_reaching_dest
         time_taken_to_ride = elevator_arrival_to_now + estimated_remaining_travel_time
         return time_taken_to_ride
 
-    
-    def get_elevator_waiting_time(self)->float:
+    def get_elevator_waiting_time(self) -> float:
         """
         Returns the length of time spent waiting for the elevator to come and service the person's call.
 
         Returns:
             float: THe length of time spent waiting for the elevator by the person
         """
-        time_taken_for_elevator_arrival = self.get_elevator_arrival_time() - self.arrival_time()
+        time_taken_for_elevator_arrival = self.get_elevator_arrival_time() - self.get_arrival_time()
         return time_taken_for_elevator_arrival
-    

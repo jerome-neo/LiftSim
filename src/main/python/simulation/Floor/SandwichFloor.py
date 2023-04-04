@@ -2,6 +2,7 @@ import simpy
 from src.main.python.simulation.Floor import Floor
 from src.main.python.simulation.HallCall import HallCall
 
+
 class SandwichFloor(Floor):
     """A class representing a floor of a building with people going up and down,
     which is a subclass of the Floor class."""
@@ -43,7 +44,6 @@ class SandwichFloor(Floor):
                 person (Person): The person who wants to go down from the sandwich floor.
         """
         self.going_down_persons.append(person)
-
 
     def remove_all_persons_going_up(self) -> list:
         """
@@ -93,6 +93,14 @@ class SandwichFloor(Floor):
             List[Person]: A list of all persons who want to go up from the sandwich floor.
         """
         return self.going_up_persons
+
+    def get_all_persons_going_down(self) -> list:
+        """
+        Returns the list of all persons who want to go down from the sandwich floor
+        Returns:
+            List[Person]: A list of all persons who want to go down from the sandwich floor.
+        """
+        return self.going_down_persons
     
     def sort(self) -> None:
         """Sorts the list of Persons in ascending arrival time."""
@@ -107,21 +115,12 @@ class SandwichFloor(Floor):
         if len(self.going_up_persons) != 0 and self.going_up_persons[0].get_arrival_time() <= self.env.now:
             self.set_call_up()
             self.person_arrived(building)
-            if elevator_algo == "ModernEGCS" and self.is_call_up_accepted() == False:
-                hall_call = HallCall(self.env,self.floor_index,1)
+            if (elevator_algo == "ModernEGCS") and (self.is_call_up_accepted() == False):
+                hall_call = HallCall(self.env, self.floor_index, 1)
                 elevator_system.add_hall_call(hall_call)
         if len(self.going_down_persons) != 0 and self.going_down_persons[0].get_arrival_time() <= self.env.now:
             self.set_call_down()
             self.person_arrived(building)
-            if elevator_algo == "ModernEGCS" and self.is_call_down_accepted() == False:
-                hall_call = HallCall(self.env,self.floor_index,-1)
+            if (elevator_algo == "ModernEGCS") and (self.is_call_down_accepted() == False):
+                hall_call = HallCall(self.env, self.floor_index, -1)
                 elevator_system.add_hall_call(hall_call)
-    
-    
-    def get_all_persons_going_down(self) -> list:
-        """
-        Returns the list of all persons who want to go down from the sandwich floor
-        Returns:
-            List[Person]: A list of all persons who want to go down from the sandwich floor.
-        """
-        return self.going_down_persons

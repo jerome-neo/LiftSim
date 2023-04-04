@@ -1,13 +1,15 @@
 import simpy
 
+
 class HallCall(object):
     """A hall call registered to ModernEGCS elevator system.
 
     Attributes:
-        env (simpy.Environment):
-        source_floor (int): floor level where elevator button is pressed
-        direction (str): direction of elevator call -> UP or DOWN
-        registered_time (float): time when call is registered
+        env (simpy.Environment): Simulation environment.
+        source_floor (int): Floor level where elevator button is pressed.
+        direction (str): Direction of elevator call,  UP or DOWN.
+        registered_time (float): Time when call is registered.
+        priority_array (list): Used in calculation of HallCall costs.
     """
 
     def __init__(self, env, source_floor, direction):
@@ -29,48 +31,49 @@ class HallCall(object):
     
     def __str__(self):
         """Returns a string representation of the HallCall object."""
-        return f"Hall call from {self.source_floor} with {self.direction} direction. Priority array: {self.priority_array}"
+        return f"Hall call from {self.source_floor} with {self.direction} direction. " \
+               f"Priority array: {self.priority_array}"
     
-    def get_source_floor(self)->int:
-        """Returns source floor level"""
+    def get_source_floor(self) -> int:
+        """Returns source floor level."""
         return self.source_floor
     
-    def get_direction(self)->str:
-        """Returns direction of call"""
+    def get_direction(self) -> str:
+        """Returns direction of call."""
         return self.direction
     
-    def get_registered_time(self)->float:
-        """Returns time when the call is registered"""
+    def get_registered_time(self) -> float:
+        """Returns time when the call is registered."""
         return self.registered_time
     
-    def set_priority_array(self, array)->None:
-        """Sets the priority array attribute for the HallCall"""
+    def set_priority_array(self, array) -> None:
+        """Sets the priority array attribute for the HallCall."""
         self.priority_array = array
 
-    def get_first_priority_value(self)->None:
+    def get_first_priority_value(self) -> None:
         """Returns the first priority array value for the HallCall,
         which is the additional cost incurred if this hall call is assigned
-        to the next best elevator"""
+        to the next best elevator."""
         return self.priority_array[0][1]
     
-    def get_second_priority_value(self)->None:
+    def get_second_priority_value(self) -> None:
         """Returns the second priority array value for the HallCall,
         which is the additional cost incurred if this hall call is assigned
-        to the next best elevator"""
+        to the next best elevator."""
         return self.priority_array[1][1]
     
-    def get_current_best_elevator(self)->None:
-        """Returns the index of the current best elevator based on HCPM"""
+    def get_current_best_elevator(self) -> None:
+        """Returns the index of the current best elevator based on HCPM."""
         return self.priority_array[0][0]
     
-    def get_current_second_best_elevator(self)->None:
-        """Returns the index of the current best elevator based on HCPM"""
+    def get_current_second_best_elevator(self) -> None:
+        """Returns the index of the current best elevator based on HCPM."""
         return self.priority_array[1][0]
     
-    def get_priority_array_length(self)->None:
-        """Returns the current length of the priority array"""
+    def get_priority_array_length(self) -> None:
+        """Returns the current length of the priority array."""
         return len(self.priority_array)
     
-    def remove_frontmost_array_pair(self)->None:
-        """Removes the frontmost priority array pair"""
+    def remove_frontmost_array_pair(self) -> None:
+        """Removes the front-most priority array pair."""
         self.priority_array = self.priority_array[1:]

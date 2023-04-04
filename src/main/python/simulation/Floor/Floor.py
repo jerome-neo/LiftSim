@@ -1,5 +1,6 @@
 import simpy
 
+
 class Floor(object):
     """A class representing a floor in a building."""
     def __init__(self, env: simpy.Environment, index: int):
@@ -86,17 +87,16 @@ class Floor(object):
         """
         Updates the count for total people arrived and arrival rate for the floor. Used in ModernEGCS.
         """
-        self.total_people_arrived+=1
-        self.people_arrival_rate=self.total_people_arrived/self.env.now
-        building.update_floor_arrival_rate(self.floor_index-1,self.people_arrival_rate)
+        self.total_people_arrived += 1
+        self.people_arrival_rate = self.total_people_arrived / self.env.now
+        building.update_floor_arrival_rate(self.floor_index-1, self.people_arrival_rate)
         sum_arrival_rates_floors = building.get_sum_arrival_rates_floors()
         building_num_floors = building.get_num_floors()
-        self.idling_elevators_deserved=self.people_arrival_rate/sum_arrival_rates_floors*building_num_floors
+        self.idling_elevators_deserved = self.people_arrival_rate/sum_arrival_rates_floors*building_num_floors
 
-    
     def new_idling_elevator_sent(self) -> None:
         """Updates the count of idling elevators sent to this floor"""
-        self.idling_elevators_sent+=1
+        self.idling_elevators_sent += 1
     
     def get_num_idling_elevators_sent(self) -> None:
         """Returns the count of idling elevators sent to this floor"""
