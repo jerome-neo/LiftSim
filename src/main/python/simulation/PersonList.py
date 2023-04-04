@@ -64,7 +64,7 @@ class PersonList:
                 next_arrival_time = LiftRandoms().next_arrival_time(time)
 
     def reset(self, new_env):
-        """Resets the initialisation of PersonList, when switching to a different elevator algorithm"""
+        """Resets the initialisation of PersonList, when switching to a different elevator algorithm."""
         self.env = new_env
         for person in self.list:
             person.reset(new_env)
@@ -74,13 +74,13 @@ class PersonList:
         return self.list
 
     def get_earliest_arrival_time(self) -> float:
-        """Returns the earliest arrival time among the Persons in the PersonList"""
+        """Returns the earliest arrival time among the Persons in the PersonList."""
         for person in self.list:
             if not person.has_completed_trip():
                 print(f'{person} arriving at floor {person.get_curr_floor()}, '
                       f'going to floor {person.get_dest_floor()} has not completed trip')
                 return person.get_arrival_time()
-
+        return 64800  # end simulation time todo: make this an enum
     def get(self, index) -> Person:
         """Returns the Person at the specified index"""
         return self.list[index]
