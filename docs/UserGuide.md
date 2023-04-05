@@ -25,6 +25,12 @@ techniques and simulation software, LiftSim provides valuable insights into elev
 
 
 
+### Time-Selector and Elevator Algorithm Selector
+Decription: There are two dropdown list of time and elevator algorithm
+
+Instruction: Select the time and algorithm you are interested in and click the option, barchart and summary table would be updated based on your selection.
+
+
 ### Viewing help : `help`
 
 Description
