@@ -1,18 +1,23 @@
 from flask import Flask, request, json, render_template
+from flask_cors import CORS, cross_origin
 import os
 import glob
 import logging
 import csv
+from src.main.python.simulation.Main import Main
 
 app = Flask(__name__)
+CORS(app)
 
 # Define Folder Path
-INPUT_FOLDER = os.path.join(os.getcwd(), 'src/main/in')
-OUTPUT_FOLDER = os.path.join(os.getcwd(), 'src/main/out')
+INPUT_FOLDER = '/app/src/main/in'
+OUTPUT_FOLDER = '/app/src/main/out'
 app.config['INPUT_FOLDER'] = INPUT_FOLDER
 app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
+Test = Main(num_up=2, num_down=1, num_floors=9)
 
 @app.route("/random", methods=['GET'])
+@cross_origin()
 def random_simulation():
 
   logging.warning('Started')
@@ -30,9 +35,7 @@ def random_simulation():
   logging.warning('Removed output files')
 
   # execute the simulation process
-  from src.main.python.simulation.Main import compare_two_algos
-
-  compare_two_algos('default')
+  Test.run(64800, mode='default')
 
   # prepare the output
 
@@ -63,6 +66,7 @@ def random_simulation():
   return data
 
 @app.route("/manual", methods=['GET', 'POST'])
+@cross_origin()
 def manual_simulation():
 
   logging.warning('Started')
@@ -80,7 +84,9 @@ def manual_simulation():
   logging.warning('Removed output files')
 
   # get the uploaded file
-  json_input = request.get_json()
+  json_input = json.dumps(request.get_json(), indent=4)
+
+  logging.warning(json_input)
 
   file_path = os.path.join(app.config['INPUT_FOLDER'], 'input.json')
 
@@ -89,9 +95,7 @@ def manual_simulation():
     f.write(json_input)
 
   # execute the simulation process
-  from src.main.python.simulation.Main import compare_two_algos
-
-  compare_two_algos('manual')
+  Test.run(64800, mode='manual')
 
   # prepare the output
 
