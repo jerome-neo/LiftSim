@@ -1,4 +1,6 @@
-var data=JSON.parse(window.data1Person);
+var data=JSON.parse(localStorage.getItem("data1Person"));
+console.log(data);
+console.log(data);
 var selectedAlog="Otis";
 var selectedTime="The Whole Day";
 const TIME_BLOCK_SIZE = 3600; // 1 hour block size
@@ -8,8 +10,11 @@ const dataByHour = {};
   }
   
   data.forEach(({ arrival_time, end_time }) => {
-	const startBlock = Math.floor(arrival_time / TIME_BLOCK_SIZE);
-	const endBlock = Math.ceil(end_time / TIME_BLOCK_SIZE);
+    
+	const startBlock = Math.floor(arrival_time / TIME_BLOCK_SIZE)+6;
+	const endBlock = Math.ceil(end_time / TIME_BLOCK_SIZE)+6;
+  console.log(startBlock);
+  console.log(endBlock);
 	for (let i = startBlock; i < endBlock; i++) {
 	  dataByHour[Math.floor(i)]++;
 	}
@@ -21,7 +26,7 @@ const dataByHour = {};
 	const busyLevel = dataByHour[i];
 	dataPoints.push({ x: hour, y: busyLevel });
   }
-  
+  console.log(dataPoints);
   const ctx = document.getElementById('myChart').getContext('2d');
   const myChart = new Chart(ctx, {
     type: 'bar',
@@ -117,11 +122,11 @@ const dataByHour = {};
     
     switch (selectedAlog) {
       case "Otis":
-        data=JSON.parse(window.data1Person);
+        data=JSON.parse(localStorage.getItem("data1Person"));
         console.log(data);
         break;
       case "ModernEGCS":
-        data=JSON.parse(window.data2Person);
+        data=JSON.parse(localStorage.getItem("data2Person"));
         console.log(data);
         break;
       default:
@@ -133,8 +138,8 @@ const dataByHour = {};
   }
   
   data.forEach(({ arrival_time, end_time }) => {
-	const startBlock = Math.floor(arrival_time / TIME_BLOCK_SIZE);
-	const endBlock = Math.ceil(end_time / TIME_BLOCK_SIZE);
+	const startBlock = Math.floor(arrival_time / TIME_BLOCK_SIZE)+6;
+	const endBlock = Math.ceil(end_time / TIME_BLOCK_SIZE)+6;
 	for (let i = startBlock; i < endBlock; i++) {
 	  dataByHour[Math.floor(i)]++;
 	}

@@ -105,7 +105,7 @@ startBtn.addEventListener("click", () => {
     fetch('http://localhost:9001/random')
     .then(response => response.json())
     .then(data => {
-      // 处理从服务器获取的数据
+      // Process data from server
       console.log('Success:', data);
       const data1 = data['Otis']['Elevators'];
       const data2 = data['ModernEGCS']['Elevators'];

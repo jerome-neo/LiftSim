@@ -1,5 +1,4 @@
 
-  console.log(data)
   const summaryData = {};
   data.forEach((row) => {
 	const { curr, wait_time } = row;
@@ -49,11 +48,11 @@
 function updateTable(selectedAlog){
 	switch (selectedAlog) {
 		case "Otis":
-		  data=JSON.parse(window.data1Person);
+		  data=JSON.parse(localStorage.getItem("data1Person"));
 		  console.log(data);
 		  break;
 		case "ModernEGCS":
-		  data=JSON.parse(window.data2Person);
+		  data=JSON.parse(localStorage.getItem("data2Person"));
 		  console.log(data);
 		  break;
 		default:

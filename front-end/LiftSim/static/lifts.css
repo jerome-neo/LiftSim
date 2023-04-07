@@ -1,11 +1,31 @@
-.model1 {
+#title1-container{
   margin-top: 30px;
+  margin-bottom: 10px;
+  margin-left: 60px;
+  color: grey;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#title2-container{
+  margin-top: 30px;
+  margin-bottom: 10px;
+  margin-left: 125px;
+  color: grey;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.model1 {
   margin-right: 30px;
+
 }
 
 .model2 {
-  margin-top: 30px;
   margin-left: 30px;
+
 }
 
 .elevatorTag {
@@ -64,6 +84,7 @@ h3 {
   font-size: 20px;
 }
 
+
 .on{
   width: 100%;
   height: 50px;
@@ -87,6 +108,4 @@ h3 {
   padding-top: 10px;
   background-color: #99ccff;
 }
-
-
 
