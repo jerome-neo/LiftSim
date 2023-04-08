@@ -1,7 +1,7 @@
 import simpy
-from Floor import TopFloor, GroundFloor, SandwichFloor
-from ElevatorSystem import ElevatorSystem
-import ModernEGCS
+from src.main.python.simulation.Floor import TopFloor, GroundFloor, SandwichFloor
+from src.main.python.simulation.ElevatorSystem import ElevatorSystem
+import src.main.python.simulation.ModernEGCS as ModernEGCS
 import numpy as np
 
 
@@ -16,7 +16,10 @@ class Building(object):
         floors (list): A list containing all floors in the building.
         elevator_group (ElevatorSystem.ElevatorSystem): An instance of the ElevatorSystem class that manages the
             elevators in the building.
-        all_persons_spawned (PersonList): A PersonList object containing all Person instances.
+        all_persons_spawned (PersonList): A PersonList object containing all Person instances
+        log: Log of every elevator state change
+        arrival_rates_floors: This is for ModernECGS algo.
+        elevator_algo: Elevator algorithm is either OTIS or ModernECGS.
     Methods:
         get_elevator_system(): Returns the object of the elevator system being implemented, which is either from the class ElevatorSystem (representing Otis) or ModernEGCS
         get_elevator_algo_type(): Returns in string the elevator system being implemented, which is either Otis or ModernEGCS
@@ -27,6 +30,9 @@ class Building(object):
         to_dict(): Returns a dictionary of logged information
         simulate(): Simulates the building operation by creating Person instances, placing them in their
             respective floors, and managing the elevators in the building.
+        update_floor_arrival_rate(): Updates the value of arrival rate for a specified floor.
+        get_sum_arrival_rates_floors(): Returns the sum of arrival rates across all floors.
+        get_busiest_floor(): Returns floor level with the highest arrival rate.
     """
     def __init__(self, env, num_up, num_down, num_floors, persons_list):
         """
@@ -79,7 +85,7 @@ class Building(object):
             curr_floor.add_person_going_up(person)
     
     def initialise(self,elevator_algo) -> None:
-        """Initialises all components that make up the building"""
+        """Initialises all components that make up the building."""
         # Place floors into building
         self.floors.append(GroundFloor(self.env, 1))
 
@@ -103,12 +109,10 @@ class Building(object):
         """Returns a dictionary of the logged info."""
         return self.log
 
-    def simulate(self) -> None:
+    def simulate(self):
         """
         Simulates the building operation by creating Person instances, placing them in their respective floors,
         and managing the elevators in the building.
-        Yields:
-                The arrival time of each wave of Person instances.
         """
 
         while True:
@@ -140,7 +144,7 @@ class Building(object):
                 print(self.elevator_group.print_system_status())
                 print(f'\n')
 
-            #ModernEGCS handling of persons
+            # ModernEGCS handling of persons
             elif self.get_elevator_algo_type() == "ModernEGCS":
                 self.elevator_group.assign_calls()
                 for elevator in self.elevator_group.elevators:
@@ -154,14 +158,14 @@ class Building(object):
             else:
                 print("Lift algorithm has not been configured yet")
 
-    def update_floor_arrival_rate(self,floor_index,updated_rate):
-        """Updates the value of arrival rate for a specified floor. Used in ModernEGCS calculations"""
+    def update_floor_arrival_rate(self, floor_index, updated_rate):
+        """Updates the value of arrival rate for a specified floor. Used in ModernEGCS calculations."""
         self.arrival_rates_floors[floor_index] = updated_rate
     
     def get_sum_arrival_rates_floors(self):
-        """Returns the sum of arrival rates across all floors"""
+        """Returns the sum of arrival rates across all floors."""
         return np.sum(self.arrival_rates_floors)
     
     def get_busiest_floor(self):
-        """Returns floor level with the highest arrival rate"""
-        return np.argmax(self.arrival_rates_floors)+1
+        """Returns floor level with the highest arrival rate."""
+        return np.argmax(self.arrival_rates_floors) + 1

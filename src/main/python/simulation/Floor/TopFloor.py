@@ -1,6 +1,7 @@
-from Floor import Floor
-from HallCall import HallCall
+from src.main.python.simulation.Floor import Floor
+from src.main.python.simulation.HallCall import HallCall
 import simpy
+
 
 class TopFloor(Floor):
     """ A class representing the top floor of a building."""
@@ -52,6 +53,14 @@ class TopFloor(Floor):
             self.going_down_persons = self.going_down_persons[count + 1:]
             return pointer
 
+    def get_all_persons_going_down(self) -> list:
+        """
+        Returns the list of all persons who want to go down from the top floor
+        Returns:
+            List[Person]: A list of all persons who want to go down from the top floor.
+        """
+        return self.going_down_persons
+
     def sort(self) -> None:
         """Sorts the list of Persons in ascending arrival time."""
         self.going_down_persons.sort(key=lambda person: person.get_arrival_time())
@@ -61,17 +70,9 @@ class TopFloor(Floor):
         # Floor will "check" if people have arrived by peeking at the simulation time
         # to compare with the person's arrival time.
         elevator_algo = elevator_system.get_algo_type()
-        if len(self.going_down_persons) != 0 and self.going_down_persons[0].get_arrival_time() <= self.env.now:
+        if (len(self.going_down_persons) != 0) and (self.going_down_persons[0].get_arrival_time() <= self.env.now):
             self.set_call_down()
             self.person_arrived(building)
-            if elevator_algo == "ModernEGCS" and self.is_call_down_accepted() == False:
-                hall_call = HallCall(self.env,self.floor_index,-1)
+            if (elevator_algo == "ModernEGCS") and (self.is_call_down_accepted() == False):
+                hall_call = HallCall(self.env, self.floor_index, -1)
                 elevator_system.add_hall_call(hall_call)
-
-    def get_all_persons_going_down(self) -> list:
-        """
-        Returns the list of all persons who want to go down from the top floor
-        Returns:
-            List[Person]: A list of all persons who want to go down from the top floor.
-        """
-        return self.going_down_persons
