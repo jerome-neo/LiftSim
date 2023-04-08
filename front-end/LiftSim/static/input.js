@@ -46,6 +46,23 @@ function createInputSet() {
 
 }
 
+let slider;
+let refreshTime;
+    document.addEventListener("DOMContentLoaded", function() {
+      slider = document.getElementById("speed-slider");
+      refreshTime = slider.value;
+
+      slider.addEventListener("change", function() {
+        refreshTime = slider.value;
+        console.log(refreshTime);
+      });
+});
+/*
+const slider = document.getElementById("speed-slider");
+let refreshTime = 2000;
+slider.addEventListener("change", function() {
+  refreshTime = slider.value;
+});*/
 
 // Add event listener to submit button
 const submitBtn = document.getElementById("submit-btn");
@@ -89,8 +106,8 @@ submitBtn.addEventListener("click", (event) => {
         const manualKeys2 = Object.keys(manualData2).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
         stopSimulationFlag = false;
         pauseSimulationFlag = false;
-        updateFloors(1,manualKeys1,manualData1);
-        updateFloors(2,manualKeys2,manualData2);
+        updateFloors(1,manualKeys1,manualData1,refreshTime);
+        updateFloors(2,manualKeys2,manualData2,refreshTime);
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -115,8 +132,8 @@ startBtn.addEventListener("click", () => {
       const keys2 = Object.keys(data2).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
       stopSimulationFlag = false;
       pauseSimulationFlag = false;
-      updateFloors(1,keys1,data1);
-      updateFloors(2,keys2,data2);
+      updateFloors(1,keys1,data1,refreshTime);
+      updateFloors(2,keys2,data2,refreshTime);
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -137,6 +154,7 @@ const pauseBtn = document.getElementById("pause-btn");
 pauseBtn.addEventListener("click", () => {
   pauseSimulationFlag = !pauseSimulationFlag;
 });
+
 
 document.addEventListener('DOMContentLoaded', function() {
   const showPageButton = document.getElementById('show-page-btn');

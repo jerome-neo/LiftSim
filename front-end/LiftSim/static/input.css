@@ -71,6 +71,7 @@
   padding: 5px 10px;
   cursor: pointer;
   margin-right: 20px;
+  margin-bottom: 40px;
 }
 
 #show-page-btn {
@@ -90,3 +91,46 @@
   opacity: 0.8;
 }
 
+.slider-container {
+  display: flex;
+  align-items: center;
+  pointer-events: none; /* 禁用鼠标事件 */
+}
+
+
+.slider-container label {
+  color: grey;
+  font-weight: bold;
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+
+#speed-slider{
+  width: 200px;
+  margin-left: 20px;
+  pointer-events: auto;
+}
+
+
+/*#speed-slider::before {
+  color: grey;
+  font-weight: bold;
+  content: "Fast";
+  position: absolute;
+  left: 0;
+  top: 20px;
+  padding-left: 1050px;
+  padding-top: 140px;
+}
+
+#speed-slider::after {
+  color: grey;
+  font-weight: bold;
+  content: "Slow";
+  position: absolute;
+  left: 0;
+  top: 20px;
+  padding-left: 1250px;
+  padding-top: 140px;
+}*/

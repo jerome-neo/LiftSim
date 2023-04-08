@@ -1,5 +1,5 @@
 #title1-container{
-  margin-top: 30px;
+  margin-top: 20px;
   margin-bottom: 10px;
   margin-left: 60px;
   color: grey;
@@ -9,7 +9,7 @@
 }
 
 #title2-container{
-  margin-top: 30px;
+  margin-top: 20px;
   margin-bottom: 10px;
   margin-left: 125px;
   color: grey;
@@ -55,7 +55,7 @@
 
 .elevator {
   width: 90px;
-  height: 526px;
+  height: 524px;
   border: 5px solid grey;
   position: relative;
   margin: 0 20px;

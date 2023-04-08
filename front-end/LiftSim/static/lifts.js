@@ -7,9 +7,11 @@ let stopSimulationFlag = false;
 let pauseSimulationFlag = false;
 
 //use closure to solve the issue of setTimeout function => use setInterval to solve the problem caused by setTimeout
-function updateFloors(model,key,data) {
+function updateFloors(model,key,data,time) {
   let i = 0;
-  const interval = setInterval(function() {
+  let interval = setInterval(fn, time);
+  function fn() {
+    //document.getElementById("loop-counter").textContent = "Loop Counter: " + key[i];
     if (stopSimulationFlag) { // If the flag is true, then exit the loop
       clearInterval(interval);
       return;
@@ -31,14 +33,19 @@ function updateFloors(model,key,data) {
     const lift2people = lift2info["num_passengers"];
     const lift3people = lift3info["num_passengers"];
 
+
     updateEachFloor(model, 1, lift1type, lift1floor, lift1people);
     updateEachFloor(model, 2, lift2type, lift2floor, lift2people);
     updateEachFloor(model, 3, lift3type, lift3floor, lift3people);
     i++;
+    time = refreshTime;
+    clearInterval(interval);
+    interval = setInterval(fn, time);
     if (i >= key.length) {
-      clearInterval(interval);//?
+      clearInterval(interval);
     }
-  }, 2000);
+    console.log(time);
+  }
 }
 
 
