@@ -44,7 +44,7 @@ class Main(object):
             duration (float): The duration of the simulation in seconds.
             mode (string): 'default' or 'manual'
         """
-        self.person_list = PersonList(self.env, duration, limit=300)  # person generated cannot exceed 300
+        self.person_list = PersonList(self.env, duration, limit=5000)  # person generated cannot exceed 300
         self.person_list.initialise(mode=mode)
         
         for lift_algo in self.lift_algos:
@@ -135,4 +135,4 @@ class Main(object):
 
 # Step 2
 # run the simulation by telling it how long to run, e.g. 6800 (from 6 am to 12 am at the same day)
-# Test.run(64800, mode='manual')
+# Test.run(64800, mode='default')
