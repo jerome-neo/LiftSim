@@ -1,3 +1,5 @@
+import sys
+sys.path.append('c:/Users/dorot/OneDrive - National University of Singapore/DSA3101/DSA3101-07-S16/')
 import src.main.python.simulation.Elevator as Elevator
 import src.main.python.simulation.HallCall as HallCall
 import src.main.python.simulation.Building as Building
@@ -25,7 +27,10 @@ class ModernEGCS(object):
             w1: w1 for cost calculation in HCPM
             w2: w2 for cost calculation in HCPM
             w3: w3 for cost calculation in HCPM
-
+            reassigning (bool): True if reassign_hall_calls is running, False otherwise.
+            calls_backlog (list): List of HallCall objects with empty priority array \
+            due to unavailability of elevators serving the direction they want to go 
+            backlog_time_start (int): Time at which the earliest backlog is added
         """
         self.env = env
         self.building = building
@@ -35,6 +40,9 @@ class ModernEGCS(object):
         self.w1 = w1
         self.w2 = w2
         self.w3 = w3
+        self.reassigning = False
+        self.calls_backlog = []
+        self.backlog_time_start = None
 
     def __str__(self):
         """
@@ -79,7 +87,7 @@ class ModernEGCS(object):
         """
         elevator_curr_floor = elevator.get_current_floor()
         elevator_direction = elevator.get_direction()
-        elevator_carcalls_list = elevator.get_car_calls()
+        elevator_path = elevator.get_path().copy()
 
         hall_call_floor = hall_call.get_source_floor()
         hall_call_direction = hall_call.get_direction()
@@ -95,22 +103,24 @@ class ModernEGCS(object):
             waiting_passengers_hallcall = self.floors[hall_call_floor-1].get_all_persons_going_down()
         floors_til_arrival = 0
 
-        if len(elevator_carcalls_list) > 0:
-            first_car_call_in_list = elevator_carcalls_list[0]
-            last_car_call_in_list = elevator_carcalls_list[-1]
-            initial_elevator_moving_distance = abs(last_car_call_in_list - first_car_call_in_list)
+        if len(elevator_path) > 0:
+            first_in_list = elevator_path[0]
+            last_in_list = elevator_path[-1]
+            initial_elevator_moving_distance = abs(last_in_list - first_in_list)
 
-            if elevator_direction is not None and elevator_direction == hall_call_direction:  
-                for floor in elevator_carcalls_list:
-                    if floor < hall_call_floor:
+            if elevator_direction == hall_call_direction:
+                for floor in elevator_path:
+                    if floor < hall_call_floor and elevator_direction == "UP":
                         floors_til_arrival += 1
+                    elif floor > hall_call_floor and elevator_direction == "DOWN":
+                        floors_til_arrival+=1
                     else:
                         break
 
-                if hall_call_floor not in range(first_car_call_in_list, last_car_call_in_list+1):
-                    elevator_carcalls_list.append(hall_call_floor)
-                elevator_carcalls_list.sort()
-                current_elevator_moving_distance=elevator_carcalls_list[0]-elevator_carcalls_list[-1]
+                if hall_call_floor not in range(first_in_list, last_in_list+1):
+                    elevator_path.append(hall_call_floor)
+                elevator_path.sort()
+                current_elevator_moving_distance=abs(elevator_path[0]-elevator_path[-1])
                 
             else:  # elevator currently either moving in an opposite direction to the hall call
                 # or have no direction (currently idle)
@@ -142,69 +152,90 @@ class ModernEGCS(object):
         for elevator in elevators:
             value = self.calculate_cost2_minus_cost1_efficient(hall_call, elevator)
             if value == -1:
-                pass
+                continue
             elevator_index = elevator.get_index()
             tup = (elevator_index, value)
             priority_array.append(tup)
         priority_array.sort(key=lambda x: x[1])
-
         converted_priority_array = []
         for i in range(len(priority_array)-1):
             value_element = priority_array[i+1][1]-priority_array[i][1]
             index = priority_array[i][0]
             tup = (index, value_element)
             converted_priority_array.append(tup)
-        last_elevator_index = priority_array[-1][0]
-        tup = (last_elevator_index, -1)
-        converted_priority_array.append(tup)
+        if len(priority_array) > 0:
+            last_elevator_index = priority_array[-1][0]
+            tup = (last_elevator_index, -1)
+            converted_priority_array.append(tup)
         return converted_priority_array
     
     def assign_calls(self) -> None:
         """Assigns hall call to the most suitable elevator based on HCPM method."""
+        if self.backlog_time_start is not None and self.env.now - self.backlog_time_start >= 5:
+            self.unassigned_hall_calls.extend(self.calls_backlog)
+            self.backlog_time_start = None
+            self.calls_backlog = []
         if len(self.unassigned_hall_calls) > 0:
             while len(self.unassigned_hall_calls) > 1:
                 self.unassigned_hall_calls.sort(key=lambda x: x.get_first_priority_value(), reverse=True)
-                lowest_value_hall_call = self.unassigned_hall_calls.pop(-1)
-                lowest_cost = lowest_value_hall_call.get_first_priority_value()
-
                 prioritised_hall_call = self.unassigned_hall_calls.pop(0)
+                priority_array = prioritised_hall_call.get_priority_array()
+                if len(priority_array) == 0:
+                    new_array = self.create_call_priority_array(prioritised_hall_call)
+                    if len(new_array) > 0:
+                        prioritised_hall_call.set_priority_array(new_array)
+                    else:
+                        self.calls_backlog.append(prioritised_hall_call)
+                        if self.backlog_time_start is None:
+                            self.backlog_time_start = self.env.now
+                        continue
+
                 current_best_elevator_index = prioritised_hall_call.get_current_best_elevator()
                 current_best_elevator = self.elevators[current_best_elevator_index-1]
-                current_cost = prioritised_hall_call.get_first_priority_value()
+                source_floor = prioritised_hall_call.get_source_floor()
 
-                if (current_best_elevator.is_busy()) and prioritised_hall_call.get_priority_array_length() > 0:
-                    # if (self.is_there_idle() or current_best_elevator.has_more_than_optimum_calls())
-                    # and prioritised_hall_call.get_priority_array_length() > 0:
-                    decrease_in_cost = prioritised_hall_call.get_second_priority_value()
-                    if decrease_in_cost>-1:
-                        updated_cost = current_cost - decrease_in_cost
-                        if updated_cost>lowest_cost:
-                            prioritised_hall_call.remove_frontmost_array_pair()
-                            pass
-                self.assign_one_call(prioritised_hall_call, current_best_elevator)
-                self.unassigned_hall_calls = self.unassigned_hall_calls[1:]
-
-            if len(self.unassigned_hall_calls) == 1:
-                last_hall_call = self.unassigned_hall_calls[0]
-                floor_index = last_hall_call.get_source_floor()
-                direction = last_hall_call.get_direction()
-                if direction == "UP":
-                    direction_arg = 1
+                #if (current_best_elevator.is_busy()) and prioritised_hall_call.get_priority_array_length() > 0:
+                if (current_best_elevator.has_more_than_optimum_calls() and self.is_there_idle()) \
+                or not current_best_elevator.floor_fits_path(source_floor):
+                    
+                    if prioritised_hall_call.get_priority_array_length() > 1 :
+                        prioritised_hall_call.remove_frontmost_array_pair()
+                        self.unassigned_hall_calls.append(prioritised_hall_call)
+                        continue
+                    else:
+                        self.calls_backlog.append(prioritised_hall_call)
+                        if self.backlog_time_start is None:
+                            self.backlog_time_start = self.env.now
+                        continue
                 else:
-                    direction_arg = -1
-                best_elevator_index = last_hall_call.get_current_best_elevator()
-                best_elevator = self.elevators[best_elevator_index-1]
-                while best_elevator.is_busy() and last_hall_call.get_priority_array_length() > 1:
-                    last_hall_call.remove_frontmost_array_pair()
+                    self.assign_one_call(prioritised_hall_call, current_best_elevator)
+                
+            if len(self.unassigned_hall_calls) == 1:
+                last_hall_call = self.unassigned_hall_calls.pop(0)
+                priority_array = last_hall_call.get_priority_array()
+                if len(priority_array) > 0:
                     best_elevator_index = last_hall_call.get_current_best_elevator()
                     best_elevator = self.elevators[best_elevator_index-1]
-                if best_elevator.is_busy() and last_hall_call.get_priority_array_length() == 1:
-                    self.unassigned_hall_calls = []
-                    hall_call = HallCall.HallCall(self.env, floor_index, direction_arg)
-                    self.add_hall_call(hall_call)
+                    source_floor = last_hall_call.get_source_floor()
+                    while (self.is_there_idle() and best_elevator.has_more_than_optimum_calls()) \
+                    or not best_elevator.floor_fits_path(source_floor):
+                    #(best_elevator.has_more_than_optimum_calls() or not best_elevator.floor_fits_path(floor)) \
+                        if last_hall_call.get_priority_array_length() > 1:
+                            last_hall_call.remove_frontmost_array_pair()
+                            best_elevator_index = last_hall_call.get_current_best_elevator()
+                            best_elevator = self.elevators[best_elevator_index-1]
+                        else:
+                            self.calls_backlog.append(last_hall_call)
+                            if self.backlog_time_start is None:
+                                self.backlog_time_start = self.env.now 
+                            break
+                    if best_elevator.floor_fits_path(source_floor):
+                        self.assign_one_call(last_hall_call, best_elevator)
                 else:
-                    self.assign_one_call(last_hall_call, best_elevator)
-                    self.unassigned_hall_calls = []
+                    new_array = self.create_call_priority_array(last_hall_call)
+                    last_hall_call.set_priority_array(new_array)
+                    self.unassigned_hall_calls.append(last_hall_call)
+                    
 
     def assign_one_call(self, hall_call: HallCall, elevator: Elevator) -> None:
         """Assign one hall call to the most suitable elevator based on HCPM method,
@@ -212,7 +243,7 @@ class ModernEGCS(object):
         hall_call_floor = hall_call.get_source_floor()
         hall_call_direction = hall_call.get_direction()
         elevator.set_busy()
-        elevator.add_path(hall_call_floor, hall_call_direction)
+        elevator.add_path(hall_call_floor, hall_call_direction, True)
         floor = self.floors[hall_call_floor-1]
         if hall_call_direction == "UP":
             floor.accept_up_call()
@@ -222,22 +253,29 @@ class ModernEGCS(object):
 
     def update_status(self) -> None:
         """Updates the elevators to be idle when they have no path.
-        Reassigns hall calls and moves idle elevators to busier floors at ever hour"""
+        Reassigns hall calls and moves idle elevators to busier floors at every hour"""
         for elevator in self.elevators:
-            if elevator.num_active_calls == 0 and elevator.is_busy():
-                if self.env.now % 3600 == 0:
-                    self.assign_calls()
-                    if elevator.is_busy():
-                        pass
-                    busiest_floor_level = self.building.get_busiest_floor()
-                    busiest_floor = self.floors[busiest_floor_level-1]
-                    idling_elevators_deserved = busiest_floor.get_num_idling_elevators_deserved()
-                    idling_elevators_sent = busiest_floor.get_num_idling_elevators_sent()
-                    if idling_elevators_deserved >= idling_elevators_sent + 1:
-                        busiest_floor.new_idling_elevator_sent()
-                        elevator.travel(busiest_floor_level)
-                        elevator.unset_direction()
+            if len(elevator.path) == 0 and elevator.is_busy():
                 elevator.set_idle("ModernEGCS")
+
+        if self.env.now % 300 == 0:
+            self.reassign_hall_calls()
+            for elevator in self.elevators:
+                if elevator.is_busy():
+                    continue
+                busiest_floor_level = self.building.get_busiest_floor()
+                busiest_floor = self.floors[busiest_floor_level-1]
+                idling_elevators_deserved = busiest_floor.get_num_idling_elevators_deserved()
+                idling_elevators_sent = busiest_floor.get_num_idling_elevators_sent()
+                if idling_elevators_deserved >= idling_elevators_sent + 1:
+                    busiest_floor.new_idling_elevator_sent()
+                    elevator.path.append(busiest_floor_level)
+                    elevator.unset_direction()
+                
+    
+    def recalculate_priority_array(self)-> None:
+        """Recalculates cost and reconstructs priority array to be used for call reassignment in update_status()"""
+
     
     def is_all_idle(self) -> bool:
         """Returns True if all the elevators are idle"""
@@ -252,3 +290,34 @@ class ModernEGCS(object):
     def is_there_idle(self) -> bool:
         """Returns True if there are any idle elevators"""
         return any(map(lambda x: x.is_busy(), self.elevators))
+    
+    def reassign_hall_calls(self) -> None:
+        """Recalculates cost and reconstructs priority array for un-served calls, including those that have been
+        allocated to elevators."""
+        self.reassigning = True
+        unserved_calls = []
+        for elevator in self.elevators:
+            if elevator.is_busy() and len(elevator.hall_calls) > 0:
+                elevator_direction = elevator.get_direction()
+                direction_num = -1 if elevator_direction == "DOWN" else 1
+                floor_currently_served = elevator.get_path()[0] if elevator_direction == "UP" else elevator.get_path()[-1]
+                frontmost_hall_call = elevator.hall_calls[0] if elevator_direction == "UP" else elevator.hall_calls[-1]
+                if floor_currently_served == frontmost_hall_call and len(elevator.hall_calls) > 1:
+                    current_elevator_unserved = elevator.hall_calls[1:]
+                else:
+                    current_elevator_unserved = elevator.hall_calls
+                for floor in current_elevator_unserved:
+                    if floor in elevator.get_path() and floor not in elevator.get_car_calls():
+                        elevator.path.remove(floor)
+                    hall_call = HallCall.HallCall(self.env, floor, direction_num)
+                    unserved_calls.append(hall_call)
+        
+        to_recalculate = self.unassigned_hall_calls + unserved_calls
+        self.unassigned_hall_calls = []
+        for call in to_recalculate:
+            self.add_hall_call(call)
+        self.assign_calls()
+        self.reassigning = False
+        
+
+

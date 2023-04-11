@@ -3,8 +3,10 @@ import csv
 import json
 import simpy
 import statistics
-import src.main.python.simulation.Building as Building
 
+sys.path.append('c:/Users/dorot/OneDrive - National University of Singapore/DSA3101/DSA3101-07-S16/')
+
+import src.main.python.simulation.Building as Building
 from src.main.python.simulation.PersonList import PersonList
 
 
@@ -44,7 +46,7 @@ class Main(object):
             duration (float): The duration of the simulation in seconds.
             mode (string): 'default' or 'manual'
         """
-        self.person_list = PersonList(self.env, duration, limit=300)  # person generated cannot exceed 300
+        self.person_list = PersonList(self.env, duration, limit=500)  # person generated cannot exceed 300
         self.person_list.initialise(mode=mode)
         
         for lift_algo in self.lift_algos:
@@ -134,4 +136,7 @@ Test = Main(num_up=2, num_down=1, num_floors=9)
 
 # Step 2
 # run the simulation by telling it how long to run, e.g. 6800 (from 6 am to 12 am at the same day)
-Test.run(64800, mode='manual')
+with open('output.txt', 'w') as f:
+    # Redirect standard output to the file
+    sys.stdout = f
+    Test.run(64800, mode='default')

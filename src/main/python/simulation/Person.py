@@ -1,3 +1,5 @@
+import sys
+sys.path.append('c:/Users/dorot/OneDrive - National University of Singapore/DSA3101/DSA3101-07-S16/')
 import src.main.python.simulation.LiftRandoms as LiftRandoms
 from src.main.python.simulation.Elevator import Elevator
 

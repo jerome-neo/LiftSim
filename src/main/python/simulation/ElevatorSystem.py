@@ -1,3 +1,5 @@
+import sys
+sys.path.append('c:/Users/dorot/OneDrive - National University of Singapore/DSA3101/DSA3101-07-S16/')
 import src.main.python.simulation.Elevator as Elevator
 
 
@@ -74,7 +76,7 @@ class ElevatorSystem(object):
                 if floor.is_call_down_accepted():
                     continue
                 elif floor.has_call_down():
-                    elevator.add_path(floor.get_floor_level(), "DOWN")
+                    elevator.add_path(floor.get_floor_level(), "DOWN", True)
                     floor.accept_down_call()
 
     def allocate_rising_call(self) -> None:
@@ -93,7 +95,7 @@ class ElevatorSystem(object):
                 if floor.is_call_up_accepted():
                     continue
                 elif floor.has_call_up():
-                    elevator.add_path(floor.get_floor_level(), "UP")
+                    elevator.add_path(floor.get_floor_level(), "UP", True)
                     floor.accept_up_call()
 
     def update_status(self) -> None:
