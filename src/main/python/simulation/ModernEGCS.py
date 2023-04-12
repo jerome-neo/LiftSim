@@ -189,7 +189,7 @@ class ModernEGCS(object):
                         if self.backlog_time_start is None:
                             self.backlog_time_start = self.env.now
                         continue
-
+                print(priority_array)
                 current_best_elevator_index = prioritised_hall_call.get_current_best_elevator()
                 current_best_elevator = self.elevators[current_best_elevator_index-1]
                 source_floor = prioritised_hall_call.get_source_floor()
@@ -213,6 +213,7 @@ class ModernEGCS(object):
             if len(self.unassigned_hall_calls) == 1:
                 last_hall_call = self.unassigned_hall_calls.pop(0)
                 priority_array = last_hall_call.get_priority_array()
+                print(priority_array)
                 if len(priority_array) > 0:
                     best_elevator_index = last_hall_call.get_current_best_elevator()
                     best_elevator = self.elevators[best_elevator_index-1]
@@ -239,17 +240,28 @@ class ModernEGCS(object):
 
     def assign_one_call(self, hall_call: HallCall, elevator: Elevator) -> None:
         """Assign one hall call to the most suitable elevator based on HCPM method,
-        when there is only 1 registered hall call"""
+        when there is only 1 registered hall call.
+        Args:
+            hall_call(HallCall): HallCall object which is being assigned
+            elevator(Elevator): Elevator to which HallCall is assigned"""
         hall_call_floor = hall_call.get_source_floor()
         hall_call_direction = hall_call.get_direction()
         elevator.set_busy()
-        elevator.add_path(hall_call_floor, hall_call_direction, True)
-        floor = self.floors[hall_call_floor-1]
-        if hall_call_direction == "UP":
-            floor.accept_up_call()
+        call_successfully_assigned = elevator.add_hall_call(hall_call_floor, hall_call_direction)
+        if call_successfully_assigned:
+            floor = self.floors[hall_call_floor-1]
+            if hall_call_direction == "UP":
+                floor.accept_up_call()
+            else:
+                floor.accept_down_call()
+            print(f"Hall call from {hall_call_floor} going {hall_call_direction} is assigned to {elevator.index}")
         else:
-            floor.accept_down_call()
-        print(f"Hall call from {hall_call_floor} going {hall_call_direction} is assigned to {elevator.index}")
+            self.calls_backlog.append(hall_call)
+            if self.backlog_time_start is None:
+                self.backlog_time_start = self.env.now
+            print(f"Hall call from {hall_call_floor} going {hall_call_direction} COULD NOT be assigned to\
+                   {elevator.index} so it is reevaluated")
+
 
     def update_status(self) -> None:
         """Updates the elevators to be idle when they have no path.
