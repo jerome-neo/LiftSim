@@ -16,8 +16,6 @@ techniques and simulation software, LiftSim provides valuable insights into elev
 
 1. Ensure you have Python `3.9` or above installed in your Computer.
 
-2. Download the latest `____`(Coming soon!)
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -110,29 +108,8 @@ data = {
     }
 }
 ```
-Note that elevators_data_otis is not a file name, it’s the JSON data inside the file
+Note that elevators_data_otis is not a file name, it’s the JSON data inside the file.
 
-## Features
-
-
-
-### Viewing help : `help`
-
-Description
-
-Format:
-
-Example:
-
-
-
-### Adjusting arrival rate : "???"
-
-Description
-
-Format:
-
-Example:
 
 
 
