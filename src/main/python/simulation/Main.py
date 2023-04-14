@@ -2,6 +2,7 @@ import csv
 import json
 import simpy
 import statistics
+
 import src.main.python.simulation.Building as Building
 from src.main.python.simulation.PersonList import PersonList
 
@@ -128,8 +129,8 @@ class Main(object):
 
 # Step 1
 # set up the environment with number of UP elevators, number of DOWN elevators and number of floors"
-# Test = Main(num_up=2, num_down=1, num_floors=9)
+Test = Main(num_up=2, num_down=1, num_floors=9)
 
 # Step 2
 # run the simulation by telling it how long to run, e.g. 6800 (from 6 am to 12 am at the same day)
-# Test.run(64800, mode='default')
+Test.run(64800, mode='default')
