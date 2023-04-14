@@ -60,13 +60,6 @@ class Main(object):
             print('Number of people served:', self.get_number_of_people_served())
             print(f"Average waiting time for {lift_algo}: {self.get_average_waiting_time()}")
 
-            if lift_algo == 'Otis':
-                Otis_average_waiting_time.append(self.get_average_waiting_time())
-                Otis_num_people_served.append(self.get_number_of_people_served())
-            else:
-                ModernEGCS_average_waiting_time.append(self.get_average_waiting_time())
-                ModernEGCS_num_people_served.append(self.get_number_of_people_served())
-
             self.env = simpy.Environment()
             self.person_list.reset(self.env)
 
