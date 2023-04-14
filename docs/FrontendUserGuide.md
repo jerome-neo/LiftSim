@@ -31,7 +31,7 @@ docker compose up
 **3. Open your Docker Desktop, and check whether the docker container is running**
 
 <p align="center">
-    <img src="docs/images/Docker.jpg">
+    <img src="https://github.com/jerome-neo/DSA3101-07-S16/blob/front-end/docs/images/Submit.jpg">
 </p>
 
 **4. How to use our web application**
