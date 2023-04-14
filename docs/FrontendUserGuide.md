@@ -25,34 +25,39 @@ techniques and simulation software, LiftSim provides valuable insights into elev
 **2. Please run the following code to run our docker image in your localhost:**
 
 ```linux 
-yating
+docker compose up
 ```
 
 Take note that you can change the name 'lift123' to any text that you want (without space).
 
 **3. Open your Docker Desktop, and check whether the docker container is running**
 
-image
+![image](https://drive.google.com/file/d/1E__MwFNFfdBLTXOjuyBC1z33D4KvidhJ/view?usp=share_link)
 
 **4. How to use our web application**
 
-- Open (https:yating) to visit our simulation page
+- Open http://localhost:9000/simulation to visit our simulation page
 - Functions of the web application
 
 1. Generate Lift System Simulation
 
    a. With manual input:
-   Users can input manually with 'Add Request' button. For each request, the user needs to have three inputs: Timestamp (HH:MM, for e.g., 21:56), Source floor (for
-   e.g., 1), and Destination floor (for e.g., 3). Users could have multiple requests for one run, and the request will be deleted with the 'Remove' button on the
-   right. The simulation process will be triggered by pressing 'Submit' below the requests chunk.
+   Users can input manually with 'Add Request' button. For each request, the user needs to have three inputs: Timestamp (HH:MM, for e.g., 10:03), Source floor (for
+   e.g., 1), and Destination floor (for e.g., 3). Users could have multiple requests for one run, simply by clicking 'Add Request' button repeatedly and adding
+   inputs. Request will be deleted with the 'Remove Request Set' button on the right. The simulation process will be triggered by pressing 'Submit' below the
+   requests chunk. The 'Refresh Speed' slider is for adjusting the speed of the simulation process.
+   ![image](https://drive.google.com/file/d/1e2oX4eD7IHrrfcF7TQp8cXGNifmC0REA/view?usp=share_link)
+   ![image](https://drive.google.com/file/d/1bdcE3GlMHcbfRrqNQhAmpI_1jlFJgaIL/view?usp=share_link)
 
    b. Without manual input/Randomized input:
    If there is no request submitted, by pressing the 'Start' button above the simulation block, output with randomized input will be passed to the application and
    displayed on the simulated lift system. Users can pause the process by pressing 'Pause/Resume' button and resume the process by pressing that button again.
-   Lastly, the process will end when pressing the 'End' button.
+   Lastly, the process will end when pressing the 'End' button. Similarly, the 'Refresh Speed' slider is for adjusting the speed of the simulation process.
+   ![image](https://drive.google.com/file/d/1WoWdj0c4r6e1q088tFNc-xw-rPgrTOzT/view?usp=share_link)
 
 2. Show Summary:
    This application also enables users to monitor the overall crowdedness within a new page. By pressing 'Show the Summary Tab' at the bottom, users are directed
    into a HTML file which includes a plot illustrating the number of tasks during a day and a table showing the summary of number of tasks and waiting time for each
    floor. The selector at top left is incorpated to select different time periods while the selector at top right is included to switch between different models for
    comparison.
+   ![image](https://drive.google.com/file/d/1bnwvUu_fWB4wIGNAIryDPYgXdKsUQpYU/view?usp=share_link)
