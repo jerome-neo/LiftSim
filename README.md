@@ -38,6 +38,7 @@ This application is meant to be served on Docker.
 
 ## 3. Usage
 For more information regarding the simulation model, please see our [Back End User Guide](docs/UserGuide.md).
+
 For more information regarding using the web app, please see our [Front End User Guide](docs/FrontendUserGuide.md).
 
 ## 4. Data
