@@ -33,7 +33,7 @@ class Main(object):
         self.person_list = None
         self.lift_algos = ['Otis', 'ModernEGCS']
 
-    def run(self, duration, mode='default'):
+    def run(self, duration, mode):
         """
         Runs the simulation for a specified duration.
 
@@ -41,7 +41,7 @@ class Main(object):
             duration (float): The duration of the simulation in seconds.
             mode (string): 'default' or 'manual'
         """
-        self.person_list = PersonList(self.env, duration, limit=500)  # person generated cannot exceed 300
+        self.person_list = PersonList(self.env, duration, limit=5000)  # person generated cannot exceed 300
         self.person_list.initialise(mode=mode)
         
         for lift_algo in self.lift_algos:
@@ -120,8 +120,9 @@ class Main(object):
                     'end_time': end_time,
                     'wait_time': wait_time
                 })
-        with open(path + name, 'w', encoding='UTF8') as f:
-            json.dump(data, f, indent=4)
+        json_serializable = json.dumps(data, indent=4)
+        with open(path + name, 'w') as f:
+            f.write(json_serializable)
 
     def output_elevator_log_to_json(self, lift_algo, path='../../out/'):
         name = 'output_elevator_'+lift_algo+'.json'
@@ -134,10 +135,8 @@ class Main(object):
 
 # Step 1
 # set up the environment with number of UP elevators, number of DOWN elevators and number of floors"
-Test = Main(num_up=2, num_down=1, num_floors=9)
+# Test = Main(num_up=2, num_down=1, num_floors=9)
 
 # Step 2
 # run the simulation by telling it how long to run, e.g. 6800 (from 6 am to 12 am at the same day)
-# Redirect standard output to the file
-
-Test.run(64800, mode='default')
+# Test.run(64800, mode='default')

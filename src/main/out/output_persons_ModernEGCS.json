@@ -1,42 +1,57 @@
 [
     {
         "curr": 1,
-        "dest": 9,
-        "arrival_time": 26.30607367438939,
-        "end_time": 71.0,
-        "wait_time": 44.69392632561061
+        "dest": 4,
+        "arrival_time": 34.26212012434737,
+        "end_time": 59.0,
+        "wait_time": 24.73787987565263
     },
     {
-        "curr": 8,
-        "dest": 1,
-        "arrival_time": 73.3157790586115,
-        "end_time": 153.0,
-        "wait_time": 79.6842209413885
-    },
-    {
-        "curr": 1,
-        "dest": 5,
-        "arrival_time": 166.26601302130055,
-        "end_time": 285.0,
-        "wait_time": 118.73398697869945
-    },
-    {
-        "curr": 7,
-        "dest": 1,
-        "arrival_time": 174.19655553850026,
-        "end_time": 304.0,
-        "wait_time": 129.80344446149974
-    },
-    {
-        "curr": 1,
+        "curr": 2,
         "dest": 3,
-        "arrival_time": 197.261177442219,
-        "end_time": 258.0,
-        "wait_time": 60.73882255778099
+        "arrival_time": 78.28471521584316,
+        "end_time": 103.0,
+        "wait_time": 24.715284784156836
     },
     {
         "curr": 1,
         "dest": 4,
+        "arrival_time": 98.85251153475124,
+        "end_time": 138.0,
+        "wait_time": 39.147488465248756
+    },
+    {
+        "curr": 9,
+        "dest": 5,
+        "arrival_time": 257.2811120347046,
+        "end_time": 314.0,
+        "wait_time": 56.71888796529538
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 304.5718726317746,
+        "end_time": 357.0,
+        "wait_time": 52.428127368225375
+    },
+    {
+        "curr": 3,
+        "dest": 1,
+        "arrival_time": 410.3856312381679,
+        "end_time": 447.0,
+        "wait_time": 36.61436876183211
+    },
+    {
+        "curr": 7,
+        "dest": 5,
+        "arrival_time": 416.5771680253568,
+        "end_time": 480.0,
+        "wait_time": 63.4228319746432
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+<<<<<<< HEAD
         "arrival_time": 359.7525693626193,
         "end_time": 400.0,
         "wait_time": 40.24743063738072
@@ -54,10 +69,44 @@
         "arrival_time": 412.88748326895103,
         "end_time": 513.0,
         "wait_time": 100.11251673104897
+=======
+        "arrival_time": 481.8093531258662,
+        "end_time": 532.0,
+        "wait_time": 50.19064687413379
+    },
+    {
+        "curr": 6,
+        "dest": 3,
+        "arrival_time": 557.234994859997,
+        "end_time": 622.0,
+        "wait_time": 64.76500514000304
+    },
+    {
+        "curr": 6,
+        "dest": 9,
+        "arrival_time": 590.2862941387531,
+        "end_time": 642.0,
+        "wait_time": 51.71370586124692
+    },
+    {
+        "curr": 3,
+        "dest": 4,
+        "arrival_time": 626.8970041593187,
+        "end_time": 675.0,
+        "wait_time": 48.102995840681274
+    },
+    {
+        "curr": 5,
+        "dest": 9,
+        "arrival_time": 636.0790908962837,
+        "end_time": 768.0,
+        "wait_time": 131.92090910371633
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
     },
     {
         "curr": 4,
         "dest": 1,
+<<<<<<< HEAD
         "arrival_time": 449.38635913147147,
         "end_time": 513.0,
         "wait_time": 63.613640868528535
@@ -68,24 +117,84 @@
         "arrival_time": 524.1577187323095,
         "end_time": 553.0,
         "wait_time": 28.84228126769051
-    },
-    {
-        "curr": 1,
-        "dest": 8,
-        "arrival_time": 607.3528776205317,
-        "end_time": 814.0,
-        "wait_time": 206.64712237946833
+=======
+        "arrival_time": 663.4313734054836,
+        "end_time": 800.0,
+        "wait_time": 136.56862659451645
     },
     {
         "curr": 1,
         "dest": 4,
-        "arrival_time": 609.9944644414807,
-        "end_time": 743.0,
-        "wait_time": 133.00553555851934
+        "arrival_time": 698.9992172893268,
+        "end_time": 810.0,
+        "wait_time": 111.0007827106732
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
+    },
+    {
+        "curr": 1,
+        "dest": 8,
+<<<<<<< HEAD
+        "arrival_time": 607.3528776205317,
+        "end_time": 814.0,
+        "wait_time": 206.64712237946833
+=======
+        "arrival_time": 731.9786721717521,
+        "end_time": 2728.0,
+        "wait_time": 1996.0213278282479
     },
     {
         "curr": 3,
         "dest": 9,
+        "arrival_time": 732.7853146049591,
+        "end_time": 4253.0,
+        "wait_time": 3520.2146853950408
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+<<<<<<< HEAD
+        "arrival_time": 609.9944644414807,
+        "end_time": 743.0,
+        "wait_time": 133.00553555851934
+=======
+        "arrival_time": 735.9155190104667,
+        "end_time": 810.0,
+        "wait_time": 74.08448098953329
+    },
+    {
+        "curr": 6,
+        "dest": 3,
+        "arrival_time": 753.0895120473066,
+        "end_time": 2584.0,
+        "wait_time": 1830.9104879526935
+    },
+    {
+        "curr": 8,
+        "dest": 3,
+        "arrival_time": 764.6462237609237,
+        "end_time": 2550.0,
+        "wait_time": 1785.3537762390763
+    },
+    {
+        "curr": 7,
+        "dest": 1,
+        "arrival_time": 798.8833066130627,
+        "end_time": 1313.0,
+        "wait_time": 514.1166933869373
+    },
+    {
+        "curr": 3,
+        "dest": 8,
+        "arrival_time": 809.9347670584565,
+        "end_time": 2199.0,
+        "wait_time": 1389.0652329415434
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+<<<<<<< HEAD
         "arrival_time": 617.2808405821588,
         "end_time": 727.0,
         "wait_time": 109.71915941784118
@@ -117,17 +226,64 @@
         "arrival_time": 742.5330798853204,
         "end_time": 893.0,
         "wait_time": 150.46692011467962
+=======
+        "arrival_time": 848.9305306818163,
+        "end_time": 4253.0,
+        "wait_time": 3404.0694693181836
+    },
+    {
+        "curr": 3,
+        "dest": 1,
+        "arrival_time": 860.612694766521,
+        "end_time": 3171.0,
+        "wait_time": 2310.387305233479
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 862.2455790890851,
+        "end_time": 1043.0,
+        "wait_time": 180.75442091091486
+    },
+    {
+        "curr": 1,
+        "dest": 7,
+        "arrival_time": 874.9463056991597,
+        "end_time": 1062.0,
+        "wait_time": 187.05369430084033
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 878.4340369978761,
+        "end_time": 1043.0,
+        "wait_time": 164.5659630021239
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 891.7917782822832,
+        "end_time": 4253.0,
+        "wait_time": 3361.2082217177167
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
     },
     {
         "curr": 1,
         "dest": 4,
+<<<<<<< HEAD
         "arrival_time": 763.2361396029561,
         "end_time": 910.0,
         "wait_time": 146.7638603970439
+=======
+        "arrival_time": 929.8911336995704,
+        "end_time": 1013.0,
+        "wait_time": 83.10886630042955
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
     },
     {
         "curr": 1,
         "dest": 8,
+<<<<<<< HEAD
         "arrival_time": 767.8432403016106,
         "end_time": 993.0,
         "wait_time": 225.15675969838935
@@ -138,24 +294,49 @@
         "arrival_time": 769.4480169146227,
         "end_time": 875.0,
         "wait_time": 105.55198308537729
+=======
+        "arrival_time": 935.7603982450374,
+        "end_time": 1414.0,
+        "wait_time": 478.23960175496256
+    },
+    {
+        "curr": 3,
+        "dest": 7,
+        "arrival_time": 1051.43494246152,
+        "end_time": 2179.0,
+        "wait_time": 1127.56505753848
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
     },
     {
         "curr": 1,
         "dest": 9,
+<<<<<<< HEAD
         "arrival_time": 782.3928711487277,
         "end_time": 1013.0,
         "wait_time": 230.60712885127225
+=======
+        "arrival_time": 1228.5274005587814,
+        "end_time": 1438.0,
+        "wait_time": 209.47259944121856
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
     },
     {
         "curr": 1,
         "dest": 5,
+<<<<<<< HEAD
         "arrival_time": 795.8519559561115,
         "end_time": 927.0,
         "wait_time": 131.1480440438885
+=======
+        "arrival_time": 1481.1222005789116,
+        "end_time": 1643.0,
+        "wait_time": 161.8777994210884
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
     },
     {
         "curr": 1,
         "dest": 4,
+<<<<<<< HEAD
         "arrival_time": 803.1450644994034,
         "end_time": 910.0,
         "wait_time": 106.85493550059664
@@ -187,10 +368,44 @@
         "arrival_time": 957.2412208651651,
         "end_time": 1031.0,
         "wait_time": 73.75877913483487
+=======
+        "arrival_time": 1496.2631025257404,
+        "end_time": 1622.0,
+        "wait_time": 125.73689747425965
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 1532.0795409035854,
+        "end_time": 1698.0,
+        "wait_time": 165.92045909641456
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 1567.6107676260808,
+        "end_time": 1698.0,
+        "wait_time": 130.38923237391919
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 1764.76505620676,
+        "end_time": 1907.0,
+        "wait_time": 142.23494379324006
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 2030.0323951925914,
+        "end_time": 2145.0,
+        "wait_time": 114.96760480740863
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
     },
     {
         "curr": 1,
         "dest": 3,
+<<<<<<< HEAD
         "arrival_time": 975.4512429452761,
         "end_time": 1074.0,
         "wait_time": 98.54875705472386
@@ -201,17 +416,57 @@
         "arrival_time": 1003.5741441721617,
         "end_time": 1089.0,
         "wait_time": 85.42585582783829
-    },
-    {
-        "curr": 1,
-        "dest": 5,
-        "arrival_time": 1076.6308152471559,
-        "end_time": 1208.0,
-        "wait_time": 131.36918475284415
+=======
+        "arrival_time": 2053.855622338829,
+        "end_time": 2103.0,
+        "wait_time": 49.14437766117089
     },
     {
         "curr": 1,
         "dest": 3,
+        "arrival_time": 2054.0326693935804,
+        "end_time": 2103.0,
+        "wait_time": 48.96733060641964
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 2171.8506471285937,
+        "end_time": 4072.0,
+        "wait_time": 1900.1493528714063
+    },
+    {
+        "curr": 2,
+        "dest": 3,
+        "arrival_time": 2462.2986918802035,
+        "end_time": 3225.0,
+        "wait_time": 762.7013081197965
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+<<<<<<< HEAD
+        "arrival_time": 1076.6308152471559,
+        "end_time": 1208.0,
+        "wait_time": 131.36918475284415
+=======
+        "arrival_time": 2502.843471754674,
+        "end_time": 2682.0,
+        "wait_time": 179.15652824532617
+    },
+    {
+        "curr": 9,
+        "dest": 1,
+        "arrival_time": 2524.219194332895,
+        "end_time": 4278.0,
+        "wait_time": 1753.7808056671051
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+<<<<<<< HEAD
         "arrival_time": 1139.3277672747238,
         "end_time": 1179.0,
         "wait_time": 39.67223272527622
@@ -257,10 +512,100 @@
         "arrival_time": 1657.4898300842156,
         "end_time": 1720.0,
         "wait_time": 62.510169915784445
+=======
+        "arrival_time": 2541.545635624801,
+        "end_time": 2649.0,
+        "wait_time": 107.45436437519902
     },
     {
         "curr": 4,
         "dest": 1,
+        "arrival_time": 2613.839259967057,
+        "end_time": 4072.0,
+        "wait_time": 1458.160740032943
+    },
+    {
+        "curr": 9,
+        "dest": 5,
+        "arrival_time": 2701.270474593062,
+        "end_time": 4357.0,
+        "wait_time": 1655.7295254069381
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 2931.2547775661433,
+        "end_time": 4168.0,
+        "wait_time": 1236.7452224338567
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 2956.3885071286095,
+        "end_time": 4253.0,
+        "wait_time": 1296.6114928713905
+    },
+    {
+        "curr": 5,
+        "dest": 1,
+        "arrival_time": 3000.8757921265974,
+        "end_time": 3123.0,
+        "wait_time": 122.12420787340261
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 3041.105075621834,
+        "end_time": 4253.0,
+        "wait_time": 1211.8949243781658
+    },
+    {
+        "curr": 3,
+        "dest": 6,
+        "arrival_time": 3042.3701818336476,
+        "end_time": 3447.0,
+        "wait_time": 404.6298181663524
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 3082.3510761574557,
+        "end_time": 3225.0,
+        "wait_time": 142.64892384254426
+    },
+    {
+        "curr": 6,
+        "dest": 1,
+        "arrival_time": 3129.780786840152,
+        "end_time": 3315.0,
+        "wait_time": 185.2192131598481
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 3161.9002844961046,
+        "end_time": 4253.0,
+        "wait_time": 1091.0997155038954
+    },
+    {
+        "curr": 3,
+        "dest": 5,
+        "arrival_time": 3165.485923195594,
+        "end_time": 3420.0,
+        "wait_time": 254.51407680440616
+    },
+    {
+        "curr": 3,
+        "dest": 1,
+        "arrival_time": 3178.3270335788598,
+        "end_time": 3342.0,
+        "wait_time": 163.67296642114025
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+<<<<<<< HEAD
         "arrival_time": 1858.1115366492393,
         "end_time": 1892.0,
         "wait_time": 33.88846335076073
@@ -292,10 +637,86 @@
         "arrival_time": 2358.848823420461,
         "end_time": 2414.0,
         "wait_time": 55.15117657953897
+=======
+        "arrival_time": 3222.689637276397,
+        "end_time": 4072.0,
+        "wait_time": 849.3103627236028
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 3230.255705102779,
+        "end_time": 3367.0,
+        "wait_time": 136.74429489722115
+    },
+    {
+        "curr": 6,
+        "dest": 3,
+        "arrival_time": 3230.744857701508,
+        "end_time": 3367.0,
+        "wait_time": 136.25514229849205
+    },
+    {
+        "curr": 6,
+        "dest": 1,
+        "arrival_time": 3231.709602759655,
+        "end_time": 3315.0,
+        "wait_time": 83.2903972403451
     },
     {
         "curr": 1,
         "dest": 6,
+        "arrival_time": 3240.6158647062666,
+        "end_time": 3447.0,
+        "wait_time": 206.38413529373338
+    },
+    {
+        "curr": 5,
+        "dest": 9,
+        "arrival_time": 3278.6359155713344,
+        "end_time": 3493.0,
+        "wait_time": 214.3640844286656
+    },
+    {
+        "curr": 1,
+        "dest": 8,
+        "arrival_time": 3561.3932949339473,
+        "end_time": 4231.0,
+        "wait_time": 669.6067050660527
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 3646.847919712589,
+        "end_time": 4168.0,
+        "wait_time": 521.1520802874111
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 3681.3437027373593,
+        "end_time": 4253.0,
+        "wait_time": 571.6562972626407
+    },
+    {
+        "curr": 1,
+        "dest": 7,
+        "arrival_time": 3722.047582751659,
+        "end_time": 4212.0,
+        "wait_time": 489.95241724834113
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 3867.0505142718316,
+        "end_time": 4113.0,
+        "wait_time": 245.94948572816838
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+<<<<<<< HEAD
         "arrival_time": 2429.873781676015,
         "end_time": 2526.0,
         "wait_time": 96.12621832398509
@@ -306,10 +727,30 @@
         "arrival_time": 2454.4066016042275,
         "end_time": 2550.0,
         "wait_time": 95.59339839577251
+=======
+        "arrival_time": 3878.8665990727,
+        "end_time": 4190.0,
+        "wait_time": 311.13340092730004
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 3882.22147799292,
+        "end_time": 4374.0,
+        "wait_time": 491.77852200708
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 3945.068986823111,
+        "end_time": 4332.0,
+        "wait_time": 386.9310131768889
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
     },
     {
         "curr": 3,
         "dest": 5,
+<<<<<<< HEAD
         "arrival_time": 2564.324786035062,
         "end_time": 2607.0,
         "wait_time": 42.67521396493794
@@ -348,10 +789,58 @@
         "arrival_time": 2853.080863816341,
         "end_time": 2935.0,
         "wait_time": 81.9191361836588
+=======
+        "arrival_time": 3965.8957047726917,
+        "end_time": 4168.0,
+        "wait_time": 202.10429522730828
     },
     {
         "curr": 1,
         "dest": 8,
+        "arrival_time": 4013.9156846839774,
+        "end_time": 4402.0,
+        "wait_time": 388.08431531602264
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 4023.945194554845,
+        "end_time": 4374.0,
+        "wait_time": 350.0548054451551
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 4028.8412898485003,
+        "end_time": 4386.0,
+        "wait_time": 357.1587101514997
+    },
+    {
+        "curr": 4,
+        "dest": 6,
+        "arrival_time": 4041.103333009421,
+        "end_time": 4374.0,
+        "wait_time": 332.896666990579
+    },
+    {
+        "curr": 3,
+        "dest": 5,
+        "arrival_time": 4044.917931170682,
+        "end_time": 4311.0,
+        "wait_time": 266.0820688293179
+    },
+    {
+        "curr": 5,
+        "dest": 8,
+        "arrival_time": 4465.32923560664,
+        "end_time": 4509.0,
+        "wait_time": 43.670764393359605
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
+    },
+    {
+        "curr": 1,
+        "dest": 8,
+<<<<<<< HEAD
         "arrival_time": 2861.410153297256,
         "end_time": 3009.0,
         "wait_time": 147.58984670274413
@@ -404,10 +893,86 @@
         "arrival_time": 3134.7026464549763,
         "end_time": 3283.0,
         "wait_time": 148.29735354502373
+=======
+        "arrival_time": 4522.700618188027,
+        "end_time": 4605.0,
+        "wait_time": 82.29938181197303
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 4586.303282935317,
+        "end_time": 4698.0,
+        "wait_time": 111.69671706468307
     },
     {
         "curr": 3,
         "dest": 9,
+        "arrival_time": 4671.515124620985,
+        "end_time": 4778.0,
+        "wait_time": 106.48487537901474
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 4702.556788915255,
+        "end_time": 4864.0,
+        "wait_time": 161.4432110847447
+    },
+    {
+        "curr": 6,
+        "dest": 9,
+        "arrival_time": 4761.007376235146,
+        "end_time": 4855.0,
+        "wait_time": 93.99262376485422
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 4788.183055753217,
+        "end_time": 4835.0,
+        "wait_time": 46.81694424678335
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 4791.413884412844,
+        "end_time": 4835.0,
+        "wait_time": 43.5861155871562
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 4962.186682718071,
+        "end_time": 5000.0,
+        "wait_time": 37.8133172819289
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 5109.583512402894,
+        "end_time": 5151.0,
+        "wait_time": 41.416487597106425
+    },
+    {
+        "curr": 3,
+        "dest": 5,
+        "arrival_time": 5112.222537768769,
+        "end_time": 5186.0,
+        "wait_time": 73.77746223123086
+    },
+    {
+        "curr": 3,
+        "dest": 6,
+        "arrival_time": 5119.344876567671,
+        "end_time": 5198.0,
+        "wait_time": 78.65512343232876
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+<<<<<<< HEAD
         "arrival_time": 3162.432403352819,
         "end_time": 3309.0,
         "wait_time": 146.56759664718084
@@ -446,10 +1011,2354 @@
         "arrival_time": 3326.870667150385,
         "end_time": 3546.0,
         "wait_time": 219.1293328496149
+=======
+        "arrival_time": 5406.096654537804,
+        "end_time": 5483.0,
+        "wait_time": 76.90334546219583
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 5408.466587165225,
+        "end_time": 5455.0,
+        "wait_time": 46.533412834774936
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 5710.0705003278645,
+        "end_time": 5757.0,
+        "wait_time": 46.929499672135535
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 5715.717716552362,
+        "end_time": 5843.0,
+        "wait_time": 127.28228344763829
     },
     {
         "curr": 2,
         "dest": 8,
+        "arrival_time": 5726.842840842559,
+        "end_time": 5924.0,
+        "wait_time": 197.15715915744113
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 5749.894812241033,
+        "end_time": 5949.0,
+        "wait_time": 199.10518775896708
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 5778.852602502541,
+        "end_time": 5896.0,
+        "wait_time": 117.14739749745877
+    },
+    {
+        "curr": 6,
+        "dest": 8,
+        "arrival_time": 5870.8416624200645,
+        "end_time": 5965.0,
+        "wait_time": 94.1583375799355
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 5980.721464196601,
+        "end_time": 6056.0,
+        "wait_time": 75.27853580339888
+    },
+    {
+        "curr": 3,
+        "dest": 5,
+        "arrival_time": 5992.105086040196,
+        "end_time": 6017.0,
+        "wait_time": 24.8949139598044
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 6021.773337263739,
+        "end_time": 6104.0,
+        "wait_time": 82.22666273626055
+    },
+    {
+        "curr": 1,
+        "dest": 7,
+        "arrival_time": 6050.715037021275,
+        "end_time": 6127.0,
+        "wait_time": 76.28496297872516
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 6200.135192989374,
+        "end_time": 6241.0,
+        "wait_time": 40.864807010625555
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 6229.759505588466,
+        "end_time": 6294.0,
+        "wait_time": 64.2404944115342
+    },
+    {
+        "curr": 1,
+        "dest": 2,
+        "arrival_time": 6343.505100688643,
+        "end_time": 6367.0,
+        "wait_time": 23.494899311356676
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 6440.933766640397,
+        "end_time": 6466.0,
+        "wait_time": 25.066233359602847
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 6599.7140722215,
+        "end_time": 6656.0,
+        "wait_time": 56.28592777850008
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 6739.625002099327,
+        "end_time": 6786.0,
+        "wait_time": 46.37499790067341
+    },
+    {
+        "curr": 1,
+        "dest": 8,
+        "arrival_time": 6873.507690693763,
+        "end_time": 7047.0,
+        "wait_time": 173.49230930623708
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 6894.542639939648,
+        "end_time": 7014.0,
+        "wait_time": 119.45736006035168
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 6908.490190114366,
+        "end_time": 7003.0,
+        "wait_time": 94.50980988563424
+    },
+    {
+        "curr": 2,
+        "dest": 8,
+        "arrival_time": 6908.632329984004,
+        "end_time": 7082.0,
+        "wait_time": 173.36767001599583
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 7074.239407834477,
+        "end_time": 7146.0,
+        "wait_time": 71.76059216552312
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 7254.20583308744,
+        "end_time": 7304.0,
+        "wait_time": 49.794166912560286
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 7613.697713107135,
+        "end_time": 7647.0,
+        "wait_time": 33.302286892864686
+    },
+    {
+        "curr": 1,
+        "dest": 8,
+        "arrival_time": 7895.383605514839,
+        "end_time": 7952.0,
+        "wait_time": 56.616394485161436
+    },
+    {
+        "curr": 3,
+        "dest": 8,
+        "arrival_time": 8174.405025840225,
+        "end_time": 8229.0,
+        "wait_time": 54.59497415977512
+    },
+    {
+        "curr": 3,
+        "dest": 8,
+        "arrival_time": 8260.160095650537,
+        "end_time": 8321.0,
+        "wait_time": 60.83990434946281
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 8513.30742457919,
+        "end_time": 8581.0,
+        "wait_time": 67.69257542080959
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 8945.586852158529,
+        "end_time": 9001.0,
+        "wait_time": 55.41314784147107
+    },
+    {
+        "curr": 3,
+        "dest": 5,
+        "arrival_time": 8970.028580940343,
+        "end_time": 9046.0,
+        "wait_time": 75.97141905965691
+    },
+    {
+        "curr": 8,
+        "dest": 9,
+        "arrival_time": 9135.453204674483,
+        "end_time": 9164.0,
+        "wait_time": 28.54679532551745
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 9730.367804876518,
+        "end_time": 9769.0,
+        "wait_time": 38.632195123482234
+    },
+    {
+        "curr": 1,
+        "dest": 8,
+        "arrival_time": 9790.399377610835,
+        "end_time": 9845.0,
+        "wait_time": 54.60062238916544
+    },
+    {
+        "curr": 1,
+        "dest": 2,
+        "arrival_time": 9874.818255470489,
+        "end_time": 9890.0,
+        "wait_time": 15.18174452951098
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 9965.441346028978,
+        "end_time": 10006.0,
+        "wait_time": 40.55865397102207
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 10033.15728833977,
+        "end_time": 10077.0,
+        "wait_time": 43.842711660230634
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 10051.936472867805,
+        "end_time": 10096.0,
+        "wait_time": 44.063527132195304
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 10289.078122243394,
+        "end_time": 10326.0,
+        "wait_time": 36.92187775660568
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 10482.707767277154,
+        "end_time": 10510.0,
+        "wait_time": 27.292232722846165
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 10697.04454727324,
+        "end_time": 10736.0,
+        "wait_time": 38.95545272675918
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 10990.74786473536,
+        "end_time": 11025.0,
+        "wait_time": 34.252135264639946
+    },
+    {
+        "curr": 3,
+        "dest": 4,
+        "arrival_time": 11021.390768076697,
+        "end_time": 11075.0,
+        "wait_time": 53.609231923303014
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 11201.411437198169,
+        "end_time": 11232.0,
+        "wait_time": 30.58856280183136
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 11202.33882491409,
+        "end_time": 11232.0,
+        "wait_time": 29.661175085910145
+    },
+    {
+        "curr": 1,
+        "dest": 2,
+        "arrival_time": 11248.768903312892,
+        "end_time": 11270.0,
+        "wait_time": 21.23109668710822
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 11799.289750703885,
+        "end_time": 11847.0,
+        "wait_time": 47.71024929611485
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 12316.758969144039,
+        "end_time": 12381.0,
+        "wait_time": 64.24103085596107
+    },
+    {
+        "curr": 1,
+        "dest": 8,
+        "arrival_time": 12460.610355088815,
+        "end_time": 12513.0,
+        "wait_time": 52.389644911185314
+    },
+    {
+        "curr": 4,
+        "dest": 9,
+        "arrival_time": 12602.61515271182,
+        "end_time": 12651.0,
+        "wait_time": 48.384847288180026
+    },
+    {
+        "curr": 4,
+        "dest": 9,
+        "arrival_time": 12613.60745020365,
+        "end_time": 12651.0,
+        "wait_time": 37.39254979635007
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 12694.220593394446,
+        "end_time": 12730.0,
+        "wait_time": 35.77940660555396
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 12704.186299581377,
+        "end_time": 12772.0,
+        "wait_time": 67.81370041862283
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 13009.987130991114,
+        "end_time": 13039.0,
+        "wait_time": 29.0128690088859
+    },
+    {
+        "curr": 3,
+        "dest": 5,
+        "arrival_time": 13403.685823739263,
+        "end_time": 13452.0,
+        "wait_time": 48.31417626073744
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 13778.673027200713,
+        "end_time": 13813.0,
+        "wait_time": 34.32697279928652
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 13815.402551110454,
+        "end_time": 13852.0,
+        "wait_time": 36.597448889546285
+    },
+    {
+        "curr": 3,
+        "dest": 4,
+        "arrival_time": 14043.110579444978,
+        "end_time": 14057.0,
+        "wait_time": 13.889420555022298
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 14302.312869052608,
+        "end_time": 14339.0,
+        "wait_time": 36.68713094739178
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 15000.888081071123,
+        "end_time": 15039.0,
+        "wait_time": 38.11191892887655
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 15304.710821615132,
+        "end_time": 15365.0,
+        "wait_time": 60.28917838486814
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 15394.026756698622,
+        "end_time": 15456.0,
+        "wait_time": 61.973243301377806
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 15628.711075001236,
+        "end_time": 15660.0,
+        "wait_time": 31.288924998763832
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 15895.554602642245,
+        "end_time": 15928.0,
+        "wait_time": 32.4453973577547
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 16037.005023690665,
+        "end_time": 16074.0,
+        "wait_time": 36.99497630933547
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 16184.850058085687,
+        "end_time": 16220.0,
+        "wait_time": 35.149941914312876
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 16239.935306822754,
+        "end_time": 16278.0,
+        "wait_time": 38.06469317724623
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 16335.05631953663,
+        "end_time": 16389.0,
+        "wait_time": 53.943680463369674
+    },
+    {
+        "curr": 1,
+        "dest": 7,
+        "arrival_time": 16548.36162317476,
+        "end_time": 16585.0,
+        "wait_time": 36.63837682524172
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 16777.73179166171,
+        "end_time": 16814.0,
+        "wait_time": 36.268208338289696
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 17065.434846297052,
+        "end_time": 17091.0,
+        "wait_time": 25.56515370294801
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 17182.37040263778,
+        "end_time": 17212.0,
+        "wait_time": 29.629597362218192
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 17333.003824980482,
+        "end_time": 17369.0,
+        "wait_time": 35.99617501951798
+    },
+    {
+        "curr": 3,
+        "dest": 8,
+        "arrival_time": 17425.066280854768,
+        "end_time": 17466.0,
+        "wait_time": 40.93371914523232
+    },
+    {
+        "curr": 1,
+        "dest": 2,
+        "arrival_time": 17922.896365880497,
+        "end_time": 17969.0,
+        "wait_time": 46.10363411950311
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 18151.932911042437,
+        "end_time": 18188.0,
+        "wait_time": 36.0670889575631
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 18437.211806203395,
+        "end_time": 18483.0,
+        "wait_time": 45.7881937966049
+    },
+    {
+        "curr": 4,
+        "dest": 9,
+        "arrival_time": 18529.941533006662,
+        "end_time": 18583.0,
+        "wait_time": 53.05846699333779
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 18588.720162867667,
+        "end_time": 18627.0,
+        "wait_time": 38.27983713233334
+    },
+    {
+        "curr": 3,
+        "dest": 5,
+        "arrival_time": 18772.394003689453,
+        "end_time": 18819.0,
+        "wait_time": 46.6059963105472
+    },
+    {
+        "curr": 2,
+        "dest": 9,
+        "arrival_time": 18852.898093952364,
+        "end_time": 18952.0,
+        "wait_time": 99.10190604763557
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 18916.095618169114,
+        "end_time": 18970.0,
+        "wait_time": 53.90438183088554
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 18944.297381387863,
+        "end_time": 19018.0,
+        "wait_time": 73.70261861213658
+    },
+    {
+        "curr": 5,
+        "dest": 9,
+        "arrival_time": 19129.03292383807,
+        "end_time": 19174.0,
+        "wait_time": 44.96707616193089
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 19498.193785193936,
+        "end_time": 19533.0,
+        "wait_time": 34.80621480606351
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 19500.94891908051,
+        "end_time": 19545.0,
+        "wait_time": 44.05108091948932
+    },
+    {
+        "curr": 3,
+        "dest": 4,
+        "arrival_time": 19670.28321969121,
+        "end_time": 19711.0,
+        "wait_time": 40.716780308790476
+    },
+    {
+        "curr": 4,
+        "dest": 9,
+        "arrival_time": 20063.43750039043,
+        "end_time": 20096.0,
+        "wait_time": 32.562499609568476
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 20108.74941390747,
+        "end_time": 20141.0,
+        "wait_time": 32.250586092530284
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 20302.74755028081,
+        "end_time": 20337.0,
+        "wait_time": 34.252449719191645
+    },
+    {
+        "curr": 1,
+        "dest": 2,
+        "arrival_time": 20661.428108439133,
+        "end_time": 20687.0,
+        "wait_time": 25.57189156086679
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 20734.625166913735,
+        "end_time": 20774.0,
+        "wait_time": 39.374833086265426
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 20760.24476605276,
+        "end_time": 20803.0,
+        "wait_time": 42.755233947238594
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 20839.55772510922,
+        "end_time": 20869.0,
+        "wait_time": 29.442274890778208
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 20925.155179515325,
+        "end_time": 20959.0,
+        "wait_time": 33.84482048467544
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 20936.973458068056,
+        "end_time": 21014.0,
+        "wait_time": 77.02654193194394
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 20957.099917928797,
+        "end_time": 21065.0,
+        "wait_time": 107.90008207120263
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 20982.542830079037,
+        "end_time": 21039.0,
+        "wait_time": 56.45716992096277
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 21067.959217497653,
+        "end_time": 21130.0,
+        "wait_time": 62.0407825023467
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 21069.869223409303,
+        "end_time": 21176.0,
+        "wait_time": 106.13077659069677
+    },
+    {
+        "curr": 1,
+        "dest": 8,
+        "arrival_time": 21321.418292656643,
+        "end_time": 21375.0,
+        "wait_time": 53.581707343357266
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 21377.736305419945,
+        "end_time": 21407.0,
+        "wait_time": 29.263694580055017
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 21447.720436334563,
+        "end_time": 21482.0,
+        "wait_time": 34.27956366543731
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 21482.70479445357,
+        "end_time": 21537.0,
+        "wait_time": 54.295205546430225
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 21491.774102967254,
+        "end_time": 21559.0,
+        "wait_time": 67.2258970327457
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 21558.25077778405,
+        "end_time": 21635.0,
+        "wait_time": 76.74922221594898
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 21584.42636038009,
+        "end_time": 21635.0,
+        "wait_time": 50.573639619909954
+    },
+    {
+        "curr": 5,
+        "dest": 9,
+        "arrival_time": 21621.38280799463,
+        "end_time": 21695.0,
+        "wait_time": 73.61719200537118
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 21668.618791810033,
+        "end_time": 21735.0,
+        "wait_time": 66.38120818996686
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 21670.701218029044,
+        "end_time": 21749.0,
+        "wait_time": 78.29878197095604
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 21760.944866215406,
+        "end_time": 21804.0,
+        "wait_time": 43.055133784593636
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 21821.966458805655,
+        "end_time": 21864.0,
+        "wait_time": 42.03354119434516
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 22050.791422013826,
+        "end_time": 22082.0,
+        "wait_time": 31.208577986173623
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 22214.965913174077,
+        "end_time": 22251.0,
+        "wait_time": 36.034086825922714
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 22335.37741480749,
+        "end_time": 22376.0,
+        "wait_time": 40.62258519250827
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 22341.36751520576,
+        "end_time": 22462.0,
+        "wait_time": 120.63248479424146
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 22354.84215977616,
+        "end_time": 22430.0,
+        "wait_time": 75.15784022384105
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 22532.220042133697,
+        "end_time": 22558.0,
+        "wait_time": 25.779957866303448
+    },
+    {
+        "curr": 6,
+        "dest": 8,
+        "arrival_time": 22545.72670579773,
+        "end_time": 22594.0,
+        "wait_time": 48.273294202270336
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 22607.14219072452,
+        "end_time": 22650.0,
+        "wait_time": 42.85780927547967
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 22753.12303204895,
+        "end_time": 22829.0,
+        "wait_time": 75.87696795105148
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 22760.655641608646,
+        "end_time": 22843.0,
+        "wait_time": 82.34435839135404
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 22980.015595786073,
+        "end_time": 23038.0,
+        "wait_time": 57.98440421392661
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 23055.634444004118,
+        "end_time": 23079.0,
+        "wait_time": 23.36555599588246
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 23253.943315706212,
+        "end_time": 23286.0,
+        "wait_time": 32.05668429378784
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 23344.21928074359,
+        "end_time": 23373.0,
+        "wait_time": 28.78071925641052
+    },
+    {
+        "curr": 3,
+        "dest": 4,
+        "arrival_time": 23437.96413602998,
+        "end_time": 23481.0,
+        "wait_time": 43.03586397002073
+    },
+    {
+        "curr": 3,
+        "dest": 5,
+        "arrival_time": 23546.750900454408,
+        "end_time": 23591.0,
+        "wait_time": 44.24909954559189
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 23643.137974451925,
+        "end_time": 23701.0,
+        "wait_time": 57.8620255480746
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 23679.6611986751,
+        "end_time": 23731.0,
+        "wait_time": 51.33880132489867
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 23692.486914718538,
+        "end_time": 23743.0,
+        "wait_time": 50.51308528146183
+    },
+    {
+        "curr": 3,
+        "dest": 6,
+        "arrival_time": 23837.229344811945,
+        "end_time": 23892.0,
+        "wait_time": 54.77065518805466
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 23857.789947887733,
+        "end_time": 23934.0,
+        "wait_time": 76.21005211226657
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 23975.213006502858,
+        "end_time": 24019.0,
+        "wait_time": 43.78699349714225
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 23983.700568096396,
+        "end_time": 24019.0,
+        "wait_time": 35.29943190360427
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 24095.948827624983,
+        "end_time": 24141.0,
+        "wait_time": 45.051172375016904
+    },
+    {
+        "curr": 3,
+        "dest": 5,
+        "arrival_time": 24118.08359020168,
+        "end_time": 24185.0,
+        "wait_time": 66.91640979831936
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 24208.138815641552,
+        "end_time": 24245.0,
+        "wait_time": 36.861184358447645
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 24324.667290092842,
+        "end_time": 24358.0,
+        "wait_time": 33.33270990715755
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 24334.30713904753,
+        "end_time": 24419.0,
+        "wait_time": 84.69286095246935
+    },
+    {
+        "curr": 1,
+        "dest": 7,
+        "arrival_time": 24460.167378914837,
+        "end_time": 24514.0,
+        "wait_time": 53.83262108516283
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 24556.698479436804,
+        "end_time": 24610.0,
+        "wait_time": 53.30152056319639
+    },
+    {
+        "curr": 2,
+        "dest": 5,
+        "arrival_time": 24614.01925693154,
+        "end_time": 24676.0,
+        "wait_time": 61.98074306845956
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 24833.72749741118,
+        "end_time": 24875.0,
+        "wait_time": 41.272502588821226
+    },
+    {
+        "curr": 3,
+        "dest": 5,
+        "arrival_time": 24870.483902497894,
+        "end_time": 25001.0,
+        "wait_time": 130.51609750210628
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 24886.341742452954,
+        "end_time": 24991.0,
+        "wait_time": 104.65825754704565
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 24909.9424805652,
+        "end_time": 25010.0,
+        "wait_time": 100.05751943479845
+    },
+    {
+        "curr": 6,
+        "dest": 8,
+        "arrival_time": 25038.26118951967,
+        "end_time": 25061.0,
+        "wait_time": 22.73881048032854
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 25174.577928656316,
+        "end_time": 25213.0,
+        "wait_time": 38.422071343684365
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 25352.496873120934,
+        "end_time": 25381.0,
+        "wait_time": 28.503126879066258
+    },
+    {
+        "curr": 3,
+        "dest": 6,
+        "arrival_time": 25413.687916928364,
+        "end_time": 25459.0,
+        "wait_time": 45.31208307163615
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 25518.521097834513,
+        "end_time": 25559.0,
+        "wait_time": 40.47890216548694
+    },
+    {
+        "curr": 5,
+        "dest": 9,
+        "arrival_time": 25621.158604260403,
+        "end_time": 25651.0,
+        "wait_time": 29.84139573959692
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 25700.402910787456,
+        "end_time": 25747.0,
+        "wait_time": 46.59708921254423
+    },
+    {
+        "curr": 4,
+        "dest": 6,
+        "arrival_time": 25777.146783042197,
+        "end_time": 25797.0,
+        "wait_time": 19.853216957802942
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 25815.193571485135,
+        "end_time": 25858.0,
+        "wait_time": 42.80642851486482
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 25860.60566592037,
+        "end_time": 25926.0,
+        "wait_time": 65.3943340796286
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 25894.139542949353,
+        "end_time": 25951.0,
+        "wait_time": 56.8604570506468
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 25970.481842199646,
+        "end_time": 26010.0,
+        "wait_time": 39.51815780035395
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 25989.77447190547,
+        "end_time": 26029.0,
+        "wait_time": 39.22552809452827
+    },
+    {
+        "curr": 3,
+        "dest": 6,
+        "arrival_time": 26091.825200009403,
+        "end_time": 26121.0,
+        "wait_time": 29.17479999059651
+    },
+    {
+        "curr": 1,
+        "dest": 2,
+        "arrival_time": 26182.585659611817,
+        "end_time": 26218.0,
+        "wait_time": 35.41434038818261
+    },
+    {
+        "curr": 1,
+        "dest": 8,
+        "arrival_time": 26246.291353234763,
+        "end_time": 26291.0,
+        "wait_time": 44.70864676523706
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 26316.704374939673,
+        "end_time": 26363.0,
+        "wait_time": 46.29562506032744
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 26371.85080329516,
+        "end_time": 26423.0,
+        "wait_time": 51.14919670483869
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 26468.471012830458,
+        "end_time": 26550.0,
+        "wait_time": 81.52898716954223
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 26476.401416036555,
+        "end_time": 26550.0,
+        "wait_time": 73.59858396344498
+    },
+    {
+        "curr": 2,
+        "dest": 8,
+        "arrival_time": 26516.845708770295,
+        "end_time": 26610.0,
+        "wait_time": 93.15429122970454
+    },
+    {
+        "curr": 3,
+        "dest": 5,
+        "arrival_time": 26731.433922605,
+        "end_time": 26800.0,
+        "wait_time": 68.56607739500032
+    },
+    {
+        "curr": 1,
+        "dest": 2,
+        "arrival_time": 26741.516460165567,
+        "end_time": 26787.0,
+        "wait_time": 45.48353983443303
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 26947.006240152223,
+        "end_time": 26990.0,
+        "wait_time": 42.993759847777255
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 27279.526632874862,
+        "end_time": 27377.0,
+        "wait_time": 97.47336712513788
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 27302.051279509073,
+        "end_time": 27432.0,
+        "wait_time": 129.94872049092737
+    },
+    {
+        "curr": 5,
+        "dest": 9,
+        "arrival_time": 27360.32618558709,
+        "end_time": 27458.0,
+        "wait_time": 97.67381441290854
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 27405.732080775248,
+        "end_time": 27562.0,
+        "wait_time": 156.2679192247524
+    },
+    {
+        "curr": 4,
+        "dest": 6,
+        "arrival_time": 27478.633113247393,
+        "end_time": 27552.0,
+        "wait_time": 73.36688675260666
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 27590.90353011579,
+        "end_time": 27633.0,
+        "wait_time": 42.09646988421082
+    },
+    {
+        "curr": 1,
+        "dest": 2,
+        "arrival_time": 27699.833233362115,
+        "end_time": 27721.0,
+        "wait_time": 21.166766637885303
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 27743.0539697713,
+        "end_time": 27776.0,
+        "wait_time": 32.94603022870069
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 27823.897291824913,
+        "end_time": 27852.0,
+        "wait_time": 28.102708175087173
+    },
+    {
+        "curr": 1,
+        "dest": 7,
+        "arrival_time": 27897.860257881897,
+        "end_time": 27954.0,
+        "wait_time": 56.13974211810273
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 28413.845502929045,
+        "end_time": 28448.0,
+        "wait_time": 34.154497070954676
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 28746.335331500155,
+        "end_time": 28769.0,
+        "wait_time": 22.664668499844993
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 29208.400723626997,
+        "end_time": 29242.0,
+        "wait_time": 33.599276373002795
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 29496.186973861557,
+        "end_time": 29523.0,
+        "wait_time": 26.813026138443092
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 29945.805228397945,
+        "end_time": 29971.0,
+        "wait_time": 25.19477160205497
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 30879.16760190107,
+        "end_time": 30914.0,
+        "wait_time": 34.83239809892984
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 31288.497872657474,
+        "end_time": 31347.0,
+        "wait_time": 58.502127342526364
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 31442.39517326933,
+        "end_time": 31489.0,
+        "wait_time": 46.60482673066872
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 31901.645140909095,
+        "end_time": 31928.0,
+        "wait_time": 26.354859090904938
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 32105.567980696887,
+        "end_time": 32149.0,
+        "wait_time": 43.43201930311261
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 32301.310012004884,
+        "end_time": 32368.0,
+        "wait_time": 66.6899879951161
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 32798.687652468696,
+        "end_time": 32869.0,
+        "wait_time": 70.31234753130411
+    },
+    {
+        "curr": 4,
+        "dest": 6,
+        "arrival_time": 32900.22379602481,
+        "end_time": 32944.0,
+        "wait_time": 43.77620397519058
+    },
+    {
+        "curr": 1,
+        "dest": 8,
+        "arrival_time": 33185.650980152765,
+        "end_time": 33254.0,
+        "wait_time": 68.34901984723547
+    },
+    {
+        "curr": 7,
+        "dest": 9,
+        "arrival_time": 33365.184290985264,
+        "end_time": 33392.0,
+        "wait_time": 26.815709014736058
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 33576.20096638257,
+        "end_time": 33625.0,
+        "wait_time": 48.79903361743345
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 33899.01433051099,
+        "end_time": 33935.0,
+        "wait_time": 35.98566948901134
+    },
+    {
+        "curr": 1,
+        "dest": 7,
+        "arrival_time": 34283.8879950181,
+        "end_time": 34339.0,
+        "wait_time": 55.1120049819001
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 34347.10543544717,
+        "end_time": 34401.0,
+        "wait_time": 53.89456455282925
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 34348.23286989606,
+        "end_time": 34416.0,
+        "wait_time": 67.76713010393723
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 35381.15252423874,
+        "end_time": 35421.0,
+        "wait_time": 39.847475761256646
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 35593.728913004285,
+        "end_time": 35652.0,
+        "wait_time": 58.27108699571545
+    },
+    {
+        "curr": 1,
+        "dest": 8,
+        "arrival_time": 35979.71384916631,
+        "end_time": 36058.0,
+        "wait_time": 78.2861508336864
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 36432.9890676576,
+        "end_time": 36475.0,
+        "wait_time": 42.0109323423967
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 36770.37541357929,
+        "end_time": 36806.0,
+        "wait_time": 35.62458642070851
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 36848.322246491116,
+        "end_time": 36866.0,
+        "wait_time": 17.677753508884052
+    },
+    {
+        "curr": 1,
+        "dest": 8,
+        "arrival_time": 36957.13667169838,
+        "end_time": 37007.0,
+        "wait_time": 49.863328301617
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 37051.41573391094,
+        "end_time": 37127.0,
+        "wait_time": 75.58426608906302
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 37075.67999097121,
+        "end_time": 37102.0,
+        "wait_time": 26.320009028786444
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 37825.834359207285,
+        "end_time": 37867.0,
+        "wait_time": 41.16564079271484
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 38430.95123273494,
+        "end_time": 38458.0,
+        "wait_time": 27.04876726506336
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 38682.176389773274,
+        "end_time": 38719.0,
+        "wait_time": 36.82361022672558
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 38779.01744304052,
+        "end_time": 38800.0,
+        "wait_time": 20.98255695948319
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 39242.647475656624,
+        "end_time": 39271.0,
+        "wait_time": 28.35252434337599
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 39906.69152798564,
+        "end_time": 39961.0,
+        "wait_time": 54.30847201435972
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 39991.08614763878,
+        "end_time": 40054.0,
+        "wait_time": 62.91385236122005
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 40342.736758950065,
+        "end_time": 40384.0,
+        "wait_time": 41.26324104993546
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 40728.582293128966,
+        "end_time": 40771.0,
+        "wait_time": 42.41770687103417
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 41027.5550533846,
+        "end_time": 41077.0,
+        "wait_time": 49.444946615396475
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 41729.35570042474,
+        "end_time": 41771.0,
+        "wait_time": 41.64429957525863
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 42097.4294902432,
+        "end_time": 42159.0,
+        "wait_time": 61.570509756798856
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 42305.390401190605,
+        "end_time": 42351.0,
+        "wait_time": 45.60959880939481
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 42310.538423599544,
+        "end_time": 42351.0,
+        "wait_time": 40.46157640045567
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 42362.65959033206,
+        "end_time": 42383.0,
+        "wait_time": 20.34040966793691
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 42402.98422764882,
+        "end_time": 42433.0,
+        "wait_time": 30.015772351180203
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 42632.36431151694,
+        "end_time": 42660.0,
+        "wait_time": 27.63568848306022
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 42730.302616101384,
+        "end_time": 42760.0,
+        "wait_time": 29.697383898615954
+    },
+    {
+        "curr": 2,
+        "dest": 9,
+        "arrival_time": 42763.01981301567,
+        "end_time": 42839.0,
+        "wait_time": 75.98018698432861
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 42935.7590448574,
+        "end_time": 42960.0,
+        "wait_time": 24.240955142602616
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 42977.59465867934,
+        "end_time": 43033.0,
+        "wait_time": 55.40534132065659
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 42987.51003027079,
+        "end_time": 43013.0,
+        "wait_time": 25.489969729213044
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 43035.20799372113,
+        "end_time": 43147.0,
+        "wait_time": 111.79200627886894
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 43036.29228076301,
+        "end_time": 43116.0,
+        "wait_time": 79.70771923699067
+    },
+    {
+        "curr": 5,
+        "dest": 9,
+        "arrival_time": 43046.57230670411,
+        "end_time": 43383.0,
+        "wait_time": 336.4276932958892
+    },
+    {
+        "curr": 6,
+        "dest": 8,
+        "arrival_time": 43064.036119675846,
+        "end_time": 43204.0,
+        "wait_time": 139.96388032415416
+    },
+    {
+        "curr": 3,
+        "dest": 6,
+        "arrival_time": 43075.29846449916,
+        "end_time": 43351.0,
+        "wait_time": 275.7015355008407
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 43094.71210850865,
+        "end_time": 43293.0,
+        "wait_time": 198.28789149135264
+    },
+    {
+        "curr": 3,
+        "dest": 5,
+        "arrival_time": 43114.138901053295,
+        "end_time": 43180.0,
+        "wait_time": 65.86109894670517
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 43138.01654799107,
+        "end_time": 43293.0,
+        "wait_time": 154.983452008928
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 43144.62525337531,
+        "end_time": 43261.0,
+        "wait_time": 116.37474662469322
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 43152.041251528244,
+        "end_time": 43363.0,
+        "wait_time": 210.95874847175583
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 43153.93839730873,
+        "end_time": 43363.0,
+        "wait_time": 209.0616026912685
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 43180.702441432106,
+        "end_time": 43293.0,
+        "wait_time": 112.29755856789416
+    },
+    {
+        "curr": 2,
+        "dest": 9,
+        "arrival_time": 43184.14921078146,
+        "end_time": 43397.0,
+        "wait_time": 212.8507892185371
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 43691.66231909449,
+        "end_time": 43715.0,
+        "wait_time": 23.33768090551166
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 44046.22837942294,
+        "end_time": 44079.0,
+        "wait_time": 32.771620577063004
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 44187.51629689491,
+        "end_time": 44223.0,
+        "wait_time": 35.48370310509199
+    },
+    {
+        "curr": 2,
+        "dest": 7,
+        "arrival_time": 44253.40235869064,
+        "end_time": 44318.0,
+        "wait_time": 64.59764130935946
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 44465.14346348257,
+        "end_time": 44505.0,
+        "wait_time": 39.85653651742905
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 45103.89586410205,
+        "end_time": 45138.0,
+        "wait_time": 34.10413589794916
+    },
+    {
+        "curr": 3,
+        "dest": 6,
+        "arrival_time": 45167.75772545657,
+        "end_time": 45212.0,
+        "wait_time": 44.24227454343054
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 45221.81496701221,
+        "end_time": 45247.0,
+        "wait_time": 25.18503298779251
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 45296.45093305261,
+        "end_time": 45365.0,
+        "wait_time": 68.54906694738747
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 45465.731034019416,
+        "end_time": 45483.0,
+        "wait_time": 17.268965980583744
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 45508.144189285464,
+        "end_time": 45536.0,
+        "wait_time": 27.855810714536346
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 45590.95040528639,
+        "end_time": 45616.0,
+        "wait_time": 25.049594713607803
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 45598.505570359455,
+        "end_time": 45616.0,
+        "wait_time": 17.494429640544695
+    },
+    {
+        "curr": 3,
+        "dest": 6,
+        "arrival_time": 45649.165820358656,
+        "end_time": 45698.0,
+        "wait_time": 48.834179641344235
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 45745.921714391196,
+        "end_time": 45801.0,
+        "wait_time": 55.078285608804435
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 45905.38030143001,
+        "end_time": 45946.0,
+        "wait_time": 40.61969856999349
+    },
+    {
+        "curr": 1,
+        "dest": 8,
+        "arrival_time": 45926.90340843086,
+        "end_time": 45980.0,
+        "wait_time": 53.09659156914131
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 45985.699532253646,
+        "end_time": 46048.0,
+        "wait_time": 62.300467746354116
+    },
+    {
+        "curr": 2,
+        "dest": 8,
+        "arrival_time": 46052.43232360343,
+        "end_time": 46129.0,
+        "wait_time": 76.56767639656755
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 46364.94412914855,
+        "end_time": 46426.0,
+        "wait_time": 61.05587085145089
+    },
+    {
+        "curr": 1,
+        "dest": 7,
+        "arrival_time": 46462.92539335209,
+        "end_time": 46540.0,
+        "wait_time": 77.07460664791142
+    },
+    {
+        "curr": 6,
+        "dest": 7,
+        "arrival_time": 46522.875005097536,
+        "end_time": 46568.0,
+        "wait_time": 45.124994902464096
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 46571.30096084848,
+        "end_time": 46670.0,
+        "wait_time": 98.69903915152099
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 46581.502181297976,
+        "end_time": 46647.0,
+        "wait_time": 65.49781870202423
+    },
+    {
+        "curr": 1,
+        "dest": 7,
+        "arrival_time": 46772.25375793829,
+        "end_time": 46810.0,
+        "wait_time": 37.74624206170847
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 46885.01113353404,
+        "end_time": 46940.0,
+        "wait_time": 54.98886646595929
+    },
+    {
+        "curr": 1,
+        "dest": 7,
+        "arrival_time": 46964.48778957487,
+        "end_time": 47069.0,
+        "wait_time": 104.5122104251277
+    },
+    {
+        "curr": 1,
+        "dest": 8,
+        "arrival_time": 46982.841956497716,
+        "end_time": 47091.0,
+        "wait_time": 108.15804350228427
+    },
+    {
+        "curr": 1,
+        "dest": 7,
+        "arrival_time": 46997.84600846888,
+        "end_time": 47069.0,
+        "wait_time": 71.1539915311223
+    },
+    {
+        "curr": 3,
+        "dest": 5,
+        "arrival_time": 47003.869646431485,
+        "end_time": 47129.0,
+        "wait_time": 125.13035356851469
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 47037.489624737296,
+        "end_time": 47178.0,
+        "wait_time": 140.51037526270375
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 47039.399824379085,
+        "end_time": 47214.0,
+        "wait_time": 174.60017562091525
+    },
+    {
+        "curr": 1,
+        "dest": 8,
+        "arrival_time": 47259.370036687396,
+        "end_time": 47335.0,
+        "wait_time": 75.62996331260365
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 47326.028088387284,
+        "end_time": 47457.0,
+        "wait_time": 130.9719116127162
+    },
+    {
+        "curr": 5,
+        "dest": 8,
+        "arrival_time": 47341.00058944092,
+        "end_time": 47423.0,
+        "wait_time": 81.9994105590813
+    },
+    {
+        "curr": 3,
+        "dest": 8,
+        "arrival_time": 47346.62797039798,
+        "end_time": 47474.0,
+        "wait_time": 127.3720296020183
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 47385.584571961816,
+        "end_time": 47487.0,
+        "wait_time": 101.41542803818447
+    },
+    {
+        "curr": 1,
+        "dest": 7,
+        "arrival_time": 47682.97799452389,
+        "end_time": 47756.0,
+        "wait_time": 73.02200547610846
+    },
+    {
+        "curr": 3,
+        "dest": 5,
+        "arrival_time": 47737.18561754057,
+        "end_time": 47830.0,
+        "wait_time": 92.81438245942991
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 47761.93702104308,
+        "end_time": 47873.0,
+        "wait_time": 111.06297895692114
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 47773.160503030864,
+        "end_time": 47853.0,
+        "wait_time": 79.83949696913623
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 47776.3037437004,
+        "end_time": 47853.0,
+        "wait_time": 76.69625629959774
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 47780.97828942765,
+        "end_time": 47853.0,
+        "wait_time": 72.02171057234955
+    },
+    {
+        "curr": 4,
+        "dest": 9,
+        "arrival_time": 47922.07902314414,
+        "end_time": 48018.0,
+        "wait_time": 95.92097685585759
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 47940.00386385217,
+        "end_time": 48073.0,
+        "wait_time": 132.9961361478272
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 47963.56763279966,
+        "end_time": 48026.0,
+        "wait_time": 62.43236720033747
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 48258.267554097685,
+        "end_time": 48558.0,
+        "wait_time": 299.7324459023148
+    },
+    {
+        "curr": 3,
+        "dest": 5,
+        "arrival_time": 48264.41611673206,
+        "end_time": 48380.0,
+        "wait_time": 115.58388326793647
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 48288.96959777721,
+        "end_time": 48518.0,
+        "wait_time": 229.0304022227865
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 48314.27214901299,
+        "end_time": 48468.0,
+        "wait_time": 153.72785098700842
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 48346.55555110913,
+        "end_time": 48428.0,
+        "wait_time": 81.44444889087026
+    },
+    {
+        "curr": 2,
+        "dest": 5,
+        "arrival_time": 48369.652670885676,
+        "end_time": 48500.0,
+        "wait_time": 130.34732911432366
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 48390.67140121302,
+        "end_time": 48518.0,
+        "wait_time": 127.32859878698218
+    },
+    {
+        "curr": 3,
+        "dest": 8,
+        "arrival_time": 48492.200510680486,
+        "end_time": 48686.0,
+        "wait_time": 193.79948931951367
+    },
+    {
+        "curr": 3,
+        "dest": 4,
+        "arrival_time": 48500.702388364676,
+        "end_time": 48610.0,
+        "wait_time": 109.29761163532385
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 48528.58068899096,
+        "end_time": 48632.0,
+        "wait_time": 103.41931100904185
+    },
+    {
+        "curr": 2,
+        "dest": 5,
+        "arrival_time": 48530.31449264669,
+        "end_time": 48707.0,
+        "wait_time": 176.6855073533079
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 48555.02877599535,
+        "end_time": 48610.0,
+        "wait_time": 54.97122400465014
+    },
+    {
+        "curr": 2,
+        "dest": 5,
+        "arrival_time": 48572.09740349125,
+        "end_time": 48707.0,
+        "wait_time": 134.9025965087494
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 48601.165159007316,
+        "end_time": 48783.0,
+        "wait_time": 181.8348409926839
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 48647.91658628774,
+        "end_time": 48752.0,
+        "wait_time": 104.08341371225833
+    },
+    {
+        "curr": 5,
+        "dest": 9,
+        "arrival_time": 48791.350454231484,
+        "end_time": 48850.0,
+        "wait_time": 58.649545768515964
+    },
+    {
+        "curr": 5,
+        "dest": 8,
+        "arrival_time": 48803.534346420776,
+        "end_time": 48833.0,
+        "wait_time": 29.465653579223726
+    },
+    {
+        "curr": 5,
+        "dest": 8,
+        "arrival_time": 48808.91822372979,
+        "end_time": 48833.0,
+        "wait_time": 24.081776270213595
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 48841.87136938998,
+        "end_time": 48911.0,
+        "wait_time": 69.12863061002281
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 48869.66600765236,
+        "end_time": 48894.0,
+        "wait_time": 24.33399234763783
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 49045.874722255045,
+        "end_time": 49076.0,
+        "wait_time": 30.125277744955383
+    },
+    {
+        "curr": 3,
+        "dest": 8,
+        "arrival_time": 49079.81417397353,
+        "end_time": 49151.0,
+        "wait_time": 71.18582602647075
+    },
+    {
+        "curr": 2,
+        "dest": 8,
+        "arrival_time": 49127.884018816076,
+        "end_time": 49213.0,
+        "wait_time": 85.1159811839243
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 49212.428338152255,
+        "end_time": 49285.0,
+        "wait_time": 72.57166184774542
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 49290.35226801535,
+        "end_time": 49318.0,
+        "wait_time": 27.647731984652637
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 49367.77031261681,
+        "end_time": 49400.0,
+        "wait_time": 32.22968738318741
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 49562.55765506765,
+        "end_time": 49590.0,
+        "wait_time": 27.44234493235126
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 49744.62926006206,
+        "end_time": 49770.0,
+        "wait_time": 25.370739937941835
+    },
+    {
+        "curr": 3,
+        "dest": 9,
+        "arrival_time": 49791.22337167583,
+        "end_time": 49881.0,
+        "wait_time": 89.77662832417263
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 49811.5009345591,
+        "end_time": 49863.0,
+        "wait_time": 51.49906544089754
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 50007.93407896734,
+        "end_time": 50045.0,
+        "wait_time": 37.06592103266303
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 50229.58157424643,
+        "end_time": 50263.0,
+        "wait_time": 33.418425753567135
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 50354.31115974414,
+        "end_time": 50382.0,
+        "wait_time": 27.688840255861578
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 50653.07406834319,
+        "end_time": 50681.0,
+        "wait_time": 27.92593165681319
+    },
+    {
+        "curr": 1,
+        "dest": 7,
+        "arrival_time": 50912.63840545321,
+        "end_time": 50951.0,
+        "wait_time": 38.36159454679
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 51167.86024613558,
+        "end_time": 51219.0,
+        "wait_time": 51.139753864423255
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 51469.07760730135,
+        "end_time": 51503.0,
+        "wait_time": 33.9223926986524
+    },
+    {
+        "curr": 2,
+        "dest": 9,
+        "arrival_time": 51790.581346672574,
+        "end_time": 51876.0,
+        "wait_time": 85.418653327426
+    },
+    {
+        "curr": 3,
+        "dest": 7,
+        "arrival_time": 51848.52584958759,
+        "end_time": 51927.0,
+        "wait_time": 78.47415041241038
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 52520.242659202966,
+        "end_time": 52553.0,
+        "wait_time": 32.757340797033976
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 52666.57943912531,
+        "end_time": 52714.0,
+        "wait_time": 47.420560874692455
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 53008.97555886481,
+        "end_time": 53044.0,
+        "wait_time": 35.02444113518868
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 53101.174346921565,
+        "end_time": 53152.0,
+        "wait_time": 50.8256530784347
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
+    },
+    {
+        "curr": 2,
+        "dest": 9,
+        "arrival_time": 53403.685781746164,
+        "end_time": 53477.0,
+        "wait_time": 73.31421825383586
+    },
+    {
+        "curr": 6,
+        "dest": 8,
+<<<<<<< HEAD
         "arrival_time": 3398.142461437992,
         "end_time": 3526.0,
         "wait_time": 127.8575385620079
@@ -523,10 +3432,247 @@
         "arrival_time": 3989.714725285669,
         "end_time": 4068.0,
         "wait_time": 78.28527471433108
+=======
+        "arrival_time": 53466.501473074895,
+        "end_time": 53540.0,
+        "wait_time": 73.49852692510467
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 53488.672213514976,
+        "end_time": 53529.0,
+        "wait_time": 40.32778648502426
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 53496.542476909635,
+        "end_time": 53602.0,
+        "wait_time": 105.4575230903647
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 54197.06439607066,
+        "end_time": 54225.0,
+        "wait_time": 27.935603929341596
+    },
+    {
+        "curr": 1,
+        "dest": 7,
+        "arrival_time": 54456.36911250784,
+        "end_time": 54511.0,
+        "wait_time": 54.63088749215967
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 55866.973458046785,
+        "end_time": 55922.0,
+        "wait_time": 55.0265419532152
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 55993.332937851104,
+        "end_time": 56032.0,
+        "wait_time": 38.66706214889564
     },
     {
         "curr": 3,
+        "dest": 4,
+        "arrival_time": 56338.39931577676,
+        "end_time": 56405.0,
+        "wait_time": 66.6006842232382
+    },
+    {
+        "curr": 5,
+        "dest": 9,
+        "arrival_time": 56346.76244172049,
+        "end_time": 56422.0,
+        "wait_time": 75.23755827950663
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 56525.76065368762,
+        "end_time": 56561.0,
+        "wait_time": 35.2393463123808
+    },
+    {
+        "curr": 4,
         "dest": 1,
+        "arrival_time": 56626.022129571764,
+        "end_time": 56665.0,
+        "wait_time": 38.9778704282362
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 56900.043634755646,
+        "end_time": 56932.0,
+        "wait_time": 31.956365244353947
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
+    },
+    {
+        "curr": 3,
+        "dest": 4,
+        "arrival_time": 57623.92517126933,
+        "end_time": 57664.0,
+        "wait_time": 40.07482873067056
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 58016.73904289055,
+        "end_time": 58056.0,
+        "wait_time": 39.26095710945083
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 58200.48481247156,
+        "end_time": 58248.0,
+        "wait_time": 47.515187528442766
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 58627.59418393667,
+        "end_time": 58661.0,
+        "wait_time": 33.40581606332853
+    },
+    {
+        "curr": 6,
+        "dest": 9,
+        "arrival_time": 58997.319519950936,
+        "end_time": 59022.0,
+        "wait_time": 24.6804800490645
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 59159.27175287087,
+        "end_time": 59189.0,
+        "wait_time": 29.728247129132797
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 59300.385540692136,
+        "end_time": 59338.0,
+        "wait_time": 37.61445930786431
+    },
+    {
+        "curr": 1,
+        "dest": 9,
+        "arrival_time": 59772.62625485487,
+        "end_time": 59826.0,
+        "wait_time": 53.37374514513067
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 60158.34077151709,
+        "end_time": 60177.0,
+        "wait_time": 18.659228482909384
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 60254.265980807744,
+        "end_time": 60287.0,
+        "wait_time": 32.7340191922558
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 60258.61273784428,
+        "end_time": 60287.0,
+        "wait_time": 28.3872621557166
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 60276.56511927067,
+        "end_time": 60346.0,
+        "wait_time": 69.43488072932814
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 61151.61827457219,
+        "end_time": 61177.0,
+        "wait_time": 25.381725427811034
+    },
+    {
+        "curr": 2,
+        "dest": 9,
+        "arrival_time": 61226.2207384562,
+        "end_time": 61296.0,
+        "wait_time": 69.77926154380111
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 61865.37951357994,
+        "end_time": 61900.0,
+        "wait_time": 34.62048642006266
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 62332.953445919295,
+        "end_time": 62369.0,
+        "wait_time": 36.04655408070539
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+        "arrival_time": 62463.04762860208,
+        "end_time": 62502.0,
+        "wait_time": 38.952371397921524
+    },
+    {
+        "curr": 2,
+        "dest": 9,
+        "arrival_time": 62615.09907956996,
+        "end_time": 62691.0,
+        "wait_time": 75.90092043003824
+    },
+    {
+        "curr": 1,
+        "dest": 4,
+        "arrival_time": 63101.221090763625,
+        "end_time": 63133.0,
+        "wait_time": 31.778909236374602
+    },
+    {
+        "curr": 1,
+        "dest": 6,
+        "arrival_time": 63822.93705923752,
+        "end_time": 63867.0,
+        "wait_time": 44.06294076248014
+    },
+    {
+        "curr": 1,
+        "dest": 5,
+        "arrival_time": 63904.54664873766,
+        "end_time": 63953.0,
+        "wait_time": 48.4533512623384
+    },
+    {
+        "curr": 1,
+        "dest": 3,
+        "arrival_time": 64129.49746351481,
+        "end_time": 64167.0,
+        "wait_time": 37.50253648518992
+    },
+    {
+        "curr": 4,
+        "dest": 1,
+<<<<<<< HEAD
         "arrival_time": 4068.4588851821,
         "end_time": 4118.0,
         "wait_time": 49.54111481790005
@@ -558,6 +3704,11 @@
         "arrival_time": 4123.020889611411,
         "end_time": 4308.0,
         "wait_time": 184.9791103885891
+=======
+        "arrival_time": 64406.735517544075,
+        "end_time": 64442.0,
+        "wait_time": 35.264482455924735
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
     },
     {
         "curr": 1,
@@ -590,6 +3741,7 @@
     {
         "curr": 6,
         "dest": 3,
+<<<<<<< HEAD
         "arrival_time": 4374.676949419819,
         "end_time": 4431.0,
         "wait_time": 56.32305058018119
@@ -1860,5 +5012,10 @@
         "arrival_time": 22200.28114407492,
         "end_time": 22237.0,
         "wait_time": 36.71885592507897
+=======
+        "arrival_time": 64611.79048865572,
+        "end_time": 64639.0,
+        "wait_time": 27.209511344277416
+>>>>>>> bb3e17637bcf28bff38d034faac994db2b9c9eae
     }
 ]
