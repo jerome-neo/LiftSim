@@ -1,0 +1,309 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+{% extends "base.html" %}
+
+{% block contents %}
+<html>
+  <head>
+    <title>Multiple Input Fields</title>
+    <link rel="stylesheet" href=" {{ url_for('static', filename='input.css') }} ">
+    <link rel="stylesheet" href="{{ url_for('static', filename='lifts.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+  </head>
+
+  <body>
+
+  <form id="input-form">
+    <div id="form-container" class = "section">
+      <!-- form inputs will be added here dynamically -->
+    </div>
+    <div style="display: flex;">
+    <button id="add-btn" type="button" onclick="createInputSet()">Add Request</button>
+    <button id="submit-btn" type="button">Submit</button>
+    </div>
+  </form>
+
+    <div id="button-container">
+      <button id="start-btn" type="button">Start</button>
+      <button id="pause-btn" type="button">Pause / Resume</button>
+      <button id="end-btn" type="button">End</button>
+    </div>
+  <div class="slider-container">
+      <label for="speed-slider">Refresh Speed:</label>
+      <input id="speed-slider" type="range" min="1" max="2000" value="1000" step="100">
+  </div>
+
+
+    <script src=" {{ url_for('static', filename='input.js') }}"></script>
+
+
+
+<div style="display: flex;">
+
+  <div id="model1-outer">
+  <div id="title1-container">Otis(Traditional)</div>
+
+      <!-- First Model -->
+
+    <div class="model1", style="display: flex;">
+      <!-- Floor Indicator -->
+      <div class="floor-indicator">
+        <h3 align="center">Floor</h3>
+        <div class="floorNum">9</div>
+        <div class="floorNum">8</div>
+        <div class="floorNum">7</div>
+        <div class="floorNum">6</div>
+        <div class="floorNum">5</div>
+        <div class="floorNum">4</div>
+        <div class="floorNum">3</div>
+        <div class="floorNum">2</div>
+        <div class="floorNum">1</div>
+      </div>
+
+      <!-- Elevator 1 -->
+      <div class="elevator">
+        <h3 class="elevatorTag" id="m1e1", align="center">
+          <span>Lift 1</span>
+          <span class="elevatorType">NIL</span>
+        </h3>
+        <div class="floor" id="m1e1f9">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e1f8">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e1f7">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e1f6">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e1f5">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e1f4">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e1f3">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e1f2">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e1f1">
+          <span class="numPeople">0</span>
+        </div>
+      </div>
+
+      <!-- Elevator 2 -->
+      <div class="elevator">
+        <h3 class="elevatorTag" id="m1e2", align="center">
+          <span>Lift 2</span>
+          <span class="elevatorType">NIL</span>
+        </h3>
+        <div class="floor" id="m1e2f9">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e2f8">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e2f7">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e2f6">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e2f5">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e2f4">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e2f3">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e2f2">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e2f1">
+          <span class="numPeople">0</span>
+        </div>
+      </div>
+
+      <!-- Elevator 3 -->
+      <div class="elevator">
+        <h3 class="elevatorTag" id="m1e3", align="center">
+          <span>Lift 3</span>
+          <span class="elevatorType">NIL</span>
+        </h3>
+        <div class="floor" id="m1e3f9">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e3f8">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e3f7">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e3f6">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e3f5">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e3f4">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e3f3">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e3f2">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m1e3f1">
+          <span class="numPeople">0</span>
+        </div>
+      </div>
+    </div>
+         </div>
+
+    <div id="model2-outer">
+  <div id="title2-container">ModernEGCS(Improved)
+  </div>
+      <!-- Second Model -->
+    <div class="model2", style="display: flex;">
+
+      <!-- Floor Indicator -->
+      <div class="floor-indicator">
+        <h3 align="center">Floor</h3>
+        <div class="floorNum">9</div>
+        <div class="floorNum">8</div>
+        <div class="floorNum">7</div>
+        <div class="floorNum">6</div>
+        <div class="floorNum">5</div>
+        <div class="floorNum">4</div>
+        <div class="floorNum">3</div>
+        <div class="floorNum">2</div>
+        <div class="floorNum">1</div>
+      </div>
+
+      <!-- Elevator 1 -->
+      <div class="elevator">
+        <h3 class="elevatorTag" id="m2e1", align="center">
+          <span>Lift 1</span>
+          <span class="elevatorType">NIL</span>
+        </h3>
+        <div class="floor" id="m2e1f9">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e1f8">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e1f7">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e1f6">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e1f5">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e1f4">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e1f3">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e1f2">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e1f1">
+          <span class="numPeople">0</span>
+        </div>
+      </div>
+
+
+      <!-- Elevator 2 -->
+      <div class="elevator">
+        <h3 class="elevatorTag" id="m2e2", align="center">
+          <span>Lift 2</span>
+          <span class="elevatorType">NIL</span>
+        </h3>
+        <div class="floor" id="m2e2f9">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e2f8">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e2f7">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e2f6">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e2f5">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e2f4">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e2f3">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e2f2">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e2f1">
+          <span class="numPeople">0</span>
+        </div>
+      </div>
+
+      <!-- Elevator 3 -->
+      <div class="elevator">
+        <h3 class="elevatorTag" id="m2e3", align="center">
+          <span>Lift 3</span>
+          <span class="elevatorType">NIL</span>
+        </h3>
+        <div class="floor" id="m2e3f9">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e3f8">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e3f7">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e3f6">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e3f5">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e3f4">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e3f3">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e3f2">
+          <span class="numPeople">0</span>
+        </div>
+        <div class="floor" id="m2e3f1">
+          <span class="numPeople">0</span>
+        </div>
+      </div>
+    </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='lifts.js') }}"></script>
+
+    <div>
+      <button id="show-page-btn" type="button">Show the Summary Tab</button>
+    </div>
+
+  </body>
+</html>
+{% endblock %}
