@@ -45,15 +45,7 @@ For more information regarding using the web app, please see our [Front End User
 Data collection was done between February and March 2023. The data was collected at NUS S16 building elevators.
 There are a total of 3 lifts in the S16 building.
 
-## 5. Results
-
-## 6. Contributing
-
-## 7. License
-
-## 8. Acknowledgments
-
-## 9. References
+## 5. References
 Simpy documentation.
 
 
