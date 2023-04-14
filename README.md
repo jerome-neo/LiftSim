@@ -37,7 +37,8 @@ Back-end authors:
 This application is meant to be served on Docker.
 
 ## 3. Usage
-For more information, please see our [User Guide](docs/UserGuide.md).
+For more information regarding the simulation model, please see our [Back End User Guide](docs/UserGuide.md).
+For more information regarding using the web app, please see our [Front End User Guide](docs/FrontendUserGuide.md).
 
 ## 4. Data
 Data collection was done between February and March 2023. The data was collected at NUS S16 building elevators.
