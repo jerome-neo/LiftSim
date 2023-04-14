@@ -32,7 +32,7 @@ Take note that you can change the name 'lift123' to any text that you want (with
 
 **3. Open your Docker Desktop, and check whether the docker container is running**
 
-![docker](https://drive.google.com/file/d/1E__MwFNFfdBLTXOjuyBC1z33D4KvidhJ/view?usp=share_link)
+![docker](https://drive.google.com/file/d/1e2oX4eD7IHrrfcF7TQp8cXGNifmC0REA/view?usp=share_link))
 
 **4. How to use our web application**
 
