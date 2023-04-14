@@ -102,6 +102,10 @@ submitBtn.addEventListener("click", (event) => {
         console.log('Success:', data);
         const manualData1 = data['Otis']['Elevators'];
         const manualData2 = data['ModernEGCS']['Elevators'];
+        localStorage.removeItem("data1Person");
+        localStorage.removeItem("data2Person");
+        localStorage.setItem("data1Person",JSON.stringify(data['Otis']['Persons']));
+        localStorage.setItem("data2Person", JSON.stringify(data['ModernEGCS']['Persons']));
         const manualKeys1 = Object.keys(manualData1).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
         const manualKeys2 = Object.keys(manualData2).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
         stopSimulationFlag = false;
@@ -122,18 +126,21 @@ startBtn.addEventListener("click", () => {
     fetch('http://localhost:9001/random')
     .then(response => response.json())
     .then(data => {
-      // Process data from server
-      console.log('Success:', data);
+      // 处理从服务器获取的数据
+      console.log(data['Otis']['Persons']);
       const data1 = data['Otis']['Elevators'];
       const data2 = data['ModernEGCS']['Elevators'];
-      window.data1Person = data['Otis']['Persons'];
-      window.data2Person = data['ModernEGCS']['Persons'];
+      localStorage.setItem("1","2");
+      localStorage.removeItem("data1Person");
+      localStorage.removeItem("data2Person");
+      localStorage.setItem("data1Person",JSON.stringify(data['Otis']['Persons']));
+      localStorage.setItem("data2Person", JSON.stringify(data['ModernEGCS']['Persons']));
       const keys1 = Object.keys(data1).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
       const keys2 = Object.keys(data2).sort((a, b) => parseInt(a) - parseInt(b)); //sort the json we received
       stopSimulationFlag = false;
       pauseSimulationFlag = false;
-      updateFloors(1,keys1,data1,refreshTime);
-      updateFloors(2,keys2,data2,refreshTime);
+      updateFloors(1,keys1,data1);
+      updateFloors(2,keys2,data2);
     })
     .catch((error) => {
       console.error('Error:', error);
