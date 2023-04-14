@@ -1,0 +1,12 @@
+version: '3'
+services:
+  backend:
+    build: ./backend
+    image: kevinchs0808/liftsim
+    ports:
+      - "9001:5000"
+  frontend:
+    build: ./frontend
+    image: tangyating/frontendliftsim
+    ports:
+      - "9000:5000"
