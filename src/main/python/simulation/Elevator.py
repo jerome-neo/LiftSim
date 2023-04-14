@@ -1,9 +1,5 @@
 import random
 import simpy
-
-import sys
-sys.path.append('c:/Users/dorot/OneDrive - National University of Singapore/DSA3101/DSA3101-07-S16/')
-
 from src.main.python.simulation.Floor import Floor
 
 MAX_CAPACITY = 13
@@ -78,6 +74,10 @@ class Elevator(object):
         self.is_moving = False
         self.total_num_elevators = total_num_elevators
         self.num_active_calls = 0  # actual number of active calls that the elevator is serving
+        if direction == "NIL":
+            self.lift_algo = "ModernEGCS"
+        else:
+            self.lift_algo = "Otis"
 
     def __str__(self):
         """Returns a string representation of the Elevator object."""
@@ -138,8 +138,7 @@ class Elevator(object):
                 person.elevator_arrival_time = self.env.now
                 curr_level = self.curr_floor
                 floor_level = person.get_dest_floor()
-                if floor_level not in self.path:
-                    self.add_path(floor_level)
+                if floor_level not in self.car_calls:
                     self.add_car_call(floor_level)
                 print(f"{person} has entered elevator at simulation time: {self.env.now}")
             else:
@@ -229,7 +228,6 @@ class Elevator(object):
         Args:
             floor_level(int): destination floor level
         """
-        self.add_path(floor_level)
         if floor_level not in self.car_calls:
             self.car_calls.append(floor_level)
             self.car_calls.sort()
@@ -237,6 +235,7 @@ class Elevator(object):
             self.direction = "UP"
         elif floor_level < self.curr_floor:
             self.direction = "DOWN"
+        self.add_path(floor_level)
     
     def add_hall_call(self, floor_level: int, direction: str) -> bool:
         """Adds a hall call to the list of unserved hall calls and returns boolean indicating whether the
@@ -251,10 +250,10 @@ class Elevator(object):
             return False
         if self.direction == "NIL":
             self.direction = direction
-        self.add_path(floor_level)
         if floor_level not in self.hall_calls:
             self.hall_calls.append(floor_level)
             self.num_active_calls += 1
+        self.add_path(floor_level)
         return True
 
     def add_path(self, floor_level: int) -> None:
@@ -320,7 +319,7 @@ class Elevator(object):
             yield self.env.timeout(0)
         elif not self.has_path():
             # return control
-            self.set_idle()
+            self.set_idle(self.lift_algo)
             yield self.env.timeout(0)
         else:
             if (self.get_path()[0] != self.get_current_floor() and self.direction == "UP") or \
@@ -333,8 +332,6 @@ class Elevator(object):
                 print(f"Elevator {self.index} set {self.direction} "
                       f"knows that current floor {self.curr_floor} IN path")
                 
-                #self.get_path().pop(0)
-
                 # Assuming we people are gracious
                 # i.e. we let people leave the elevator before boarding
                 yield self.env.process(self.leave_elevator())

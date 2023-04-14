@@ -1,5 +1,3 @@
-import sys
-sys.path.append('c:/Users/dorot/OneDrive - National University of Singapore/DSA3101/DSA3101-07-S16/')
 import src.main.python.simulation.Elevator as Elevator
 import src.main.python.simulation.HallCall as HallCall
 import src.main.python.simulation.Building as Building
@@ -171,7 +169,7 @@ class ModernEGCS(object):
     
     def assign_calls(self) -> None:
         """Assigns hall call to the most suitable elevator based on HCPM method."""
-        if self.backlog_time_start is not None and self.env.now - self.backlog_time_start >= 5:
+        if self.backlog_time_start is not None and self.env.now - self.backlog_time_start >= 15:
             self.unassigned_hall_calls.extend(self.calls_backlog)
             self.backlog_time_start = None
             self.calls_backlog = []
@@ -189,7 +187,6 @@ class ModernEGCS(object):
                         if self.backlog_time_start is None:
                             self.backlog_time_start = self.env.now
                         continue
-                print(priority_array)
                 current_best_elevator_index = prioritised_hall_call.get_current_best_elevator()
                 current_best_elevator = self.elevators[current_best_elevator_index-1]
                 source_floor = prioritised_hall_call.get_source_floor()
@@ -212,15 +209,14 @@ class ModernEGCS(object):
                 
             if len(self.unassigned_hall_calls) == 1:
                 last_hall_call = self.unassigned_hall_calls.pop(0)
+                self.unassigned_hall_calls = [] #reset list
                 priority_array = last_hall_call.get_priority_array()
-                print(priority_array)
                 if len(priority_array) > 0:
                     best_elevator_index = last_hall_call.get_current_best_elevator()
                     best_elevator = self.elevators[best_elevator_index-1]
                     source_floor = last_hall_call.get_source_floor()
                     while (self.is_there_idle() and best_elevator.has_more_than_optimum_calls()) \
                     or not best_elevator.floor_fits_path(source_floor):
-                    #(best_elevator.has_more_than_optimum_calls() or not best_elevator.floor_fits_path(floor)) \
                         if last_hall_call.get_priority_array_length() > 1:
                             last_hall_call.remove_frontmost_array_pair()
                             best_elevator_index = last_hall_call.get_current_best_elevator()
@@ -246,9 +242,10 @@ class ModernEGCS(object):
             elevator(Elevator): Elevator to which HallCall is assigned"""
         hall_call_floor = hall_call.get_source_floor()
         hall_call_direction = hall_call.get_direction()
-        elevator.set_busy()
+        
         call_successfully_assigned = elevator.add_hall_call(hall_call_floor, hall_call_direction)
         if call_successfully_assigned:
+            elevator.set_busy()
             floor = self.floors[hall_call_floor-1]
             if hall_call_direction == "UP":
                 floor.accept_up_call()
@@ -259,8 +256,7 @@ class ModernEGCS(object):
             self.calls_backlog.append(hall_call)
             if self.backlog_time_start is None:
                 self.backlog_time_start = self.env.now
-            print(f"Hall call from {hall_call_floor} going {hall_call_direction} COULD NOT be assigned to\
-                   {elevator.index} so it is reevaluated")
+            print(f"Hall call from {hall_call_floor} going {hall_call_direction} COULD NOT be assigned to {elevator.index} so it is reevaluated")
 
 
     def update_status(self) -> None:
@@ -281,7 +277,7 @@ class ModernEGCS(object):
                 idling_elevators_sent = busiest_floor.get_num_idling_elevators_sent()
                 if idling_elevators_deserved >= idling_elevators_sent + 1:
                     busiest_floor.new_idling_elevator_sent()
-                    elevator.path.append(busiest_floor_level)
+                    elevator.add_path(busiest_floor_level)
                     elevator.unset_direction()
                 
     
@@ -316,8 +312,10 @@ class ModernEGCS(object):
                 frontmost_hall_call = elevator.hall_calls[0] if elevator_direction == "UP" else elevator.hall_calls[-1]
                 if floor_currently_served == frontmost_hall_call and len(elevator.hall_calls) > 1:
                     current_elevator_unserved = elevator.hall_calls[1:]
-                else:
+                elif floor_currently_served != frontmost_hall_call and len(elevator.hall_calls) > 1:
                     current_elevator_unserved = elevator.hall_calls
+                else:
+                    continue
                 for floor in current_elevator_unserved:
                     if floor in elevator.get_path() and floor not in elevator.get_car_calls():
                         elevator.path.remove(floor)

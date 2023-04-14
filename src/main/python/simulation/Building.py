@@ -1,8 +1,4 @@
 import simpy
-import sys
-
-sys.path.append('c:/Users/dorot/OneDrive - National University of Singapore/DSA3101/DSA3101-07-S16/')
-
 from src.main.python.simulation.Floor import TopFloor, GroundFloor, SandwichFloor
 from src.main.python.simulation.ElevatorSystem import ElevatorSystem
 import src.main.python.simulation.ModernEGCS as ModernEGCS

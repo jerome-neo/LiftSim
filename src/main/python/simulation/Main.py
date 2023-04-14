@@ -1,14 +1,9 @@
-import sys
 import csv
 import json
 import simpy
 import statistics
-
-sys.path.append('c:/Users/dorot/OneDrive - National University of Singapore/DSA3101/DSA3101-07-S16/')
-
 import src.main.python.simulation.Building as Building
 from src.main.python.simulation.PersonList import PersonList
-
 
 class Main(object):
     """
@@ -64,6 +59,13 @@ class Main(object):
             print('Number of people spawned in advance:', len(self.building.get_all_persons()))
             print('Number of people served:', self.get_number_of_people_served())
             print(f"Average waiting time for {lift_algo}: {self.get_average_waiting_time()}")
+
+            if lift_algo == 'Otis':
+                Otis_average_waiting_time.append(self.get_average_waiting_time())
+                Otis_num_people_served.append(self.get_number_of_people_served())
+            else:
+                ModernEGCS_average_waiting_time.append(self.get_average_waiting_time())
+                ModernEGCS_num_people_served.append(self.get_number_of_people_served())
 
             self.env = simpy.Environment()
             self.person_list.reset(self.env)
@@ -136,7 +138,6 @@ Test = Main(num_up=2, num_down=1, num_floors=9)
 
 # Step 2
 # run the simulation by telling it how long to run, e.g. 6800 (from 6 am to 12 am at the same day)
-with open('output.txt', 'w') as f:
-    # Redirect standard output to the file
-    sys.stdout = f
-    Test.run(64800, mode='default')
+# Redirect standard output to the file
+
+Test.run(64800, mode='default')
