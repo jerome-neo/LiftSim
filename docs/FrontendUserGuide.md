@@ -3,7 +3,7 @@ layout: page
 title: Front End User Guide
 ---
 
-LiftSim is a web application designed for the building management officer to simulate the movement processes and monitor the overall crowdedness and waiting time of three lifts at S16
+LiftSim is a web application designed for the building management officer to simulate the movement processes and monitor the overall crowdedness and waiting time of three lifts at S16.
 
 ## Quick start
 
