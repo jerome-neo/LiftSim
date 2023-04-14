@@ -3,15 +3,15 @@ layout: page
 title: User Guide
 ---
 
-LiftSim is a data science project aimed at improving elevator efficiency and reducing wait times in multi-floor 
-buildings, particularly, S16 building at the National University of Singapore (NUS). By utilizing statistical modeling 
-techniques and simulation software, LiftSim provides valuable insights into elevator performance and management. 
+LiftSim is a web application designed for the building management officer to simulate the movement processes and monitor the overall crowdedness and waiting time of three lifts at S16
 
 ## Quick start
 
 1. Ensure you have Python `3.9` or above installed in your Computer.
 
-2. Download the latest `____`(Coming soon!)
+2. Download the zip file or clone the whole repository.
+
+3. Open the terminal and change directory to this folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -47,7 +47,7 @@ Take note that you can change the name 'lift123' to any text that you want (with
    e.g., 1), and Destination floor (for e.g., 3). Users could have multiple requests for one run, simply by clicking 'Add Request' button repeatedly and adding
    inputs. Request will be deleted with the 'Remove Request Set' button on the right. The simulation process will be triggered by pressing 'Submit' below the
    requests chunk. The 'Refresh Speed' slider is for adjusting the speed of the simulation process.
-   ![image](https://drive.google.com/file/d/1e2oX4eD7IHrrfcF7TQp8cXGNifmC0REA/view?usp=share_link)
+   ![image](https://drive.google.com/file/d/1e2oX4eD7IHrrfcF7TQp8cXGNifmC0REA/view?usp=share_link).jpg
    ![image](https://drive.google.com/file/d/1bdcE3GlMHcbfRrqNQhAmpI_1jlFJgaIL/view?usp=share_link)
 
    b. Without manual input/Randomized input:
