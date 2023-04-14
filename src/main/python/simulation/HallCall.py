@@ -54,7 +54,7 @@ class HallCall(object):
         """Returns the first priority array value for the HallCall,
         which is the additional cost incurred if this hall call is assigned
         to the next best elevator."""
-        return self.priority_array[0][1]
+        return self.priority_array[0][1] if len(self.priority_array) > 0 else -2
     
     def get_second_priority_value(self) -> None:
         """Returns the second priority array value for the HallCall,
@@ -77,3 +77,7 @@ class HallCall(object):
     def remove_frontmost_array_pair(self) -> None:
         """Removes the front-most priority array pair."""
         self.priority_array = self.priority_array[1:]
+    
+    def get_priority_array(self) -> None:
+        """Returns the priority array of the hall call"""
+        return self.priority_array

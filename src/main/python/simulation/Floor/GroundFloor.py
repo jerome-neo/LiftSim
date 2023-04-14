@@ -1,5 +1,4 @@
 from typing import List
-
 from src.main.python.simulation.Floor import Floor
 from src.main.python.simulation.HallCall import HallCall
 import simpy

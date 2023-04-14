@@ -68,11 +68,16 @@ class Elevator(object):
         self.passengers = []
         self.path = []  # all assigned floors in the elevator's current path based on simulation
         self.car_calls = []  # all un-served car calls registered for the elevator
+        self.hall_calls = [] # all un-served hall calls registered for the elevator
         self.resource = simpy.Resource(env,1)
         self.capacity = MAX_CAPACITY
         self.is_moving = False
         self.total_num_elevators = total_num_elevators
         self.num_active_calls = 0  # actual number of active calls that the elevator is serving
+        if direction == "NIL":
+            self.lift_algo = "ModernEGCS"
+        else:
+            self.lift_algo = "Otis"
 
     def __str__(self):
         """Returns a string representation of the Elevator object."""
@@ -111,15 +116,6 @@ class Elevator(object):
         print(f'{person} has entered elevator {self.direction} {self.index}')
         self.passengers.append(person)
     
-    def add_car_call(self, floor) -> None:
-        """Adds a car call to the list of unserved car calls"""
-        if floor not in self.car_calls:
-            self.car_calls.append(floor)
-            self.car_calls.sort()
-        if floor > self.curr_floor:
-            self.direction = "UP"
-        elif floor < self.curr_floor:
-            self.direction = "DOWN"
 
     def elevator_door_open(self, t=3):
         """Simulates door opening."""
@@ -142,12 +138,7 @@ class Elevator(object):
                 person.elevator_arrival_time = self.env.now
                 curr_level = self.curr_floor
                 floor_level = person.get_dest_floor()
-                if floor_level > curr_level:
-                    direction = "UP"
-                elif floor_level < curr_level:
-                    direction = "DOWN"
-                if floor_level not in self.path:
-                    self.add_path(floor_level, direction)
+                if floor_level not in self.car_calls:
                     self.add_car_call(floor_level)
                 print(f"{person} has entered elevator at simulation time: {self.env.now}")
             else:
@@ -185,6 +176,8 @@ class Elevator(object):
             self.passengers.remove(person)
         if self.curr_floor in self.car_calls:
             self.car_calls.remove(self.curr_floor)
+        if self.curr_floor in self.hall_calls:
+            self.hall_calls.remove(self.curr_floor)
         self.num_active_calls-=1
         if len(to_remove) > 0:
             yield self.env.process(self.elevator_door_open())
@@ -228,26 +221,53 @@ class Elevator(object):
         """
         print(f'{self} moved from {self.curr_floor} to {end}')
         self.curr_floor = end
+    
+    def add_car_call(self, floor_level) -> None:
+        """Adds a car call to the list of unserved car calls.
 
-    def add_path(self, floor_level, direction) -> None:
+        Args:
+            floor_level(int): destination floor level
+        """
+        if floor_level not in self.car_calls:
+            self.car_calls.append(floor_level)
+            self.car_calls.sort()
+        if floor_level > self.curr_floor:
+            self.direction = "UP"
+        elif floor_level < self.curr_floor:
+            self.direction = "DOWN"
+        self.add_path(floor_level)
+    
+    def add_hall_call(self, floor_level: int, direction: str) -> bool:
+        """Adds a hall call to the list of unserved hall calls and returns boolean indicating whether the
+        hall call  has been successfully added to the list of hall calls.
+
+        Args:
+            floor_level (int): the floor from which hall call is initiated
+            direction (str): the call direction
+        Returns:
+            True if call is successfully added to self.hall_calls, False otherwise"""
+        if self.direction != "NIL" and self.direction != direction:
+            return False
+        if self.direction == "NIL":
+            self.direction = direction
+        if floor_level not in self.hall_calls:
+            self.hall_calls.append(floor_level)
+            self.num_active_calls += 1
+        self.add_path(floor_level)
+        return True
+
+    def add_path(self, floor_level: int) -> None:
         """
         Add a floor to the elevator's path.
+
         Args:
             floor_level (int): the floor to add to the elevator's path
-            direction (str): the movement direction
         """
+        if self.direction == "NIL" and len(self.path) == 1: #elevator is initially an idling elevator sent to busy floor
+            self.path = [] #change course immediately if a call is assigned to elevator
         if floor_level not in self.path:
             self.path.append(floor_level)
-            self.num_active_calls+=1
-        # self.path = np.unique(self.path).tolist()
-        if self.direction == direction:
-            self.path.sort()
-        if not self.is_busy():
-            self.set_busy()
-        self.direction = direction
-        displayed_path = self.path if self.get_direction() == "UP" else self.path[::-1]
-        print(f"Elevator {self.index} set {self.direction} has path logged: {displayed_path}")
-
+        
     def get_path(self) -> list:
         """
         Get the elevator's path.
@@ -270,7 +290,7 @@ class Elevator(object):
 
     def move(self):
         """This moves the elevator in the direction of the next floor in their path."""
-        if self.is_busy() and self.has_path():
+        if self.has_path():
             destination_floor = self.get_path()[0] if self.get_direction() == "UP" else self.get_path()[-1]
             displacement_direction = destination_floor - self.get_current_floor()  # final - initial = change
             move_direction = "UP" if displacement_direction > 0 else "DOWN"
@@ -281,6 +301,8 @@ class Elevator(object):
             yield self.env.timeout(random.randint(3, 4))
         else:
             yield self.env.timeout(0)
+        displayed_path = self.path if self.get_direction() == "UP" else self.path[::-1]
+        print(f"Elevator {self.index} set {self.direction} has path logged: {displayed_path}")
 
     def activate(self) -> None:
         """
@@ -293,14 +315,16 @@ class Elevator(object):
             Setting of the call status is done by the Floor class update() method.
             It should be called in the Building class.
         """
-        if not self.is_busy():
+        if not self.is_busy() and not self.has_path():
             yield self.env.timeout(0)
         elif not self.has_path():
             # return control
-            self.set_idle()
+            self.set_idle(self.lift_algo)
             yield self.env.timeout(0)
         else:
-            if self.get_path()[0] != self.get_current_floor():
+            if (self.get_path()[0] != self.get_current_floor() and self.direction == "UP") or \
+                (self.get_path()[-1] != self.get_current_floor() and self.direction == "DOWN") or \
+                (self.get_path()[0] != self.get_current_floor() and self.direction == "NIL"):
                 print(f"Elevator {self.index} set {self.direction} "
                       f"knows that current floor {self.curr_floor} NOT IN path")
                 yield self.env.timeout(0)
@@ -308,25 +332,27 @@ class Elevator(object):
                 print(f"Elevator {self.index} set {self.direction} "
                       f"knows that current floor {self.curr_floor} IN path")
                 
-                self.get_path().pop(0)
-
                 # Assuming we people are gracious
                 # i.e. we let people leave the elevator before boarding
                 yield self.env.process(self.leave_elevator())
                 floor = self.floors[self.get_current_floor()-1]
 
                 if self.get_direction() == "UP":
+                    self.path.pop(0)
                     if self.get_current_floor() < self.num_floors:  
                         yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_up()))
                         # reset status
                         floor.uncall_up()
                         floor.unaccept_up_call()
                 elif self.get_direction() == "DOWN":
+                    self.path.pop(-1)
                     if self.get_current_floor() > 1:
                         yield self.env.process(self.enter_elevator(floor.remove_all_persons_going_down()))
                         # reset status
                         floor.uncall_down()
                         floor.unaccept_down_call()
+                else:
+                    self.path.pop(0)
     
     def get_current_floor_object(self) -> Floor:
         """
@@ -377,4 +403,21 @@ class Elevator(object):
     def unset_direction(self) -> None:
         """Changes direction to NIL once a ModernEGCS elevator has no more calls"""
         self.direction = "NIL"
-
+    
+    def is_serving_car_call(self) -> bool:
+        """Returns True if elevator's next destination in path is from a car call"""
+        if self.direction == "UP":
+            return self.get_path()[0] in self.car_calls
+        else:
+            return self.get_path()[-1] in self.car_calls
+    
+    def floor_fits_path(self, floor_level: int) -> bool:
+        """Returns True if floor level inputted does not disrupt the elevator's current movement
+        Args:
+            floor_level (int): floor level being assessed"""
+        if self.direction == "UP":
+            return self.get_current_floor() <= floor_level
+        elif self.direction == "DOWN":
+            return self.get_current_floor() >= floor_level
+        else:
+            return True

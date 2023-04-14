@@ -1,12 +1,10 @@
-import sys
 import csv
 import json
 import simpy
 import statistics
+
 import src.main.python.simulation.Building as Building
-
 from src.main.python.simulation.PersonList import PersonList
-
 
 class Main(object):
     """
@@ -44,7 +42,7 @@ class Main(object):
             duration (float): The duration of the simulation in seconds.
             mode (string): 'default' or 'manual'
         """
-        self.person_list = PersonList(self.env, duration, limit=300)  # person generated cannot exceed 300
+        self.person_list = PersonList(self.env, duration, limit=5000)  # person generated cannot exceed 300
         self.person_list.initialise(mode=mode)
         
         for lift_algo in self.lift_algos:
@@ -131,8 +129,8 @@ class Main(object):
 
 # Step 1
 # set up the environment with number of UP elevators, number of DOWN elevators and number of floors"
-# Test = Main(num_up=2, num_down=1, num_floors=9)
+Test = Main(num_up=2, num_down=1, num_floors=9)
 
 # Step 2
 # run the simulation by telling it how long to run, e.g. 6800 (from 6 am to 12 am at the same day)
-# Test.run(64800, mode='manual')
+Test.run(64800, mode='default')

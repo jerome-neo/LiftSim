@@ -1,6 +1,5 @@
 import simpy
 
-
 class Floor(object):
     """A class representing a floor in a building."""
     def __init__(self, env: simpy.Environment, index: int):
