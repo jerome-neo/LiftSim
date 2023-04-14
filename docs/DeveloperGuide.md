@@ -23,9 +23,6 @@ title: Developer Guide
 folder. 
 </div>
 
-### Architecture Diagrams
-The **_Architecture Diagram_** given shows the high-level implementation of our Flask application.
-
 ### Class Diagrams
 
 <img src="images/ClassDiagram.png" width="2450" />
