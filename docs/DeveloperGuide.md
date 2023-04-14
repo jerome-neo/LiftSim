@@ -23,7 +23,7 @@ title: Developer Guide
 folder. 
 </div>
 
-### Class Diagrams
+### Class Diagram
 
 <img src="images/ClassDiagram.png" width="2450" />
 
