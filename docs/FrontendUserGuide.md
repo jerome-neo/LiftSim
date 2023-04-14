@@ -30,7 +30,9 @@ docker compose up
 
 **3. Open your Docker Desktop, and check whether the docker container is running**
 
-![image](https://drive.google.com/file/d/1e2oX4eD7IHrrfcF7TQp8cXGNifmC0REA/view?usp=share_link)
+<p align="center">
+    <img src="docs/images/Docker.jpg">
+</p>
 
 **4. How to use our web application**
 
