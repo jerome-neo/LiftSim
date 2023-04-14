@@ -40,6 +40,7 @@ image
 - Functions of the web application
 
 1. Generate Lift System Simulation
+
 a. With manual input:
 Users can input manually with 'Add Request' button. For each request, the user needs to have three inputs: Timestamp (HH:MM, for e.g., 21:56), Source floor (for e.g., 1), and Destination floor (for e.g., 3). Users could have multiple requests for one run, and the request will be deleted with the 'Remove' button on the right. The simulation process will be triggered by pressing 'Submit' below the requests chunk.
 
