@@ -1,6 +1,6 @@
 ---
 layout: page
-title: User Guide
+title: Front End User Guide
 ---
 
 LiftSim is a web application designed for the building management officer to simulate the movement processes and monitor the overall crowdedness and waiting time of three lifts at S16
@@ -27,8 +27,6 @@ LiftSim is a web application designed for the building management officer to sim
 ```linux 
 docker compose up
 ```
-
-Take note that you can change the name 'lift123' to any text that you want (without space).
 
 **3. Open your Docker Desktop, and check whether the docker container is running**
 
