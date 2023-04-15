@@ -67,6 +67,7 @@ docker compose up
    into a HTML file which includes a plot illustrating the number of tasks during a day and a table showing the summary of number of tasks and waiting time for each
    floor. The selector at top left is incorpated to select different time periods while the selector at top right is included to switch between different models for
    comparison.
+   It is generally recommended to wait until the simulation starts on the first page before clicking on the "Show Summary" tab to avoid incomplete data loading. 
    <p align="center">
        <img src="https://github.com/jerome-neo/DSA3101-07-S16/blob/front-end/docs/images/Summary.jpg">
    </p>
